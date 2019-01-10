@@ -1,8 +1,10 @@
 # Sudo Give Us An A
 
-# Mission Statement
+## Mission Statement
 
-# Roles
+## Roles
 -Manager/Project Management - Brian
+
 -Design/Marketing - Eleanor 
+
 -Developers - Tj, Lucas, Drew
