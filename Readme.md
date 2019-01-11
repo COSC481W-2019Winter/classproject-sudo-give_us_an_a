@@ -10,3 +10,5 @@ We want to solve the problem of not being able to figure out where you parked an
 -Design/Marketing - Eleanor 
 
 -Developers - Tj, Lucas, Drew
+
+-Support - Tj
