@@ -7,7 +7,7 @@
 ### Welcome Screen
 The welcome screen has a map and a "Park Here" button.
 
-![alt text](classproject-sudo-give_us_an_a/COSC 381 mock up.png "Mock up")
+![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/DesignSpecs/COSC%20381%20mock%20up.png "Mock up")
 
 ### Current Location
 Shows parking location (coordinates and elevation). Shows where you currently are and how far you are away.
