@@ -7,20 +7,25 @@ Our Android based app ParkedUp will solve this issue. While some new Apple phone
 
 ### Map Interaction
 
-### parking button
+### Parking button
 
-### unparking button
+### Unparking button
 
-### confirm button
+### Confirm button
 
-### mandatory
-####   map interaction
-####  button interaction
-#### GPS location for parking and current position
+### _Mandatory_
+####  _Map interaction:_
 
-### desirable
-#### elevation
-#### time to walk back to car
+####  _Button interaction:_
+
+####  _GPS location for parking and current position:_
+
+
+### Desirable
+#### Elevation:
+
+#### Time to walk back to car:
+
 
 ### Welcome Screen
 The welcome screen has a map and a "Park Here" button.  This simple and straight forward welcome screen will make it clear to anyone using the app, no matter how technologically savvy they are, where to click in order to mark their parking location. By displaying the map they can see where they are and only allowing them to press parking will limit the amount of user error. Green is universal for “go” so it will have the user automatically thinking this is the button to start tracking without even reading what is written on the button.
