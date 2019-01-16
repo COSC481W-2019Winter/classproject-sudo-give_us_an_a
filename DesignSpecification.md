@@ -4,22 +4,22 @@
 
 ## The Solution
 
-    ### Map Interaction
-    
-    ### parking button
-    
-    ### unparking button
-    
-    ### confirm button
-    
-    ### mandatory
-     ####   map inteaction
-      ####  button inteaction
-       #### gps location for parking and current position
-        
-    ### desirable
-       #### elevation
-       #### time to walk back to car
+### Map Interaction
+
+### parking button
+
+### unparking button
+
+### confirm button
+
+### mandatory
+####   map inteaction
+####  button inteaction
+#### gps location for parking and current position
+
+### desirable
+#### elevation
+#### time to walk back to car
 ### Welcome Screen
 The welcome screen has a map and a "Park Here" button.
 
