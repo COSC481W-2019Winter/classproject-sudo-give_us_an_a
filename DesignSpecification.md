@@ -25,7 +25,7 @@ Shows parking location (coordinates and elevation). Shows where you currently ar
 ![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/DesignSpecs/imgs/current_location.png "Current Location")
 
 ### Confirm Deletion
-Confirms to delete your current location or when you've found your car.  This last screen in the cycle will allow the user to  confirm that they wish to delete their parking location and will allow them to still view the information on the pakring spot, below will be an option to cancel, which will take the user back to the current location screen. If the user deletes the vehicle then the welcome screen will reapper allowing the user to mark a new parkign location.
+Confirms to delete your current location or when you've found your car.  This last screen in the cycle will allow the user to  confirm that they wish to delete their parking location and will allow them to still view the information on the pakring spot, below will be an option to cancel, which will take the user back to the current location screen. If the user deletes the vehicle then the welcome screen will reapper allowing the user to mark a new parking location.
 ![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/DesignSpecs/imgs/delete_confirmation.png "Delete Confirmation")
 
 #### _Mandatory Aspects_
