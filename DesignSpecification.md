@@ -40,3 +40,5 @@ Confirms to delete your current location or when you've found your car.  This la
  * Elevation
 
  * Time to walk back to car
+ 
+ * Automatic deletion of parking spot once one is within several feet of their car 
