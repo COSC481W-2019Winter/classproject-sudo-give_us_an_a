@@ -38,5 +38,5 @@
 
 # Models
 ## Context Model
-
+![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/Requirements/imgs/Context%20Model.png "Context Model")
 ## Structural Model
