@@ -1,35 +1,35 @@
 # Requirements Specification
 
 ## General
-- Only looking at andriod phones since version KitKat and up for 95% usability
+- _Only looking at Android phones since version KitKat and up for 95% usability_
 - One page display with vector scaling graphics for minimum 1024 pixel resolution
 - Ensure orentation change does not impact layout
-- Google maps should initiate as app starts
+- _Google maps should initiate as app starts_
 - Notification at top of screen when not in app to show there is a parking location marked
   
 ## Functionality 
-- Park button to record GPS coordinates
-- Map to show current location and parking location
+- _Park button to record GPS coordinates_
+- _Map to show current location and parking location_
 - Map to zoom in and out automatically to fit both locations as GPS location changes
-- Buttons to work
-- Popup to work
-- Pressing No on popup closes it and retains location of car
-- Once location is deleted (pressing yes on popup) it reverts back to the welcome screen
-- Welcome screen shows current location
+- _Buttons to work_
+- _Popup to work_
+- _Pressing No on popup closes it and retains location of car_
+- _Once location is deleted (pressing yes on popup) it reverts back to the welcome screen_
+- _Welcome screen shows current location_
 
 ## Technical
-- Store parking coordantes as local variables
-- Current location is local variable constantly updated
-- Current location updated every < 1 second 
-- Elevation is a local varible
+- _Store parking coordinates as local variables_
+- _Current location is local variable constantly updated_
+- _Current location updated every < 1 second_
+- Elevation is a local variable
 
 ## Design
 ### Color
-- Park here button is green
-- Delete button is red
-- Confirm delete popup red
+- _Park here button is green_
+- _Delete button is red_
+- _Confirm delete popup red_
 ### Text
-- Font should be simplistic and easily readable
+- _Font should be simplistic and easily readable_
 - Font size should be large 
 
 ### Ratio 
