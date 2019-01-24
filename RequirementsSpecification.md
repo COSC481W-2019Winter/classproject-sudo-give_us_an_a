@@ -11,24 +11,24 @@
 - _Park button to record GPS coordinates_
 - _Map to show current location and parking location_
 - Map to zoom in and out automatically to fit both locations as GPS location changes
-- _Buttons to work_
-- _Popup to work_
-- _Pressing No on popup closes it and retains location of car_
-- _Once location is deleted (pressing yes on popup) it reverts back to the welcome screen_
+- _Pake here, Delete location, exit buttons to work_
+- _Both the location deletion and Exit popups appear when their corresponding buttons are pressed_
+- _Pressing No either on popup closes it and returns to current app state_
+- _Once confirming location is deletion (pressing yes on popup) it reverts back to the welcome screen_
 - _Welcome screen shows current location_
 - _Exit button allows user to close the app_
 
 ## Technical
 - _Store parking coordinates as local variables_
 - _Current location is local variable constantly updated_
-- _Current location updated every < 1 second_
+- _Current location updated every <1 second_
 - Elevation is a local variable
 
 ## Design
 ### Color
 - _Park here button is green_
 - _Delete button is red_
-- _Exit button is red_
+- _Exit button is black X icon_
 - _Confirm delete popup red_
 ### Text
 - _Font should be simplistic and easily readable_
