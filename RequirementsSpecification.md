@@ -4,7 +4,7 @@
 - _Only looking at Android phones since version KitKat and up for 95% usability_
 - One page display with vector scaling graphics for minimum 1024 pixel resolution
 - Ensure orientation change does not impact layout
-- _Google maps should initiate as app starts_
+- _Google map services should initiate as app starts_
 - Notification at top of screen when not in app to show there is a parking location marked
   
 ## Functionality 
@@ -16,6 +16,7 @@
 - _Pressing No on popup closes it and retains location of car_
 - _Once location is deleted (pressing yes on popup) it reverts back to the welcome screen_
 - _Welcome screen shows current location_
+- _Exit button allows user to close the app_
 
 ## Technical
 - _Store parking coordinates as local variables_
@@ -27,6 +28,7 @@
 ### Color
 - _Park here button is green_
 - _Delete button is red_
+- _Exit button is red_
 - _Confirm delete popup red_
 ### Text
 - _Font should be simplistic and easily readable_
