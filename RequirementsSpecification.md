@@ -3,7 +3,7 @@
 ## General
 - _Only looking at Android phones since version KitKat and up for 95% usability_
 - One page display with vector scaling graphics for minimum 1024 pixel resolution
-- Ensure orentation change does not impact layout
+- Ensure orientation change does not impact layout
 - _Google maps should initiate as app starts_
 - Notification at top of screen when not in app to show there is a parking location marked
   
