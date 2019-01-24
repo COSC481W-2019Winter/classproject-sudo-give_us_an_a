@@ -16,13 +16,17 @@ The button that will appear under the information on where the parking location 
 The confirmation button is the last interactive part done by the user. If they have selected the “Delete Parking Spot” button then the screen will the same and the user will have to select the red button again to confirm that they do indeed want to remove the parking spot. This will prevent accidental deletion and make the user confirm that they want to remove the spot; it warns that once deleted then the location cannot be retrieved. 
 
 ### Welcome Screen
-The welcome screen has a map and a "Park Here" button.  This simple and straight forward welcome screen will make it clear to anyone using the app, no matter how technologically savvy they are, where to click in order to mark their parking location. By displaying the map they can see where they are and only allowing them to press parking will limit the amount of user error. Green is universal for “go” so it will have the user automatically thinking this is the button to start tracking without even reading what is written on the button.
-![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/master/imgs/welcome_screen.png "Welcome Screen")
+The welcome screen has a map and a "Park Here" button.  This simple and straight forward welcome screen will make it clear to anyone using the app, no matter how technologically savvy they are, where to click in order to mark their parking location. By displaying the map they can see where they are and only allowing them to press parking will limit the amount of user error. Green is universal for “go” so it will have the user automatically thinking this is the button to start tracking without even reading what is written on the button. If the user clicks X then it will completely exit out of the app.
+![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/master/imgs/Welcome%20screen%20with%20x.png "Welcome Screen")
 
 ### Current Location
 Shows parking location (coordinates and elevation). Shows where you currently are and how far you are away.  While the map will show the parking and current loaction, below will have the information showing the GPS coordinates or the parking and current locations. Hopefully, we can implement a feature whichc will allow to the app to track the elevation of both parking and current locations. And additionally we would like to implement the distance and time it will take for the user to walk back to their car. The only interation that the user can have will be moving with in the map and selectingn the delete parking button to remove the stored parking location.
 
-![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/master/imgs/current_location.png "Current Location")
+![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/master/imgs/Second%20screen%20with%20x.png "Current Location")
+### Confirm Exit
+When user exits the app with exit button, it will promt the user to confirm that they wish to delete their location and exit the app. Options are yes or no, no will return to the current location screen and yes will copletely exit out of the app.
+
+![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/master/imgs/Second%20screen%20with%20x%20prompt.png "Current Location")
 
 ### Confirm Deletion
 Confirms to delete your current location or when you've found your car.  This last screen in the cycle will allow the user to  confirm that they wish to delete their parking location and will allow them to still view the information on the pakring spot, below will be an option to cancel, which will take the user back to the current location screen. If the user deletes the vehicle then the welcome screen will reapper allowing the user to mark a new parking location.
