@@ -11,7 +11,7 @@
 - _Park button to record GPS coordinates_
 - _Map to show current location and parking location_
 - Map to zoom in and out automatically to fit both locations as GPS location changes
-- _Pake here, Delete location, exit buttons to work_
+- _Park here, Delete location, exit buttons to work_
 - _Both the location deletion and Exit popups appear when their corresponding buttons are pressed_
 - _Pressing No either on popup closes it and returns to current app state_
 - _Once confirming location is deletion (pressing yes on popup) it reverts back to the welcome screen_
