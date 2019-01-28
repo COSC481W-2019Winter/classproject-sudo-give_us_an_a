@@ -28,7 +28,7 @@
 * once everything is done it should automatically install and launch an android app which says "hello world" in the middle
   
 **Troubleshooting Android Problems**
-* in newer android devices after pushing play the layout may pop up and drop out or be, completely grey on your device. if this occurs goto -> app/manifests/AndroidManifest.xml and add the bottom line of this code. then try launching again
+* in newer android devices after pushing play the layout may pop up and drop out or be completely grey on your device. if this occurs goto -> app/manifests/AndroidManifest.xml and add the bottom line of this code. then try launching again
 
         <application
         android:allowBackup="true"
