@@ -27,3 +27,15 @@
 * to test that everything works go back to Android Studio and click the green Play button in the top menu (this will take a little while)
 * once everything is done it should automatically install and launch an android app which says "hello world" in the middle
   
+**Troubleshooting Android Problems**
+* in newer android devices after pushing play the layout may pop up and drop out or be, completely grey on your device. if this occurs goto -> app/manifests/AndroidManifest.xml and add the bottom line of this code. then try launching again
+
+        <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <!--make sure to add this so it works on newer devices-->
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
