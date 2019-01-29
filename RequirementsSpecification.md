@@ -40,6 +40,6 @@
 
 # Models
 ## Context Model
-![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/Requirements/imgs/Context%20Model.png "Context Model")
+![Context Model](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/master/imgs/Context%20Model.png "Context Model")
 ## Event-Driven Model
-![alt text](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/Requirements/imgs/eventdriven_model.png "Event-Driven Model")
+![Event-Driven Model](https://github.com/COSC481W-2019Winter/classproject-sudo-give_us_an_a/blob/master/imgs/eventdriven_model.png "Event-Driven Model")
