@@ -17,6 +17,6 @@ User can extend the MapActivity class for any user interface screens they want t
 ## Connections
 **Inputs**
 * 'unsure'
-* 
+
 **Outputs**
 * 'unsure'
