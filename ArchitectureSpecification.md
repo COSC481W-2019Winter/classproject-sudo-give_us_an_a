@@ -1,2 +1,21 @@
 # Architecture Specification
-I'm working on this right now -drew
+
+## Name
+descriptions
+
+## Properties
+| Name | Type | Description |
+| ---- | --- | --- |
+| gssd | ghc | The .. |
+
+## Functionality
+| Name | Parameters | Return | Behavior |
+| ---- | --- | --- | --- |
+| gssd | ghc | The .. | The behavior |
+
+## Connections
+**Inputs**
+* RecipeBox - 
+* 
+**Outputs**
+* Thing
