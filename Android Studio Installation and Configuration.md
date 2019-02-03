@@ -28,7 +28,8 @@
 * once everything is done it should automatically install and launch an android app which says "hello world" in the middle
   
 **Troubleshooting Android Problems**
-* (A)
+**(A)**
+
 * in newer android devices after pushing play the layout may pop up and drop out or be completely grey on your device. if this occurs goto -> app/manifests/AndroidManifest.xml and add the bottom line of this code. then try launching again
 
         <application
@@ -41,8 +42,17 @@
         <!--make sure to add this so it works on newer devices-->
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         
-* (B)
-* if after this, the app still doesn't launch on your device or you are still getting a "grey screen" do the following:
+**Notice before proceeding**
+
+   **before performing the following steps, make sure you have not already installed and tried running the same Android        project on your device. if you have, simply uninstall the app from the device**
+
+**otherwise you may get an error message that looks like this:**
+![application installation failed](https://user-images.githubusercontent.com/15261678/52171260-d60e9b00-2727-11e9-8b8c-769ad35837fc.png)
+
+**this is because if the version of the app that you have installed was not built with the same keystore/signing certificate it will have a different signature. by default each build machine will have a different certificate**
+
+**(B)**
+* if after step (A) the app still doesn't launch on your device or you are still getting a "grey screen" do the following:
 1. goto our groups' slack account and look for the new API key under the channel api_key [here](https://sudoa.slack.com/messages/CFVVAEBS5/) and copy it
 2. come back into android studio and open two files:
    in the top left of the screen you should see a dropdown that says Android. click it and select Project which will show you 
