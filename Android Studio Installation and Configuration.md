@@ -48,6 +48,7 @@
 
 **otherwise you may get an error message that looks like this:**
 ![application installation failed](https://user-images.githubusercontent.com/15261678/52171260-d60e9b00-2727-11e9-8b8c-769ad35837fc.png)
+**if you see this error press Cancel and uninstall the app from your device**
 
 **this is because if the version of the app that you have installed was not built with the same keystore/signing certificate it will have a different signature. by default each build machine will have a different certificate**
 
