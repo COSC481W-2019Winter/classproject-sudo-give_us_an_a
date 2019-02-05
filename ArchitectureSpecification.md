@@ -1,5 +1,12 @@
 # Architecture Specification
 
+## MVP
+Model: Business logic classes that will be added and include current longitude/latitude, as well as other functions and variables
+
+View: Handles all UI elements
+
+Presenter: MainActivity handles the code dealing with user UI interaction
+
 ## MapActivity
 User can extend the MapActivity class for any user interface screens they want to display a map within. The addition of the MapFragment class allows the developer to exploit map viewing functionality provided via encapsulation. This change gives the developer more control over the details of the Activity class used to display a Google Map.
 
