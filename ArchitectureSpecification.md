@@ -27,3 +27,23 @@ User can extend the MapActivity class for any user interface screens they want t
 
 **Outputs**
 * 'unsure'
+
+## LocationManager
+Holds user data for global location data. Contains latitude and longitude coordinates and elevation data.
+
+## Properties
+| Name | Type | Description |
+| ---- | --- | --- |
+| mapData | nMap | Google Maps data values passed in from MapActivity | 
+
+#Functionality
+| Name | Type | Description |
+| ---- | ---- | ---- | 
+|
+
+## Connections
+**Inputs**
+* MapActivity - GPS location data is pulled from nMap when called.
+
+**Outputs**
+* 'unsure'
