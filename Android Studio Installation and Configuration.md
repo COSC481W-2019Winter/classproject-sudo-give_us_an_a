@@ -50,6 +50,8 @@
 ![application installation failed](https://user-images.githubusercontent.com/15261678/52171260-d60e9b00-2727-11e9-8b8c-769ad35837fc.png)
 **if you see this error press Cancel and uninstall the app from your device**
 
+**after uninstalling the app from the device go back to Android Studio on the top menu bar click ->Build/Rebuild Project**
+
 **this is because if the version of the app that you have installed was not built with the same keystore/signing certificate it will have a different signature. by default each build machine will have a different certificate**
 
 **(B)**
