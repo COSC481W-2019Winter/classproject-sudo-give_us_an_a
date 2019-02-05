@@ -36,7 +36,7 @@ Holds user data for global location data. Contains latitude and longitude coordi
 | ---- | --- | --- |
 | mapData | nMap | Google Maps data values passed in from MapActivity | 
 
-#Functionality
+## Functionality
 | Name | Type | Description |
 | ---- | ---- | ---- | 
 |
