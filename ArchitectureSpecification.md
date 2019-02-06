@@ -19,7 +19,7 @@ Initializes android application. Handles all calls to GoogleMaps APIs as well as
 ## Connections
 **Inputs**
 * `LocationManager` - Gets parking coordinates and elevation as well as users current coordinates and elevation.
-* `View` - Calls ~OnClick~ Listeners for associated buttons within the user interface.
+* `View` - Calls OnClick Listeners for associated buttons within the user interface.
 
 **Outputs**
 * 'View' - Displays layout and GoogleMap along with user interface. 
@@ -27,7 +27,7 @@ Initializes android application. Handles all calls to GoogleMaps APIs as well as
 ## LocationManager
 Holds user information for location data. Contains latitude and longitude coordinates and elevation data for both the parked vehicle and the user's current location. 
 
-## Properties
+### Properties
 | Name | Type | Description |
 | ---- | --- | --- |
 | coordinates | float[] | Google Maps latitude and longitude data values passed in from MainActivity | 
@@ -35,7 +35,7 @@ Holds user information for location data. Contains latitude and longitude coordi
 | parkingCoord | float[] | Coordinates of parking spot saved from MainActivity |
 | parkingElev | float | Elevation of user's parked vehicle saved from MainActivity. |
 
-## Functionality
+### Functionality
 | Name | Parameters | Return | Description |
 | ---- | ---- | ---- | ---- |
 | getCoordinates() | None | float[] |Returns a float array containing the coordinate values stored in an array |
@@ -43,7 +43,7 @@ Holds user information for location data. Contains latitude and longitude coordi
 | setParkCoord() | nMap | None | Input of coordinates from GoogleMaps nMap type and stores them as a float[].
 | setParkElev() | nMap | None | Input of elevation contained with an nMap type converted and then stored as a float.
 
-## Connections
+### Connections
 **Inputs**
 * `MainActivity` - GPS location data is pulled from nMap when called. Also calls functions when triggered by Viewer to do so.
 
@@ -51,8 +51,8 @@ Holds user information for location data. Contains latitude and longitude coordi
 * `MainActivity` - Provides stored values for parking location coordinates and elevation as well as current position values.
 
 ## View 
-## Properties
-## Functionality
-## Connections
+### Properties
+### Functionality
+### Connections
 **Inputs**
 **Outputs**
