@@ -1,49 +1,58 @@
 # Architecture Specification
 
-## MVP
-Model: Business logic classes that will be added and include current longitude/latitude, as well as other functions and variables
+## MainActivity
+Initializes android application. Handles all calls to GoogleMaps APIs as well as passing that information to local storage within `LocationManager`.
 
-View: Handles all UI elements
-
-Presenter: MainActivity handles the code dealing with user UI interaction
-
-## MapActivity
-User can extend the MapActivity class for any user interface screens they want to display a map within. The addition of the MapFragment class allows the developer to exploit map viewing functionality provided via encapsulation. This change gives the developer more control over the details of the Activity class used to display a Google Map.
-
-## Properties
+### Properties
 | Name | Type | Description |
 | ---- | --- | --- |
 | mMap | GoogleMap | The GoogleMap object |
 
-## Functionality
+### Functionality
 | Name | Parameters | Return | Behavior |
 | ---- | --- | --- | --- |
-| onCreate() | Bundle | None | Launches activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains getMapAsync which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. |
-| onMapReady() | GoogleMap | None | Callback interface for when the map is ready to be used. Once an instance of this interface is set on a MapFragment or MapView object, the onMapReady(GoogleMap) method is triggered when the map is ready to be used and provides a non-null instance of GoogleMap |
+| onCreate() | Bundle | None | Launches activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains `getMapAsync` which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. |
+| onMapReady() | GoogleMap | None | Callback interface for when the map is ready to be used. Once an instance of this interface is set on a MapFragment or MapView object, the `onMapReady(GoogleMap)` method is triggered when the map is ready to be used and provides a non-null instance of GoogleMap |
+| parkButton() | None | None | Registers a clicked button with `View` to signify the user wanting to save the current location as a parking spot.
+|exitButton() | None | None | Registers clicked button within `View`, terminates app and kills it's external processes.
 
 ## Connections
 **Inputs**
-* 'unsure'
+* `LocationManager` - Gets parking coordinates and elevation as well as users current coordinates and elevation.
+* `View` - Calls ~OnClick~ Listeners for associated buttons within the user interface.
 
 **Outputs**
-* 'unsure'
+* 'View' - Displays layout and GoogleMap along with user interface. 
 
 ## LocationManager
-Holds user data for global location data. Contains latitude and longitude coordinates and elevation data.
+Holds user information for location data. Contains latitude and longitude coordinates and elevation data for both the parked vehicle and the user's current location. 
 
 ## Properties
 | Name | Type | Description |
 | ---- | --- | --- |
-| mapData | nMap | Google Maps data values passed in from MapActivity | 
+| coordinates | float[] | Google Maps latitude and longitude data values passed in from MainActivity | 
+| elevation | float | Elevation of user's current position provided by MainActivity.
+| parkingCoord | float[] | Coordinates of parking spot saved from MainActivity |
+| parkingElev | float | Elevation of user's parked vehicle saved from MainActivity. |
 
 ## Functionality
-| Name | Type | Description |
-| ---- | ---- | ---- | 
-|
+| Name | Parameters | Return | Description |
+| ---- | ---- | ---- | ---- |
+| getCoordinates() | None | float[] |Returns a float array containing the coordinate values stored in an array |
+| getElevation() | None | float | Returns elevation value as a floating point number. |
+| setParkCoord() | nMap | None | Input of coordinates from GoogleMaps nMap type and stores them as a float[].
+| setParkElev() | nMap | None | Input of elevation contained with an nMap type converted and then stored as a float.
 
 ## Connections
 **Inputs**
-* MapActivity - GPS location data is pulled from nMap when called.
+* `MainActivity` - GPS location data is pulled from nMap when called. Also calls functions when triggered by Viewer to do so.
 
 **Outputs**
-* 'unsure'
+* `MainActivity` - Provides stored values for parking location coordinates and elevation as well as current position values.
+
+## View 
+## Properties
+## Functionality
+## Connections
+**Inputs**
+**Outputs**
