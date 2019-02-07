@@ -1,28 +1,32 @@
 # Architecture Specification
 
 ## MainActivity
-Initializes android application. Handles all calls to GoogleMaps APIs as well as passing that information to local storage within `LocationManager`.
+Initializes android application. Handles all calls to GoogleMaps APIs as well as passing that information to local storage within `LocationManager`. Also takes information stored within `LocationManager` and displays it using Android's activity `Layouts`.
 
 ### Properties
 | Name | Type | Description |
 | ---- | --- | --- |
 | mMap | GoogleMap | The GoogleMap object |
+| location | LocationManager | LocationManager Instance for storing map data and then displaying it.| 
 
 ### Functionality
 | Name | Parameters | Return | Behavior |
 | ---- | --- | --- | --- |
-| onCreate() | Bundle | None | Launches activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains `getMapAsync` which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. |
+| onCreate() | Bundle | None | Launches `View` activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains `getMapAsync` which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. |
 | onMapReady() | GoogleMap | None | Callback interface for when the map is ready to be used. Once an instance of this interface is set on a MapFragment or MapView object, the `onMapReady(GoogleMap)` method is triggered when the map is ready to be used and provides a non-null instance of GoogleMap |
-| parkButton() | None | None | Registers a clicked button with `View` to signify the user wanting to save the current location as a parking spot.
-|exitButton() | None | None | Registers clicked button within `View`, terminates app and kills it's external processes.
+| parkBtn() | None | None | Creates and registers a clicked button within the android activity layout to signify the user wanting to save the current location as a parking spot. |
+| unParkBtn() | None | None | Creates and registers a clicked button within the android activity layout to allow the user to remove the saved parking space coordinates. `LocationManager` is then told to delete saved coordinates and elevation for the parking space. |
+| exitButton() | None | None | Creates and registers a clicked button within "View", terminates application and kills it's external processes.
+| confirmDeleteBtn() | None | boolean | Creates "pop-up" within activity layout to allow the user to confirm deletion of the parking position. Returns true if the user selects "yes" and false if the user selects "no". |
+| displayCoord() | float[] | None | Displays coordinate values within current activity layout. |
+| displayElev() | float | None | Displays elevation values within current activity layout. |
 
 ## Connections
 **Inputs**
 * `LocationManager` - Gets parking coordinates and elevation as well as users current coordinates and elevation.
-* `View` - Calls OnClick Listeners for associated buttons within the user interface.
 
 **Outputs**
-* 'View' - Displays layout and GoogleMap along with user interface. 
+* `LocationManager` - Map data passed as nMap type to later be converted by `LocationManager`.
 
 ## LocationManager
 Holds user information for location data. Contains latitude and longitude coordinates and elevation data for both the parked vehicle and the user's current location. 
@@ -48,11 +52,4 @@ Holds user information for location data. Contains latitude and longitude coordi
 * `MainActivity` - GPS location data is pulled from nMap when called. Also calls functions when triggered by Viewer to do so.
 
 **Outputs**
-* `MainActivity` - Provides stored values for parking location coordinates and elevation as well as current position values.
-
-## View 
-### Properties
-### Functionality
-### Connections
-**Inputs**
-**Outputs**
+* `MainActivity` - Passes stored values for saved parking location coordinates and elevation as well as the current position values.
