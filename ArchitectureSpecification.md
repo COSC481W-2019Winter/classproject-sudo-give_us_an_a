@@ -57,3 +57,14 @@ Holds user information for location data. Contains latitude and longitude coordi
 
 **Outputs**
 * `MainActivity` - Passes stored values for saved parking location coordinates and elevation as well as the current position values.
+
+
+# Tasks Split up
+
+Brian - `LocationManager` 
+
+Lucas - Setting up interface and connections between `LocationManager` and `MainActivity`
+
+Drew - `MainActivity` 
+
+Eleanor - XML file (View) with formatting and design
