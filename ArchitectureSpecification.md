@@ -13,7 +13,7 @@ Initializes android application. Handles all calls to GoogleMaps APIs as well as
 | Name | Parameters | Return | Behavior |
 | ---- | --- | --- | --- |
 | onCreate() | Bundle | None | Launches `View` activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains `getMapAsync` which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. |
-| omMapReady() | GoogleMap | None | Callback interface for when the map is ready to be used. Once an instance of this interface is set on a MapFragment or MapView object, the `omMapReady(GoogleMap)` method is triggered when the map is ready to be used and provides a non-null instance of GoogleMap |
+| onMapReady() | GoogleMap | None | Callback interface for when the map is ready to be used. Once an instance of this interface is set on a MapFragment or MapView object, the `onMapReady(GoogleMap)` method is triggered when the map is ready to be used and provides a non-null instance of GoogleMap |
 | parkBtn() | None | None | Creates and registers a clicked button within the android activity layout to signify the user wanting to save the current location as a parking spot. |
 | unParkBtn() | None | None | Creates and registers a clicked button within the android activity layout to allow the user to remove the saved parking space coordinates. `LocationManager` is then told to delete saved coordinates and elevation for the parking space. |
 | exitButton() | None | None | Creates and registers a clicked button within "View", terminates application and kills it's external processes.
