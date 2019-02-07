@@ -20,10 +20,12 @@ Initializes android application. Handles all calls to GoogleMaps APIs as well as
 | confirmDeleteBtn() | None | boolean | Creates "pop-up" within activity layout to allow the user to confirm deletion of the parking position. Returns true if the user selects "yes" and false if the user selects "no". |
 | displayCoord() | float[] | None | Displays coordinate values within current activity layout. |
 | displayElev() | float | None | Displays elevation values within current activity layout. |
+| displayDist() | float | None | Displays the total distance between the user's current position and the car's parking spot within the activity layout. | 
+| displayTime() | int | None | Displays the time to travel to the vehicle in minutes within the application activity layout. |
 
 ## Connections
 **Inputs**
-* `LocationManager` - Gets parking coordinates and elevation as well as users current coordinates and elevation.
+* `LocationManager` - Gets parking coordinates and elevation as well as users current coordinates and elevation. Also calls the time to the travel in minutes for the current parking position.
 
 **Outputs**
 * `LocationManager` - Map data passed as nMap type to later be converted by `LocationManager`.
@@ -44,8 +46,10 @@ Holds user information for location data. Contains latitude and longitude coordi
 | ---- | ---- | ---- | ---- |
 | getCoordinates() | None | float[] |Returns a float array containing the coordinate values stored in an array |
 | getElevation() | None | float | Returns elevation value as a floating point number. |
-| setParkCoord() | nMap | None | Input of coordinates from GoogleMaps nMap type and stores them as a float[].
-| setParkElev() | nMap | None | Input of elevation contained with an nMap type converted and then stored as a float.
+| setParkCoord() | nMap | None | Input of coordinates from GoogleMaps nMap type and stores them as a float[]. |
+| setParkElev() | nMap | None | Input of elevation contained with an nMap type converted and then stored as a float. |
+| distanceToCar() | float[] | float | Finds the distance from the user to their car using the coordinates and elevation of both the saved parking spot and the user's position. |
+| timeToCar() | float | int | Computes the time to travel to the parked car using the parking position coordinates/elevation and the current position coordinates/elevation. |
 
 ### Connections
 **Inputs**
