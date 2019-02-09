@@ -12,6 +12,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -42,11 +45,26 @@ public class MapsActivity extends FragmentActivity implements
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
 
+    TextView text;
+    Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        text= (TextView) findViewById(R.id.myText);
+        button = (Button) findViewById(R.id.myButton);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                text.setText("Start Button clicked");
+
+                button.setText("Delete Parking Spot");
+                button.setBackgroundColor(0xff1e1e);
+
+            }
+        });
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkUserLocationPermission();

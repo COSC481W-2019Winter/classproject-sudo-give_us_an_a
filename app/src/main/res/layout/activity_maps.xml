@@ -5,27 +5,67 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--<color android:name= "white">#ffffff</color>-->
+    <!--<color android:name= "black">#020200</color>-->
+    <!--<color android:name= "grey">#9e9e9e</color>-->
+    <!--<color android:name= "light blue">#9ff0f9</color>-->
+    <!--<color android:name= "red">#ff1e1e</color>-->
+    <!--<color android:name= "green">#0dc611</color>-->
+    <!--<color android:name= "purple">#a356c4</color>-->
+
+    // this layout should put the ParkedUp header at top, not curently working
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/header"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:text="ParkedUp" />-->
+            <!--android:background= "@color/blue"-->
+        <!--/>-->
+    <!--</LinearLayout>-->
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="538dp"
+        android:layout_height="458dp"
         tools:context=".MapsActivity" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+        android:background="#9ff0f9"
+
         <TextView
-            android:id="@+id/simpleTextView"
+            android:id="@+id/myText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Future Text Will Go Here" />
 
+            android:background="#ffffff"
+
+            android:text=""
+            android:textColor="#020200"
+            />
+
+        <Button android:id="@+id/myButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="#0dc611"
+
+
+            android:text="Park Here"
+
+            android:textColor="@color/colorPrimaryDark"
+            />
 
     </LinearLayout>
 
