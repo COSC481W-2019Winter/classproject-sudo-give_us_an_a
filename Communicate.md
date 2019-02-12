@@ -6,11 +6,11 @@
  
  # Week One Goals
  
- *
+ * For XML we want to have the park here, delete parking spot buttons appearing, as well as having the structured text area for the information to appear once the user has parked.
  
  # Week Two Goals
  
- *
+ * For XML we want to have the Exit button, exit popup and delete parking spot popup appearing. Additonally, we will have the color of the backdrop and the buttons matching the design specifications (red or green buttons, black text, bule backdrop).
  
  # Who Does What
  
