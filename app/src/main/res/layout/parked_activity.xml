@@ -8,7 +8,8 @@
     android:layout_marginTop="0dp"
     android:layout_marginRight="0dp"
     android:layout_marginBottom="0dp"
-    android:orientation="vertical" >
+    android:background="@android:color/holo_blue_light"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/title"
@@ -29,27 +30,69 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="400dp" /><![CDATA[
+        android:layout_height="447dp" /><![CDATA[
         tools:context=".MapsActivity" />
-
 
     ]]>
 
-    <EditText
-        android:id="@+id/Info"
-        style="@android:style/Widget.AutoCompleteTextView"
+    <TextView
+        android:id="@+id/header1"
         android:layout_width="match_parent"
-        android:layout_height="211dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_light"
         android:ems="10"
-        android:inputType="text"
-        android:text="Parking Spot:\n\t GPS Coordinate: \n Current Location \n\t GPS Coordinate: " />
+        android:inputType="textPersonName"
+        android:text="Parking Spot:"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/parkedCoord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="\t GPS Coordinates:"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/header2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Current Location:"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/currCoord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="\t GPS Coordinates:"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=" \t Distance Back To Car:"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
         android:background="@android:color/holo_red_dark"
+        android:gravity="center"
         android:text="Delete Paking Spot" />
 
 </LinearLayout>
