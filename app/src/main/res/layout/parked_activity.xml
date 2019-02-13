@@ -37,17 +37,19 @@
 
     <EditText
         android:id="@+id/Info"
+        style="@android:style/Widget.AutoCompleteTextView"
         android:layout_width="match_parent"
-        android:layout_height="181dp"
+        android:layout_height="211dp"
+        android:background="@android:color/holo_blue_light"
         android:ems="10"
-        android:inputType="textMultiLine"
-        android:text="Parking Spot: "/>
+        android:inputType="text"
+        android:text="Parking Spot:\n\t GPS Coordinate: \n Current Location \n\t GPS Coordinate: " />
 
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_red_dark"
-        android:text="Delete Pakign Spot" />
+        android:text="Delete Paking Spot" />
 
 </LinearLayout>
