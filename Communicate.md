@@ -1,11 +1,9 @@
  # Communication Guidelines
  
  Our team will use our slack channel (sudoa.slack) to check in with one another, ask questions and share advice. 
- Our current setup for our slack has a general, project, random, api_key and sha-1_certificate channel. With each channel having a specific
- purpose it allows us to sperate and keep organized. We have utilized the pinning feature to mark information that is very important.
+ Our current setup for our slack has a general, project, random, api_key and sha-1_certificate channel. With each channel having a specific purpose it allows us to sperate and keep organized. We have utilized the pinning feature to mark information that is very important.
  
- 
- # Our Goals
+  # Our Goals
  
  ## Week One Goals
  
@@ -16,7 +14,7 @@
  
  ## Week Two Goals
  
- * For XML we want to have the Exit button, exit popup and delete parking spot popup appearing. Additonally, we will have the color of the backdrop and the buttons matching the design specifications (red or green buttons, black text, bule backdrop).
+ * For XML we want to have the Exit button, exit popup and delete parking spot popup appearing. Additionally, we will have the color of the backdrop and the buttons matching the design specifications (red or green buttons, black text, blue backdrop).
  * For the 'MainActivity' 
  * For the 'LocationManager' 
  
