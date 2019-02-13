@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 //import android.location.LocationListener;
 
 //public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-public class StartActivity extends FragmentActivity implements
+public class ParkedActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -51,19 +50,19 @@ public class StartActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.start_activity);
+        setContentView(R.layout.begin_activity);
 
         //Find your views
-        button = (Button) findViewById(R.id.parkButton);
+        button = (Button) findViewById(R.id.deleteButton);
 
         //Assign a listener to your button
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(start_activity.this, parked_activity.class);
-                startActivity(intent);
-            }
-        });
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(ParkedActivity.this, parked_activity.class);
+//                startActivity(intent);
+//            }
+//        });
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkUserLocationPermission();
         }

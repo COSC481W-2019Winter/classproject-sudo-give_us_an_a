@@ -44,7 +44,7 @@
         android:text="Parking Spot: "/>
 
     <Button
-        android:id="@+id/parkButton"
+        android:id="@+id/deleteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_red_dark"
