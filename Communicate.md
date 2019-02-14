@@ -57,4 +57,4 @@ Drew - `MainActivity` (Presenter)
 
 Eleanor - XML file (View) with formatting and design
 
-Erik - 
+Erik - Supporting `LocationManager`, `MainActivity` and XML file development.
