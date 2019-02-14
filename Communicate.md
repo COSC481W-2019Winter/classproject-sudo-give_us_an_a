@@ -23,7 +23,7 @@ We also use Github with GitExtentions for git to push our work which keeps the t
 * Initialize all variables to prepare for all the calculations 
 
 ### Interface Setup
- * Goals
+ * Create class structure setup for contract between `LocationManager` and `MainActivity` with documentation.
  
 ## Week Two Goals
 
@@ -41,7 +41,8 @@ We also use Github with GitExtentions for git to push our work which keeps the t
 * Assure difference is calculating correctly and returns to `MainActivity` as the location moves.
 
 ### Interface Setup
- * Goals
+ * Make additional interfaces for pushing needed information to any XML Layout.
+  
  
 
 
