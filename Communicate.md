@@ -2,9 +2,9 @@
  
 Our team will use our slack channel (SudoA.slack) to check in with one another, ask questions and share advice.
 
-Our current setup for our slack has a general, project, random, api\_key and sha-1\_certificate channel. With each channel having a specific purpose it allows us to separate and keep organized. We have utilized the pinning feature to mark information that is very important.
+Our current setup for our slack has #general, #project, #api\_key and #sha-1\_certificate channels. With each channel having a specific purpose it allows us to separate and keep organized. We have utilized the pinning feature to mark information that is very important.
 
-We also use Github with GitExtentions for git to push our work which keeps the team updated on project progress.
+We also use Github with GitExtentions for git to push our work which keeps the team updated on project progress. Commits, issues, pull requests, etc. are automatically posted to the #project channel by the Github Integration bot in Slack.
 
 # Our Goals
 
