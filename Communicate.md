@@ -56,5 +56,3 @@ Lucas - Setting up interface and connections between `LocationManager` and `Main
 Drew - `MainActivity` (Presenter)
 
 Eleanor - XML file (View) with formatting and design
-
-Erik - Supporting `LocationManager`, `MainActivity` and XML file development.
