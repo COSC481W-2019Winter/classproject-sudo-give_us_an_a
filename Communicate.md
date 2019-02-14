@@ -13,6 +13,7 @@ We also use Github with GitExtentions for git to push our work which keeps the t
 ### XML Layout (View)
  * Park here, delete parking spot buttons appearing
  * Having the structured text area for the information to appear once the user has parked.
+ * Color of the backdrop and the buttons matching the design specifications (red or green buttons, black text, blue backdrop).
 
 ### MainActivity (Presenter)
  * Ensure orientation change does not impact layout
@@ -29,7 +30,6 @@ We also use Github with GitExtentions for git to push our work which keeps the t
 
 ### XML Layout (View)
  * Exit button, exit popup and delete parking spot popup appearing
- * Color of the backdrop and the buttons matching the design specifications (red or green buttons, black text, blue backdrop).
  * Button functionality working in regards to marking parking location and displaying information in regards to parking and current location.
 
 ### MainActivity (Presenter)
