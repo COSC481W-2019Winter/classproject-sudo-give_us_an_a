@@ -14,13 +14,13 @@ We also use Github with GitExtentions for git to push our work which keeps the t
  * Park here, delete parking spot buttons appearing
  * Having the structured text area for the information to appear once the user has parked.
 
-### MainActivity
+### MainActivity (Presenter)
  * Ensure orientation change does not impact layout
  * Welcome screen shows current location
 
-### LocationManager
+### LocationManager (Model)
 
-* Goals
+* Initialize all variables to prepare for all the calculations 
 
 ### Interface Setup
  * Goals
@@ -32,13 +32,13 @@ We also use Github with GitExtentions for git to push our work which keeps the t
  * Color of the backdrop and the buttons matching the design specifications (red or green buttons, black text, blue backdrop).
  * Button functionality working in regards to marking parking location and displaying information in regards to parking and current location.
 
-### MainActivity
+### MainActivity (Presenter)
  * Marker does not get placed until button is pushed
  * Calculate difference between Marker and current location
 
-### LocationManager
+### LocationManager (Model)
 
-* Goals
+* Assure difference is calculating correctly and returns to `MainActivity` as the location moves.
 
 ### Interface Setup
  * Goals
@@ -47,11 +47,11 @@ We also use Github with GitExtentions for git to push our work which keeps the t
 
 # Roles
  
-Brian - `LocationManager` 
+Brian - `LocationManager` (Model)
 
 Lucas - Setting up interface and connections between `LocationManager` and `MainActivity`
 
-Drew - `MainActivity` 
+Drew - `MainActivity` (Presenter)
 
 Eleanor - XML file (View) with formatting and design
 
