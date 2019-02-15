@@ -14,11 +14,11 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
         android:background="@android:color/holo_blue_light"
-        android:paddingLeft="125dp"
-        android:paddingTop="5dp"
-        android:paddingRight="125dp"
+        android:gravity="center"
         android:text="ParkedUp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="30sp"
@@ -31,7 +31,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="447dp" /><![CDATA[
-        tools:context=".MapsActivity" />
+        tools:context=".parked_activity" />
 
     ]]>
 
