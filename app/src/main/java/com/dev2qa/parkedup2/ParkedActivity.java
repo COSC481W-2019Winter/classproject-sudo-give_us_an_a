@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -52,9 +53,10 @@ public class ParkedActivity extends FragmentActivity implements
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
 
+    public static boolean forceExit = false;
     TextView text;
     Button button;
-
+    Button button2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,31 +67,56 @@ public class ParkedActivity extends FragmentActivity implements
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
+               @Override
+               public void onClick(View v) {
 
-                                              DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                                                  @Override
-                                                  public void onClick(DialogInterface dialog, int choice) {
-                                                      switch (choice) {
-                                                          case DialogInterface.BUTTON_POSITIVE:
-                                                                  Intent intent = new Intent(ParkedActivity.this, BeignActivity.class);
-                                                                  startActivity(intent);
-                                                              break;
-                                                          case DialogInterface.BUTTON_NEGATIVE:
-                                                              break;
-                                                      }
-                                                  }
-                                              };
+                   DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialog, int choice) {
+                           switch (choice) {
+                               case DialogInterface.BUTTON_POSITIVE:
+                                   System.exit(0);
+                                   break;
+                                   case DialogInterface.BUTTON_NEGATIVE:
+                                       break;
+                           }
+                       }
+                   };
 
-                                              AlertDialog.Builder builder = new AlertDialog.Builder(ParkedActivity.this);
-                                              builder.setMessage("Are you sure you want to delete? (This will be permanent)")
-                                                      .setPositiveButton("Yes", dialogClickListener)
-                                                      .setNegativeButton("No", dialogClickListener).show();
+                   AlertDialog.Builder builder = new AlertDialog.Builder(ParkedActivity.this);
+                   builder.setMessage("Are you sure you want to delete? (This will be permanent)")
+                           .setPositiveButton("Yes", dialogClickListener)
+                           .setNegativeButton("No", dialogClickListener).show();
+               }
+        });
 
+        //Find your views
+        button2 = (Button) findViewById(R.id.exit);
 
-                                          }
-                                      });
+        //Assign a listener to your button
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // pop up for complete exit out off program
+                DialogInterface.OnClickListener dialogClickListener2 = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int choice) {
+                        switch (choice) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                System.exit(0);
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(ParkedActivity.this);
+                builder2.setMessage("Are you sure you want to exit? (This will be delete your parked location)")
+                        .setPositiveButton("Yes", dialogClickListener2)
+                        .setNegativeButton("No", dialogClickListener2).show();
+            }
+        });
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkUserLocationPermission();
         }
@@ -99,7 +126,6 @@ public class ParkedActivity extends FragmentActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
 
     /**
      * Manipulates the map once available.
