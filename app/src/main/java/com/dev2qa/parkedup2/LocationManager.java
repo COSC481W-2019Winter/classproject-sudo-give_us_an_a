@@ -7,11 +7,15 @@ public class LocationManager implements Location {
     private float[] coordinates;
     private float distance;
     private float elevation;
+    private float[] parkingCoord;
+    private float parkingElev;
 
-    public LocationManager() {
-        coordinates = {0.0f,0.0f};
+    public LocationManager(Location location) {
+        coordinates = location.getCoordinates();
         distance = 0;
         elevation = 0;
+        parkingCoord = null;
+        parkingElev = 0.0f;
     }
 
     public float[] getCoordinates() {
