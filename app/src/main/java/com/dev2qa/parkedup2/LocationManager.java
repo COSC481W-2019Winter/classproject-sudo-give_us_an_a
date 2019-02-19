@@ -6,11 +6,12 @@ public class LocationManager implements Location {
     private GoogleMap mMap;
     private float[] coordinates;
     private float distance;
-    private float elevaton;
+    private float elevation;
 
     public LocationManager() {
-        float[] coordinates = {0.0f,0.0f};
-        float distance = 0;
+        coordinates = {0.0f,0.0f};
+        distance = 0;
+        elevation = 0;
     }
 
     public float[] getCoordinates() {
@@ -18,7 +19,7 @@ public class LocationManager implements Location {
     }
 
     public float getElevation() {
-        return elevaton;
+        return elevation;
     }
 
     public void setParkCoord(GoogleMap map) {
@@ -30,7 +31,7 @@ public class LocationManager implements Location {
     }
 
     public float distanceToCar(float[] coordinates) {
-
+        return distance;
     }
 
     public String timeToCar(float distance) {
