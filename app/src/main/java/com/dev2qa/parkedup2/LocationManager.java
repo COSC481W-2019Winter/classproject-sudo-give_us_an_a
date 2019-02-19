@@ -27,11 +27,11 @@ public class LocationManager implements Location {
     }
 
     public void setParkCoord(GoogleMap map) {
-
+        //Will set parkingCoord
     }
 
     public void setParkElev(GoogleMap map) {
-
+        //Will set parkingElev
     }
 
     public float distanceToCar(float[] coordinates) {
@@ -39,7 +39,8 @@ public class LocationManager implements Location {
     }
 
     public String timeToCar(float distance) {
-
+        float time = distance/ //miles per hour
+        return String.valueOf(time);
     }
 
 }
