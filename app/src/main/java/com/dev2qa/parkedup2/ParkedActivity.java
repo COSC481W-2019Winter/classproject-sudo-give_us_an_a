@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -30,6 +31,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
+import java.io.IOException;
 
 //import android.location.LocationListener;
 
@@ -62,8 +67,27 @@ public class ParkedActivity extends FragmentActivity implements
         button.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {
-                                              Intent intent = new Intent(ParkedActivity.this, BeignActivity.class);
-                                              startActivity(intent);
+
+                                              DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                                  @Override
+                                                  public void onClick(DialogInterface dialog, int choice) {
+                                                      switch (choice) {
+                                                          case DialogInterface.BUTTON_POSITIVE:
+                                                                  Intent intent = new Intent(ParkedActivity.this, BeignActivity.class);
+                                                                  startActivity(intent);
+                                                              break;
+                                                          case DialogInterface.BUTTON_NEGATIVE:
+                                                              break;
+                                                      }
+                                                  }
+                                              };
+
+                                              AlertDialog.Builder builder = new AlertDialog.Builder(ParkedActivity.this);
+                                              builder.setMessage("Are you sure you want to delete? (This will be permanent)")
+                                                      .setPositiveButton("Yes", dialogClickListener)
+                                                      .setNegativeButton("No", dialogClickListener).show();
+
+
                                           }
                                       });
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
