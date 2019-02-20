@@ -30,8 +30,12 @@
 
 ## Lucas
 ### ToDo
+ * Develop interfaces to handle contract between LocationManager and our MainActivity. 
+ * Provide concise documentation to show how the interface will integrate between classes and what parameters LocationManager will require.
 ### Test 
-
+ * Show that the interfaces create the necessary classes that are listed in the Architecture Specification.
+ * Help generate unit tests to support LocationManager and MainActivity so that they comply with the desired attributes set by the Location Interface.
+ 
 ## Drew
 ### ToDo
  * Ensure orientation change does not impact layout
@@ -73,16 +77,20 @@ I will write unit test for BeginActivity and ParkedActivity to test the function
 * Get methods return correct values
 
 
+## Lucas
+### ToDo
+* Setup integration between LocationManager and MainActivity.
+  * Begin communication between classes so that necessary parameters are passed and received.
+* Integrate 
+### Test
+
 #### Integration/System
+* Instance of LocationManager created by MainActivity
 * Data displayed updates regularly
   * Distance
   * Time to car
   * Current Location
 * Parked location is displayed
-
-## Lucas
-### ToDo
-### Test
 
 ## Drew
 ### ToDo
