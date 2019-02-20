@@ -40,9 +40,18 @@
 # To-Do List for Week Two
 ## Eleanor
 ### ToDo
- * Exit button, exit popup and delete parking spot popup appearing
+ * Exit button, exit popup and delete parking spot popup appearing on screen per reqirements
  * Button functionality working in regards to marking parking location and displaying information in regards to parking and current location.
 ### Test
+I will write unit test for BeginActivity and ParkedActivity to test the functionality of each button and pop up. I believe I will be able to use espresso to test click buttons and select options within the pop ups to confirm what is happening. Should have (if my understanding of how to test these activities is correct. I have not yet done in depth research.)
+* park here bottom click test
+* delete parking spot button test
+* delete parking confirm popup test
+* delete parking not confirm popup test
+* exit from begin screen test
+* exit from park screen test
+* exit confirm popup test
+* exit not confirm popup test
 
 ## Brian
 ### ToDo
