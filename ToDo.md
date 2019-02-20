@@ -93,3 +93,6 @@ I will write unit test for BeginActivity and ParkedActivity to test the function
  * Marker does not get placed until button is pushed
  * Calculate difference between Marker and current location
 ### Test
+ * Ensure that there is no marker placed by default, and that when button is pressed it is placed in the correct location
+ #### Unit
+ * Confirm that the correct distance has been returned to the MainActivity from the LocationManager class
