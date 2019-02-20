@@ -1,5 +1,7 @@
 # To-Do List for Week One
 ## Eleanor
+### ToDo
+* 
 ### Test Plan
 #### Begin Screen
 * ParkedUp is on screen
@@ -21,7 +23,24 @@
 
 * On click of Delete Parking Spot screen will change to Begin Screen
 ## Brian
+### ToDo
 
 ## Lucas
+### ToDo
 
 ## Drew
+### ToDo
+
+
+# To-Do List for Week Two
+## Eleanor
+### ToDo
+
+## Brian
+### ToDo
+
+## Lucas
+### ToDo
+
+## Drew
+### ToDo
