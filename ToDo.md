@@ -99,4 +99,4 @@ I will write unit test for BeginActivity and ParkedActivity to test the function
 ### Test
  * Ensure that there is no marker placed by default, and that when button is pressed it is placed in the correct location
  #### Unit
- * Confirm that the correct distance has been returned to the MainActivity from the LocationManager class
+ * Create a test to confirm that the distance returned to the MainActivity from the LocationManager class is operating correctly
