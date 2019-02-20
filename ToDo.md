@@ -26,7 +26,11 @@
 * On click of Delete Parking Spot screen will change to Begin Screen
 ## Brian
 ### ToDo
+* Initalize `LocationManager` class.
 ### Test 
+#### Unit
+* Confirm object is initialized successfully
+* Confirm methods return proper types
 
 ## Lucas
 ### ToDo
@@ -57,7 +61,27 @@ I will write unit test for BeginActivity and ParkedActivity to test the function
 
 ## Brian
 ### ToDo
+* Ensure distance is calculating correctly and returns to MainActivity as the location moves.
+* Ensure GPS coordinates are received and stored correctly from Maps API and returns to MainActivity as a variable to display.
 ### Test
+#### Unit
+* Current Location is pulled from Google Maps API
+* Test distance
+  * Cannot be <0
+  * Random sample of coordinates should return correct distances
+* Test time to car
+  * Accurately handles any time input
+  * Cannot be <0
+* Location is stored when set method is called
+* Get methods return correct values
+
+
+#### Integration/System
+* Data displayed updates regularly
+  * Distance
+  * Time to car
+  * Current Location
+* Parked location is displayed
 
 ## Lucas
 ### ToDo
