@@ -34,6 +34,8 @@
 
 ## Drew
 ### ToDo
+ * Ensure orientation change does not impact layout
+ * Welcome screen shows current location
 ### Test 
 
 
@@ -63,4 +65,6 @@ I will write unit test for BeginActivity and ParkedActivity to test the function
 
 ## Drew
 ### ToDo
+ * Marker does not get placed until button is pushed
+ * Calculate difference between Marker and current location
 ### Test
