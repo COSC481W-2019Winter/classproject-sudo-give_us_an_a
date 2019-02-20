@@ -8,21 +8,17 @@
 #### Begin Screen
 * ParkedUp is on screen
 * Map appears
-
 * Top banner with app name is blue
 * Park Here button is Green with black text
 * Backdrop is blue
-
 * On click of Park Here the screen will change to the Parked Screen
 
 #### Parked Screen
 * ParkedUp is on screen
 * Map appears
-
 * Top banner with app name is blue
 * Delete Parking Spot button is Red with black text
 * Backdrop is blue
-
 * On click of Delete Parking Spot screen will change to Begin Screen
 ## Brian
 ### ToDo
@@ -50,7 +46,7 @@
  * Exit button, exit popup and delete parking spot popup appearing on screen per reqirements
  * Button functionality working in regards to marking parking location and displaying information in regards to parking and current location.
 ### Test
-I will write unit test for BeginActivity and ParkedActivity to test the functionality of each button and pop up. I believe I will be able to use espresso to test click buttons and select options within the pop ups to confirm what is happening. Should have (if my understanding of how to test these activities is correct. I have not yet done in depth research.)
+I will write unit test for BeginActivity and ParkedActivity to test the functionality of each button and pop up. I believe I will be able to use espresso to test click buttons and select options within the pop ups to confirm what is happening. 
 * park here bottom click test
 * delete parking spot button test
 * delete parking confirm popup test
