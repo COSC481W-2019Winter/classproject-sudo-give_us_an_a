@@ -39,7 +39,7 @@ We also use Github with GitExtentions for git to push our work which keeps the t
 ### LocationManager (Model)
 
 * Enure distance is calculating correctly and returns to `MainActivity` as the location moves.
-* Ensure GPS coordinates are receieved and stored correctly from Maps API and returns to `MainActivity` as a variable to display.
+* Ensure GPS coordinates are received and stored correctly from Maps API and returns to `MainActivity` as a variable to display.
 
 ### Interface Setup
  * Make additional interfaces for pushing needed information to any XML Layout.
