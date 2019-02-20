@@ -41,7 +41,8 @@
  * Ensure orientation change does not impact layout
  * Welcome screen shows current location
 ### Test 
-
+ * Confirm orientation stays in portrait mode when screen is turned horizontally
+ * Confirm that when the app is launched, the current location is shown by default
 
 # To-Do List for Week Two
 ## Eleanor
