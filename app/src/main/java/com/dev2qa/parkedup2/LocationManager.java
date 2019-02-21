@@ -1,21 +1,20 @@
 package com.dev2qa.parkedup2;
 
-import com.google.android.gms.maps.GoogleMap;
+import android.location.Location;
 
-public class LocationManager implements Location {
-    private GoogleMap mMap;
+public class LocationManager implements LocationI {
     private float[] coordinates;
     private float distance;
     private float elevation;
     private float[] parkingCoord;
     private float parkingElev;
 
-    public LocationManager(Location location) {
-        coordinates = location.getCoordinates();
+    public LocationManager() {
+        coordinates = new float[]{0f,0f};
         distance = 0;
         elevation = 0;
-        parkingCoord = null;
-        parkingElev = 0.0f;
+        parkingCoord = new float[]{0f,0f};
+        parkingElev = 0;
     }
 
     public float[] getCoordinates() {
@@ -26,20 +25,21 @@ public class LocationManager implements Location {
         return elevation;
     }
 
-    public void setParkCoord(GoogleMap map) {
+    public void setParkCoord(Location location) {
         //Will set parkingCoord
     }
 
-    public void setParkElev(GoogleMap map) {
+    public void setParkElev(Location location) {
         //Will set parkingElev
     }
 
     public float distanceToCar(float[] coordinates) {
+        //Will use distance formula
         return distance;
     }
 
     public String timeToCar(float distance) {
-        float time = distance/ //miles per hour
+        float time = distance/2; //miles per hour
         return String.valueOf(time);
     }
 
