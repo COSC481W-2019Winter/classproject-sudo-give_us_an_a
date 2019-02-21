@@ -1,8 +1,8 @@
 package com.dev2qa.parkedup2;
 
-import com.google.android.gms.maps.GoogleMap;
+import android.location.Location;
 
-public interface Location {
+public interface LocationI {
 
     /**
      * Returns a array of coordinates in latitude in longitude.
@@ -30,7 +30,7 @@ public interface Location {
      *
      * @param mMap a GoogleMap object giving data for coordinates
      */
-    void setParkCoord(GoogleMap mMap);
+    void setParkCoord(Location location);
 
     /**
      * Stores the parking elevation gathered from the GoogleMap
@@ -38,7 +38,7 @@ public interface Location {
      *
      * @param mMap a GoogleMap object giving data for coordinates
      */
-    void setParkElev(GoogleMap mMap);
+    void setParkElev(Location location);
 
     /**
      * Returns the distance between the android device and the
