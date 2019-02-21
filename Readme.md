@@ -9,9 +9,9 @@ We want to solve the problem of not being able to figure out where you parked an
 
 -Design/Marketing - Eleanor 
 
--Developers - Tj, Lucas, Drew
+-Developers - ~~Tj~~, Lucas, Drew
 
--Support - Tj
+-Support - ~~Tj~~ Drew
 
 ## Sign here:
 
@@ -23,6 +23,6 @@ Eleanor Lawton
 
 Brian Mikolajczyk
 
-Tejaswi Akkineni
+~~Tejaswi Akkineni~~
 
 Siyuan Jiang
