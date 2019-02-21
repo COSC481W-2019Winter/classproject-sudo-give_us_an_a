@@ -20,10 +20,12 @@ public class LocationManagerTest {
     @Test
     public void distanceToCar() {
         assertEquals(0f, obj.distanceToCar(obj.getCoordinates()), 0.0002);
+        assertNotNull(obj.distanceToCar(obj.getCoordinates()));
     }
 
     @Test
     public void timeToCar() {
         assertTrue(obj.timeToCar(obj.distanceToCar(obj.getCoordinates())) instanceof String);
+        assertNotNull(obj.timeToCar(obj.distanceToCar(obj.getCoordinates())));
     }
 }
