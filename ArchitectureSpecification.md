@@ -49,7 +49,7 @@ Holds user information for location data. Contains latitude and longitude coordi
 | setParkCoord() | mMap | None | Input of coordinates from GoogleMaps mMap type and stores them as a float[]. |
 | setParkElev() | mMap | None | Input of elevation contained with an mMap type converted and then stored as a float. |
 | distanceToCar() | float[] | float | Finds the distance from the user to their car using the coordinates and elevation of both the saved parking spot and the user's position. |
-| timeToCar() | float | int | Computes the time to travel to the parked car using the parking position coordinates/elevation and the current position coordinates/elevation. |
+| timeToCar() | float | String | Computes the time to travel to the parked car using the parking position coordinates/elevation and the current position coordinates/elevation. |
 
 ### Connections
 **Inputs**
