@@ -53,19 +53,19 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.parked_activity);
+        setContentView(R.layout.activity_parked);
 
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
-                                              Intent intent = new Intent(ParkedActivity.this, BeignActivity.class);
-                                              startActivity(intent);
-                                          }
-                                      });
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
+                startActivity(intent);
+            }
+        });
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkUserLocationPermission();
         }

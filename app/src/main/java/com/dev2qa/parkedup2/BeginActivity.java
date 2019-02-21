@@ -17,9 +17,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,7 +35,7 @@ import android.content.Intent;
 //import android.location.LocationListener;
 
 //public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-public class BeignActivity extends FragmentActivity implements
+public class BeginActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -46,13 +48,15 @@ public class BeignActivity extends FragmentActivity implements
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
 
+    private FusedLocationProviderClient mFusedLocationProviderClient;//not used yet
+
     TextView text;
     Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.begin_activity);
+        setContentView(R.layout.activity_begin);
 
         //Find your views
         button = (Button) findViewById(R.id.parkButton);
@@ -61,7 +65,7 @@ public class BeignActivity extends FragmentActivity implements
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BeignActivity.this, ParkedActivity.class);
+                Intent intent = new Intent(BeginActivity.this, ParkedActivity.class);
                 startActivity(intent);
             }
         });
@@ -69,10 +73,13 @@ public class BeignActivity extends FragmentActivity implements
             checkUserLocationPermission();
         }
 
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
 
@@ -162,6 +169,7 @@ public class BeignActivity extends FragmentActivity implements
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
+
         //changes things about the marker
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -171,8 +179,18 @@ public class BeignActivity extends FragmentActivity implements
         currentUserLocationMarker = mMap.addMarker(markerOptions);
 
         //moves camera to this location
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
+
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(53, 2)));
+//        mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
+        CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(19);
+
+
+        mMap.moveCamera(center);
+        mMap.animateCamera(zoom);
+        // mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
+
+
 
 
 
