@@ -94,9 +94,11 @@ I will write unit test for BeginActivity and ParkedActivity to test the function
 
 ## Drew
 ### ToDo
+ * Fix bug where the default location is not precise enough
  * Marker does not get placed until button is pushed
  * Calculate difference between Marker and current location
 ### Test
+ * Ensure the default location on the screen shows where the user actually is
  * Ensure that there is no marker placed by default, and that when button is pressed it is placed in the correct location
  #### Unit
  * Create a test to confirm that the distance returned to the MainActivity from the LocationManager class is operating correctly
