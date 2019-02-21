@@ -70,9 +70,9 @@ public class ParkedActivity extends FragmentActivity implements
         currCoord = findViewById(R.id.currCoord);
         distance = findViewById(R.id.distance);
 
-        parkedCoord.append("");
-        currCoord.append("");
-        distance.append("");
+        parkedCoord.append(" Update");
+        currCoord.append(" Update");
+        distance.append(" Update");
 
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
