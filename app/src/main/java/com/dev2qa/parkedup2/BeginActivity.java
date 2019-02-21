@@ -1,24 +1,27 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
-//import android.location.LocationListener;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -28,8 +31,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.content.Intent;
+//import android.location.LocationListener;
+
 //public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-public class MapsActivity extends FragmentActivity implements
+public class BeginActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -42,20 +48,38 @@ public class MapsActivity extends FragmentActivity implements
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
 
+    private FusedLocationProviderClient mFusedLocationProviderClient;//not used yet
+
+    TextView text;
+    Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_begin);
 
+        //Find your views
+        button = (Button) findViewById(R.id.parkButton);
 
+        //Assign a listener to your button
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BeginActivity.this, ParkedActivity.class);
+                startActivity(intent);
+            }
+        });
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkUserLocationPermission();
         }
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
 
@@ -145,6 +169,7 @@ public class MapsActivity extends FragmentActivity implements
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
+
         //changes things about the marker
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -154,9 +179,16 @@ public class MapsActivity extends FragmentActivity implements
         currentUserLocationMarker = mMap.addMarker(markerOptions);
 
         //moves camera to this location
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
 
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(53, 2)));
+//        mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
+        CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(19);
+
+
+        mMap.moveCamera(center);
+        mMap.animateCamera(zoom);
+        // mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
 
 
 
