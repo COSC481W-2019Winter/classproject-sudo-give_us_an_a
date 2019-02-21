@@ -36,7 +36,7 @@ import android.content.Intent;
 //import android.location.LocationListener;
 
 //public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-public class BeignActivity extends FragmentActivity implements
+public class BeginActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -69,7 +69,7 @@ public class BeignActivity extends FragmentActivity implements
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BeignActivity.this, ParkedActivity.class);
+                Intent intent = new Intent(BeginActivity.this, ParkedActivity.class);
                 startActivity(intent);
             }
         });
