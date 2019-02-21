@@ -82,9 +82,8 @@
     
      write this down (or copy it by right clicking the top folder and clicking Copy Reference) and keep track of it somewhere
 
-5. next we need our projects to be working with the same Google Maps API key (as far as the Google Cloud is concerned). we just collected our official Package name, now we need everyones' personal Android projects' SHA-1 certificate fingerprint. to get this, go back to the top left of the screen where it now says Project, click the dropdown and click Android to bring it back to the original directory perspective
+5. next we need our projects to be working with the same Google Maps API key (as far as the Google Cloud is concerned). we just collected our official Package name, now we need everyones' personal Android projects' SHA-1 certificate fingerprint. To get this, create a new project (File>New>New Project) using the **Google Maps Activity** option. The default settings are fine. Once the project is open and builds, it'll open the `google_maps_api.xml` file.  
 
-     go back to -> **Project/"your project name"/app/src/debug/res/values/google_maps_api.xml**
      under the *commented* code in the middle there should be something resembling this:
 
        SHA-1 certificate fingerprint

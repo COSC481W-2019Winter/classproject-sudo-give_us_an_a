@@ -20,9 +20,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,6 +50,8 @@ public class BeginActivity extends FragmentActivity implements
     private Location lastLocation;
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
+
+    private FusedLocationProviderClient mFusedLocationProviderClient;//not used yet
 
     TextView text;
     Button button;
@@ -182,6 +186,7 @@ public class BeginActivity extends FragmentActivity implements
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
+
         //changes things about the marker
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -191,8 +196,18 @@ public class BeginActivity extends FragmentActivity implements
         currentUserLocationMarker = mMap.addMarker(markerOptions);
 
         //moves camera to this location
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
+
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(53, 2)));
+//        mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
+        CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(19);
+
+
+        mMap.moveCamera(center);
+        mMap.animateCamera(zoom);
+        // mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
+
+
 
 
 

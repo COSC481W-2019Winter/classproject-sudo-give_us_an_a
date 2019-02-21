@@ -57,8 +57,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="447dp" /><![CDATA[
-        tools:context=".parked_activity" />
-
+        tools:context=".MapsActivity" />
     ]]>
 
     <TextView

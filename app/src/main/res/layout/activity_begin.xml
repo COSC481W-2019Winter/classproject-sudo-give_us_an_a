@@ -57,7 +57,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="600dp" />
-    tools:context=".begin_activity" />
+    tools:context=".MapsActivity" />
 
 
     <Button
