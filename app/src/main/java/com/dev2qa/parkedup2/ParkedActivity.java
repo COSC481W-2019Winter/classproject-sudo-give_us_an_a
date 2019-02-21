@@ -57,10 +57,22 @@ public class ParkedActivity extends FragmentActivity implements
     TextView text;
     Button button;
     Button button2;
+    TextView parkedCoord;
+    TextView currCoord;
+    TextView distance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parked_activity);
+
+        // set strings with updated data
+        parkedCoord = findViewById(R.id.parkedCoord);
+        currCoord = findViewById(R.id.currCoord);
+        distance = findViewById(R.id.distance);
+
+        parkedCoord.append("");
+        currCoord.append("");
+        distance.append("");
 
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
@@ -103,7 +115,10 @@ public class ParkedActivity extends FragmentActivity implements
                     public void onClick(DialogInterface dialog, int choice) {
                         switch (choice) {
                             case DialogInterface.BUTTON_POSITIVE:
-                                System.exit(0);
+                                Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.putExtra("EXIT", true);
+                                startActivity(intent);
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
