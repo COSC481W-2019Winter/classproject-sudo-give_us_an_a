@@ -60,7 +60,7 @@ public class BeginActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.begin_activity);
+        setContentView(R.layout.activity_begin);
 
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
