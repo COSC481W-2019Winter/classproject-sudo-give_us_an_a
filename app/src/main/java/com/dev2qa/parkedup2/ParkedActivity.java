@@ -63,16 +63,7 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.parked_activity);
-
-        // set strings with updated data
-        parkedCoord = findViewById(R.id.parkedCoord);
-        currCoord = findViewById(R.id.currCoord);
-        distance = findViewById(R.id.distance);
-
-        parkedCoord.append(" Update");
-        currCoord.append(" Update");
-        distance.append(" Update");
+        setContentView(R.layout.activity_parked);
 
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
