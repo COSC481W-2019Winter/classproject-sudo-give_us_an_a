@@ -65,6 +65,15 @@ public class ParkedActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
 
+        // set strings with updated data
+        parkedCoord = findViewById(R.id.parkedCoord);
+        currCoord = findViewById(R.id.currCoord);
+        distance = findViewById(R.id.distance);
+
+        parkedCoord.append(" Update");
+        currCoord.append(" Update");
+        distance.append(" Update");
+
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
 

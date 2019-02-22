@@ -62,6 +62,10 @@ public class BeginActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_begin);
 
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
+
         //Find your views
         button = (Button) findViewById(R.id.parkButton);
         button2 = (Button) findViewById(R.id.exit);
