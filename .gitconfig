@@ -1,0 +1,6 @@
+[branch "ParkedUp"]
+        mergeoptions = --no-ff
+[branch "master"]
+        mergeoptions = --no-ff
+[merge]
+        ff = false
