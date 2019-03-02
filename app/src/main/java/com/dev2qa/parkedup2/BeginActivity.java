@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,21 +28,25 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.content.Intent;
-//import android.location.LocationListener;
 
-//public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+//public class BeginActivity extends AppCompatActivity implements
 public class BeginActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    //variables of current latitude/longitude
+    double latitude, longitude;
+
     private GoogleMap mMap;
+    private SupportMapFragment mapFrag;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private Location lastLocation;
@@ -73,15 +78,15 @@ public class BeginActivity extends FragmentActivity implements
             checkUserLocationPermission();
         }
 
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFrag.getMapAsync(this);
+        //Toast.makeText(this, "On Create()", Toast.LENGTH_SHORT).show();
 
+        //new FusedLocationProviderClient not being used yet
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
     }
-
 
     /**
      * Manipulates the map once available.
@@ -94,24 +99,24 @@ public class BeginActivity extends FragmentActivity implements
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        //Toast.makeText(this, "On Map Ready()", Toast.LENGTH_SHORT).show();
         mMap = googleMap;
         //Change type of map to hybrid ie satalite and roads
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-
         //necessary add permissions check
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-
+            //Location Permission already granted
             buildGoogleApiClient();
-
             mMap.setMyLocationEnabled(true);
+        } else {//new else statement. take out if buggy
+            checkUserLocationPermission();
         }
-
     }
-
 
     //check if permission is granted or not
     public boolean checkUserLocationPermission(){
+        //Toast.makeText(this, "Check User Location Permission()", Toast.LENGTH_SHORT).show();
         //if the permission is not granted
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
@@ -125,10 +130,10 @@ public class BeginActivity extends FragmentActivity implements
         }
     }
 
-
     //handle permission request response
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //Toast.makeText(this, "On Request PermissionsResult()", Toast.LENGTH_SHORT).show();
         switch (requestCode)
         {//if permission is granted
             case Request_User_Location_Code:
@@ -137,6 +142,7 @@ public class BeginActivity extends FragmentActivity implements
                         if(googleApiClient == null){
                             buildGoogleApiClient();
                         }
+                        //less important I think. comment when debugging possibly
                         mMap.setMyLocationEnabled(true);
                     }
                 }
@@ -147,75 +153,71 @@ public class BeginActivity extends FragmentActivity implements
         }
     }
 
-    //
     protected synchronized void buildGoogleApiClient(){
-
+        //Toast.makeText(this, "synchonized Build Google Api Client()", Toast.LENGTH_SHORT).show();
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-
         googleApiClient.connect();//connect the google API client
-    }
-
-    //new implemented methods for establishing our current location
-    @Override
-    public void onLocationChanged(Location location) {//called when location is changed
-        lastLocation = location;
-        if(currentUserLocationMarker != null){
-            currentUserLocationMarker.remove();
-        }
-
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-
-        //changes things about the marker
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("sudoA User Current Location");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-
-        currentUserLocationMarker = mMap.addMarker(markerOptions);
-
-        //moves camera to this location
-
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(53, 2)));
-//        mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
-        CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(19);
-
-
-        mMap.moveCamera(center);
-        mMap.animateCamera(zoom);
-        // mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
-
-
-
-
-
-
-        //start the location
-        if(googleApiClient != null){
-            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-        }
-
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {//called when device is connected
+        //Toast.makeText(this, "On Connected()", Toast.LENGTH_SHORT).show();
         locationRequest = new LocationRequest();
         locationRequest.setInterval(1000);//1000ms = 1sec
         locationRequest.setFastestInterval(1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
-
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+
+            // mFusedLocationProviderClient.
+            ///////////////////////////////
         }
-
-
     }
+
+    //new implemented methods for establishing our current location
+    @Override
+    public void onLocationChanged(Location location) {//called when location is changed
+        //Toast.makeText(this, "On Location Changed()", Toast.LENGTH_SHORT).show();
+        lastLocation = location;
+        if(currentUserLocationMarker != null){
+            currentUserLocationMarker.remove();
+        }
+        //split up latitude/longitude into variables before creating LatLng object
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        //Toast.makeText(this, "latitude: " + latitude + "\nlongitude: " + longitude, Toast.LENGTH_LONG).show();
+
+        LatLng latLng = new LatLng(latitude, longitude);//instantiate lat/lng object
+
+        // fun target/camera/zoom/tilt methods that work
+        // Construct a CameraPosition focusing on latLng and animate the camera to that position.
+//        CameraPosition cameraPosition = new CameraPosition.Builder()
+//                .target(latLng)      // Sets the center of the map to latLng
+//                .zoom(20)                   // Sets the zoom
+//                .bearing(0)                // Sets the orientation of the camera to east
+//                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
+//                .build();                   // Creates a CameraPosition from the builder
+//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        //abruptly moves camera to this location and animates zoom in
+        CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
+        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 20);//2.0 to 21.0 -higher double = more zoom
+        mMap.moveCamera(center);//centers camera right above before zooming
+        mMap.animateCamera(zoom);//animated zoom in
+
+        //start the location
+        if(googleApiClient != null){
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+            //mFusedLocationProviderClient
+            //////////////////////////////
+        }
+    }
+
 
     @Override
     public void onConnectionSuspended(int i) {

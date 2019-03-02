@@ -17,9 +17,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,21 +33,24 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.content.Intent;
 
-//import android.location.LocationListener;
 
-//public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 public class ParkedActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    double latitude, longitude;
+
     private GoogleMap mMap;
+    private SupportMapFragment mapFrag;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private Location lastLocation;
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code = 99;
+
+    private FusedLocationProviderClient mFusedLocationProviderClient;//not used yet
 
     TextView text;
     Button button;
@@ -69,11 +74,12 @@ public class ParkedActivity extends FragmentActivity implements
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkUserLocationPermission();
         }
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFrag.getMapAsync(this);
+
+        //new FusedLocationProviderClient not being used yet
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
 
@@ -92,17 +98,14 @@ public class ParkedActivity extends FragmentActivity implements
         //Change type of map to hybrid ie satalite and roads
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-
         //necessary add permissions check
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-
             buildGoogleApiClient();
-
             mMap.setMyLocationEnabled(true);
+        } else {//new else statement. take out if buggy
+            checkUserLocationPermission();
         }
-
     }
-
 
     //check if permission is granted or not
     public boolean checkUserLocationPermission(){
@@ -133,56 +136,20 @@ public class ParkedActivity extends FragmentActivity implements
                         }
                         mMap.setMyLocationEnabled(true);
                     }
-                }
-                else{//if permission is not granted
+                } else {//if permission is not granted
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
                 }
                 return;
         }
     }
 
-    //
     protected synchronized void buildGoogleApiClient(){
-
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-
         googleApiClient.connect();//connect the google API client
-    }
-
-    //new implemented methods for establishing our current location
-    @Override
-    public void onLocationChanged(Location location) {//called when location is changed
-        lastLocation = location;
-        if(currentUserLocationMarker != null){
-            currentUserLocationMarker.remove();
-        }
-
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-        //changes things about the marker
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("sudoA User Current Location");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-
-        currentUserLocationMarker = mMap.addMarker(markerOptions);
-
-        //moves camera to this location
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
-
-
-
-
-        //start the location
-        if(googleApiClient != null){
-            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-        }
-
     }
 
     @Override
@@ -192,12 +159,46 @@ public class ParkedActivity extends FragmentActivity implements
         locationRequest.setFastestInterval(1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
-
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         }
+    }
+
+    //new implemented methods for establishing our current location
+    @Override
+    public void onLocationChanged(Location location) {//called when location is changed
+        lastLocation = location;
+        if(currentUserLocationMarker != null){
+            currentUserLocationMarker.remove();
+        }
+        //split up latitude/longitude into variables before creating LatLng object
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        //Toast.makeText(this, "latitude: " + latitude + "\nlongitude: " + longitude, Toast.LENGTH_LONG).show();
+
+        LatLng latLng = new LatLng(latitude, longitude);//instantiate lat/lng object
+
+        //changes things about the marker
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title("Your Parking Spot");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+
+        // actually adds the marker
+        currentUserLocationMarker = mMap.addMarker(markerOptions);
+
+        //moves camera to this location
+        CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
+        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 19);//2.0 to 21.0 -higher double = more zoom
+        mMap.moveCamera(center);//centers camera right above before zooming
+        //mMap.animateCamera(zoom);//animated zoom in
+        mMap.moveCamera(zoom);//non-animated zoom in
 
 
+        //start the location
+        if(googleApiClient != null){
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+        }
     }
 
     @Override
