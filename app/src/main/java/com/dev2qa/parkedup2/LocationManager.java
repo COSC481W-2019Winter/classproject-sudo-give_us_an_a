@@ -55,6 +55,7 @@ public class LocationManager {
     }
     private String timeFormatted(double time) { //hours
         StringBuilder str = new StringBuilder();
+
         //Days
         if (time > 24) {
             time /= 24;
@@ -64,25 +65,46 @@ public class LocationManager {
         if (time > 1) {
             time %= 1;
             time *= 24;
+
             if (str.length() > 0)
                 str.append(", ");
-            str.append(String.format("%.0f hrs",  Math.floor(time)));
+            //Calculation rounding-error handling
+            if ((1 - (time % 1)) < (1 / 24.0)) {
+                time = Math.ceil(time);
+                str.append(String.format("%.0f hrs",  time));
+                time %= 1;
+            }
+            else
+                str.append(String.format("%.0f hrs",  Math.floor(time)));
         }
         //Minutes
         if (time > 1) {
-            time %= 1;
-            time *= 60;
+            if (time % 1 != 0) {
+                time %= 1;
+                time *= 60;
+            }
+
             if (str.length() > 0)
                 str.append(", ");
-            str.append(String.format("%.0f mins",  Math.floor(time)));
+            //Calculation rounding-error handling
+            if ((1 - (time % 1)) < (1 / 60.0)) {
+                time = Math.ceil(time);
+                str.append(String.format("%.0f mins",  time));
+                time %= 1;
+            }
+            else
+                str.append(String.format("%.0f mins",  Math.floor(time)));
         }
         //Seconds
         if (time > 1) {
             time %= 1;
             time *= 60;
-            if (str.length() > 0)
-                str.append(", ");
-            str.append(String.format("%.0f secs",  Math.floor(time)));
+
+            if (time > 0) {
+                if (str.length() > 0)
+                    str.append(", ");
+                str.append(String.format("%.0f secs", Math.floor(time)));
+            }
         }
 
         System.out.println(str.toString());
