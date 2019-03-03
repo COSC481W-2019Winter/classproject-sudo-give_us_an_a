@@ -77,6 +77,8 @@ public class LocationManager {
             else
                 str.append(String.format("%.0f hrs",  Math.floor(time)));
         }
+        else
+            time *= 60;
         //Minutes
         if (time > 1) {
             if (time % 1 != 0) {
