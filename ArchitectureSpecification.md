@@ -12,16 +12,14 @@ Initializes android application. Handles all calls to GoogleMaps APIs as well as
 ### Functionality
 | Name | Parameters | Return | Behavior |
 | ---- | --- | --- | --- |
-| onCreate() | Bundle | None | Launches `View` activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains `getMapAsync` which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. |
+| onCreate() | Bundle | None | Launches `View` activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains `getMapAsync` which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. Also contains functionality for button clicks of parkButton and exit button|
 | onMapReady() | GoogleMap | None | Callback interface for when the map is ready to be used. Once an instance of this interface is set on a MapFragment or MapView object, the `onMapReady(GoogleMap)` method is triggered when the map is ready to be used and provides a non-null instance of GoogleMap |
-| parkBtn() | None | None | Creates and registers a clicked button within the android activity layout to signify the user wanting to save the current location as a parking spot. |
-| unParkBtn() | None | None | Creates and registers a clicked button within the android activity layout to allow the user to remove the saved parking space coordinates. `LocationManager` is then told to delete saved coordinates and elevation for the parking space. |
-| exitButton() | None | None | Creates and registers a clicked button within "View", terminates application and kills it's external processes.
-| confirmDeleteBtn() | None | boolean | Creates "pop-up" within activity layout to allow the user to confirm deletion of the parking position. Returns true if the user selects "yes" and false if the user selects "no". |
-| displayCoord() | float[] | None | Displays coordinate values within current activity layout. |
-| displayElev() | float | None | Displays elevation values within current activity layout. |
-| displayDist() | float | None | Displays the total distance between the user's current position and the car's parking spot within the activity layout. | 
-| displayTime() | int | None | Displays the time to travel to the vehicle in minutes within the application activity layout. |
+| onRequestPermissionResult | Bundle | None | Handels permission requests in regard to access granted verses denied. |
+| onLocationChange | Location | None | Moves google maps to the users current location and will add markers on the map. |
+| onConnected | Bundle | None | Has the location being udated and checked every second. |
+| onConnectionSuspended | int | None | N/A |
+| onConnectionFailed | ConnectionResult | None | N/A |
+
 
 ## Connections
 **Inputs**
@@ -43,16 +41,13 @@ Initializes android application. Handles all calls to GoogleMaps APIs as well as
 ### Functionality
 | Name | Parameters | Return | Behavior |
 | ---- | --- | --- | --- |
-| onCreate() | Bundle | None | Launches `View` activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains `getMapAsync` which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. |
+| onCreate() | Bundle | None | Launches `View` activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains `getMapAsync` which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. Also contains functionality for button clicks of unparkButton and exit button, then also handels the popups which appear when a button is sclicked on this screen. This method will also handle displaying the locations information on the screen in the form of GPS position|
 | onMapReady() | GoogleMap | None | Callback interface for when the map is ready to be used. Once an instance of this interface is set on a MapFragment or MapView object, the `onMapReady(GoogleMap)` method is triggered when the map is ready to be used and provides a non-null instance of GoogleMap |
-| parkBtn() | None | None | Creates and registers a clicked button within the android activity layout to signify the user wanting to save the current location as a parking spot. |
-| unParkBtn() | None | None | Creates and registers a clicked button within the android activity layout to allow the user to remove the saved parking space coordinates. `LocationManager` is then told to delete saved coordinates and elevation for the parking space. |
-| exitButton() | None | None | Creates and registers a clicked button within "View", terminates application and kills it's external processes.
-| confirmDeleteBtn() | None | boolean | Creates "pop-up" within activity layout to allow the user to confirm deletion of the parking position. Returns true if the user selects "yes" and false if the user selects "no". |
-| displayCoord() | float[] | None | Displays coordinate values within current activity layout. |
-| displayElev() | float | None | Displays elevation values within current activity layout. |
-| displayDist() | float | None | Displays the total distance between the user's current position and the car's parking spot within the activity layout. | 
-| displayTime() | int | None | Displays the time to travel to the vehicle in minutes within the application activity layout. |
+| onRequestPermissionResult | Bundle | None | Handels permission requests in regard to access granted verses denied. |
+| onLocationChange | Location | None | Moves google maps to the users current location and will add markers on the map. |
+| onConnected | Bundle | None | Has the location being udated and checked every second. |
+| onConnectionSuspended | int | None | N/A |
+| onConnectionFailed | ConnectionResult | None | N/A |
 
 ## Connections
 **Inputs**
