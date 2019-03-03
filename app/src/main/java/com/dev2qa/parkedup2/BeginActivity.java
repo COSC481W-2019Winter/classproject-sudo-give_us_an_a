@@ -84,8 +84,7 @@ public class BeginActivity extends FragmentActivity implements
         //Toast.makeText(this, "On Create()", Toast.LENGTH_SHORT).show();
 
         //new FusedLocationProviderClient not being used yet
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
+        //mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     /**
@@ -152,7 +151,7 @@ public class BeginActivity extends FragmentActivity implements
                 return;
         }
     }
-
+    // we build google api client
     protected synchronized void buildGoogleApiClient(){
         //Toast.makeText(this, "synchonized Build Google Api Client()", Toast.LENGTH_SHORT).show();
         googleApiClient = new GoogleApiClient.Builder(this)
@@ -167,15 +166,13 @@ public class BeginActivity extends FragmentActivity implements
     public void onConnected(@Nullable Bundle bundle) {//called when device is connected
         //Toast.makeText(this, "On Connected()", Toast.LENGTH_SHORT).show();
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(1000);//1000ms = 1sec
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(1500);//1000ms = 1sec
         locationRequest.setFastestInterval(1000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
-
-            // mFusedLocationProviderClient.
-            ///////////////////////////////
         }
     }
 
@@ -213,11 +210,8 @@ public class BeginActivity extends FragmentActivity implements
         //start the location
         if(googleApiClient != null){
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-            //mFusedLocationProviderClient
-            //////////////////////////////
         }
     }
-
 
     @Override
     public void onConnectionSuspended(int i) {

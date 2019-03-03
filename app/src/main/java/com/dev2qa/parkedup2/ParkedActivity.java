@@ -33,14 +33,20 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.content.Intent;
 
-
 public class ParkedActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    double latitude, longitude;
+    //latitude longitude of static parked position
+    public double latitudeFirst, longitudeFirst;
+    //latitude longitude of current updating position
+    public double latitudeCurrent, longitudeCurrent;
+
+    private Location location;
+    private Location locationFirst;
+    private Location locationCurrent;
 
     private GoogleMap mMap;
     private SupportMapFragment mapFrag;
@@ -52,7 +58,10 @@ public class ParkedActivity extends FragmentActivity implements
 
     private FusedLocationProviderClient mFusedLocationProviderClient;//not used yet
 
-    TextView text;
+    //TextViews
+    private TextView parkedCoordActual;
+    private TextView currCoordActual;
+
     Button button;
 
     @Override
@@ -62,6 +71,8 @@ public class ParkedActivity extends FragmentActivity implements
 
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
+        parkedCoordActual = findViewById(R.id.parkedCoordActual);
+        currCoordActual = findViewById(R.id.currCoordActual);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
@@ -78,10 +89,7 @@ public class ParkedActivity extends FragmentActivity implements
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
 
-        //new FusedLocationProviderClient not being used yet
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
-
 
     /**
      * Manipulates the map once available.
@@ -95,7 +103,7 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        //Change type of map to hybrid ie satalite and roads
+        //Change type of map to hybrid ie satellite and roads
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         //necessary add permissions check
@@ -122,7 +130,6 @@ public class ParkedActivity extends FragmentActivity implements
         }
     }
 
-
     //handle permission request response
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -143,6 +150,7 @@ public class ParkedActivity extends FragmentActivity implements
         }
     }
 
+    // we build google api client
     protected synchronized void buildGoogleApiClient(){
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -155,28 +163,33 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     public void onConnected(@Nullable Bundle bundle) {//called when device is connected
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(1000);//1000ms = 1sec
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(1500);//1000ms = 1sec
         locationRequest.setFastestInterval(1000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
+        //essential check before next lines of code are allowed
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         }
-    }
 
-    //new implemented methods for establishing our current location
-    @Override
-    public void onLocationChanged(Location location) {//called when location is changed
-        lastLocation = location;
+        // permissions ok, we get last location. new initial condition
+        locationFirst = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        //split up latitude/longitude into variables before creating LatLng object
+        latitudeFirst = locationFirst.getLatitude();
+        longitudeFirst = locationFirst.getLongitude();
+
+        //sets layout text for Parking Spot:
+        if (locationFirst != null) {
+            parkedCoordActual.setText("\tLATITUDE #1 : " + latitudeFirst + "\tLONGITUDE #1 : " + longitudeFirst);
+        }
+
+        //this makes sure only one marker is placed
         if(currentUserLocationMarker != null){
             currentUserLocationMarker.remove();
         }
-        //split up latitude/longitude into variables before creating LatLng object
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        //Toast.makeText(this, "latitude: " + latitude + "\nlongitude: " + longitude, Toast.LENGTH_LONG).show();
 
-        LatLng latLng = new LatLng(latitude, longitude);//instantiate lat/lng object
+        LatLng latLng = new LatLng(latitudeFirst, longitudeFirst);//instantiate lat/lng object
 
         //changes things about the marker
         MarkerOptions markerOptions = new MarkerOptions();
@@ -187,6 +200,43 @@ public class ParkedActivity extends FragmentActivity implements
         // actually adds the marker
         currentUserLocationMarker = mMap.addMarker(markerOptions);
 
+        //startLocationUpdates();//new kill?
+
+    }
+//    //new kill?
+//    private void startLocationUpdates() {
+//        Toast.makeText(this, "Fucking here in startLocationUpdates", Toast.LENGTH_SHORT).show();
+//        locationRequest = new LocationRequest();
+//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        locationRequest.setInterval(UPDATE_INTERVAL);
+//        locationRequest.setFastestInterval(FASTEST_INTERVAL);
+//
+//        if (ActivityCompat.checkSelfPermission(this,
+//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+//                &&  ActivityCompat.checkSelfPermission(this,
+//                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            Toast.makeText(this, "You need to enable permissions to display location !", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+//    }
+
+    //new implemented methods for establishing our current location
+    @Override
+    public void onLocationChanged(Location location) {//called when location is changed
+
+        if (location != null) {
+            currCoordActual.setText("\tLATITUDE #2 : " + location.getLatitude() + "\tLONGITUDE #2 : " + location.getLongitude());
+        }
+
+        locationCurrent = location;
+
+        //split up latitude/longitude into variables before creating LatLng object
+        latitudeCurrent = locationCurrent.getLatitude();
+        longitudeCurrent = locationCurrent.getLongitude();
+
+        LatLng latLng = new LatLng(latitudeCurrent, longitudeCurrent);//instantiate lat/lng object
+
         //moves camera to this location
         CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
         CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 19);//2.0 to 21.0 -higher double = more zoom
@@ -194,11 +244,10 @@ public class ParkedActivity extends FragmentActivity implements
         //mMap.animateCamera(zoom);//animated zoom in
         mMap.moveCamera(zoom);//non-animated zoom in
 
-
-        //start the location
-        if(googleApiClient != null){
-            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-        }
+        //this was stopping location updates
+//        if(googleApiClient != null){
+//            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+//        }
     }
 
     @Override

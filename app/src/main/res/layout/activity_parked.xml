@@ -55,6 +55,14 @@
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/parkedCoordActual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:ems="10"
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/header2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,6 +80,14 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="\t GPS Coordinates:"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/currCoordActual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:ems="10"
         android:textSize="18sp" />
 
     <TextView
