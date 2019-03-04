@@ -4,43 +4,43 @@ import android.location.Location;
 
 //public class LocationManager implements LocationI {
 public class LocationManager {
-    private float[] coordinates;
+    private double[] coordinates;
     private double distance;
-    private float elevation;
-    private float[] parkingCoord;
-    private float parkingElev;
+    private double elevation;
+    private double[] parkingCoord;
+    private double parkingElev;
 
     public LocationManager() {
-        coordinates = new float[]{0f,0f};
+        coordinates = new double[]{0f,0f};
         //distance = distanceToCar(coordinates);
         distance = 0; // for testing
         elevation = 0;
-        parkingCoord = new float[]{0f,0f};
+        parkingCoord = new double[]{0f,0f};
         parkingElev = 0;
     }
 
-    public float[] getCoordinates() {
+    public double[] getCoordinates() {
         return coordinates;
     }
 
-    public float getElevation() {
+    public double getElevation() {
         return elevation;
     }
 
     //public void setParkCoord(Location location) {
-    public void setParkCoord(float lat1, float lng1, float lat2, float lng2) { // for testing
-       parkingCoord = new float[]{lat1,lng1};
-       coordinates = new float[]{lat2,lng2}; // for testing
+    public void setParkCoord(double lat1, double lng1, double lat2, double lng2) { // for testing
+       parkingCoord = new double[]{lat1,lng1};
+       coordinates = new double[]{lat2,lng2}; // for testing
     }
 
     public void setParkElev(Location location) {
         //Will set parkingElev
     }
 
-    private double degToRad(float deg) {
+    private double degToRad(double deg) {
         return deg * Math.PI / 180;
     }
-    public float distanceToCar() {
+    public double distanceToCar() {
         int earthRadius = 3959; //mi
 
         double lat = degToRad(coordinates[0]-parkingCoord[0]);
@@ -53,7 +53,7 @@ public class LocationManager {
                 Math.cos(latCurrent) * Math.cos(latParked) * Math.sin(lon/2) * Math.sin(lon/2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-        return (float) c * earthRadius;
+        return c * earthRadius;
     }
     private String timeFormatted(double time) { //hours
         StringBuilder str = new StringBuilder();

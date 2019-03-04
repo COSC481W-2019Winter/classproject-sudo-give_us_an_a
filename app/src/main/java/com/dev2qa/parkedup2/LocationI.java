@@ -12,7 +12,7 @@ public interface LocationI {
      *
      * @return the current coordinates of the android device's location
      */
-    float[] getCoordinates();
+    double[] getCoordinates();
 
     /**
      * Returns the current elevation of the android device.
@@ -22,11 +22,11 @@ public interface LocationI {
      *
      * @return current elevation of device's location
      */
-    float getElevation();
+    double getElevation();
 
     /**
      * Stores the parking coordinates gathered from the GoogleMap
-     * object into a floating point array.
+     * object into a double point array.
      *
      * @param mMap a GoogleMap object giving data for coordinates
      */
@@ -34,7 +34,7 @@ public interface LocationI {
 
     /**
      * Stores the parking elevation gathered from the GoogleMap
-     * object into a floating point array.
+     * object into a double point array.
      *
      * @param mMap a GoogleMap object giving data for coordinates
      */
@@ -44,10 +44,10 @@ public interface LocationI {
      * Returns the distance between the android device and the
      * saved parking location.
      *
-     * @param coordinates a floating array containing latitude and longitude
+     * @param coordinates a double array containing latitude and longitude
      * @return the distance to the user's car from their position.
      */
-    float distanceToCar(float[] coordinates);
+    double distanceToCar(double[] coordinates);
 
     /**
      * Returns a string used to print the time it will take the
@@ -56,7 +56,7 @@ public interface LocationI {
      * @param distance the distance between the android device and the parked car.
      * @return the time to travel to the user's car from their position.
      */
-    String timeToCar(float distance);
+    String timeToCar(double distance);
 
 
 }
