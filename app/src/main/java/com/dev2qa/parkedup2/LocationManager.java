@@ -29,17 +29,22 @@ public class LocationManager {
     public void setParkCoord(Location location) {
     //public void setParkCoord(double lat1, double lng1, double lat2, double lng2) { // for testing
        parkingCoord = new double[]{location.getLatitude(),location.getLongitude()};
+       distanceToCar();
        //coordinates = new double[]{lat2,lng2}; // for testing
     }
 
     public void setParkElev(Location location) {
         //Will set parkingElev
     }
-
+    public double getDistance() {
+        distanceToCar();
+        return distance;
+    }
     private double degToRad(double deg) {
         return deg * Math.PI / 180;
     }
-    public double distanceToCar() {
+    public void distanceToCar() {
+    //public double distanceToCar() {
         int earthRadius = 3959; //mi
 
         double lat = degToRad(coordinates[0]-parkingCoord[0]);
@@ -52,7 +57,8 @@ public class LocationManager {
                 Math.cos(latCurrent) * Math.cos(latParked) * Math.sin(lon/2) * Math.sin(lon/2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-        return c * earthRadius;
+        //return c * earthRadius; //for testing
+        distance = c * earthRadius;
     }
     private String timeFormatted(double time) { //hours
         StringBuilder str = new StringBuilder();
@@ -121,7 +127,9 @@ public class LocationManager {
         
         return str.toString();
     }
-    public String timeToCar(double distance) { //in miles
+    //in miles
+    public String timeToCar() {
+    //public String timeToCar(double distance) {  // for testing
         double time = distance/2; //2mph; average walking pace
         return timeFormatted(time);
     }
