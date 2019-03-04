@@ -57,8 +57,6 @@ public class LocationManager {
     }
     private String timeFormatted(double time) { //hours
         StringBuilder str = new StringBuilder();
-        double originalTime = time;
-
         //Days
         if (time > 24) {
             time /= 24;
@@ -84,8 +82,7 @@ public class LocationManager {
             time *= 60;
         //Minutes
         if (time > 1) {
-            System.out.println(time);
-            if (time % 1 != 0) {
+            if ((time % 1 != 0) && (str.length() > 0)) {
                 time %= 1;
                 time *= 60;
             }
@@ -100,21 +97,29 @@ public class LocationManager {
             else
                 str.append(String.format("%.0f mins",  Math.floor(time)));
         }
-//        else
-//            time *= 60;
+        else
+            time *= 60;
         //Seconds
         if (time > 1) {
-            time %= 1;
-            time *= 60;
-
-            if (time > 0) {
+            if (str.length() > 0) {
+                time %= 1;
+                time *= 60;
+            }
+            //Calculation rounding-error handling
+            if ((1 - (time % 1)) < (1 / 60.0)) {
+                time = Math.ceil(time);
+                if (str.length() > 0)
+                    str.append(", ");
+                str.append(String.format("%.0f secs",  time));
+                time %= 1;
+            }
+            else if (time > 0) {
                 if (str.length() > 0)
                     str.append(", ");
                 str.append(String.format("%.0f secs", Math.floor(time)));
             }
         }
-
-        System.out.println(str.toString());
+        
         return str.toString();
     }
     public String timeToCar(double distance) { //in miles
