@@ -13,7 +13,7 @@ public class LocationManager {
     public LocationManager() {
         coordinates = new float[]{0f,0f};
         //distance = distanceToCar(coordinates);
-        distance = 0;
+        distance = 0; // for testing
         elevation = 0;
         parkingCoord = new float[]{0f,0f};
         parkingElev = 0;
@@ -27,8 +27,10 @@ public class LocationManager {
         return elevation;
     }
 
-    public void setParkCoord(Location location) {
-        //Will set parkingCoord
+    //public void setParkCoord(Location location) {
+    public void setParkCoord(float lat1, float lng1, float lat2, float lng2) { // for testing
+       parkingCoord = new float[]{lat1,lng1};
+       coordinates = new float[]{lat2,lng2}; // for testing
     }
 
     public void setParkElev(Location location) {
@@ -38,7 +40,7 @@ public class LocationManager {
     private double degToRad(float deg) {
         return deg * Math.PI / 180;
     }
-    public double distanceToCar() {
+    public float distanceToCar() {
         int earthRadius = 3959; //mi
 
         double lat = degToRad(coordinates[0]-parkingCoord[0]);
@@ -51,10 +53,11 @@ public class LocationManager {
                 Math.cos(latCurrent) * Math.cos(latParked) * Math.sin(lon/2) * Math.sin(lon/2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-        return c * earthRadius;
+        return (float) c * earthRadius;
     }
     private String timeFormatted(double time) { //hours
         StringBuilder str = new StringBuilder();
+        double originalTime = time;
 
         //Days
         if (time > 24) {
@@ -81,11 +84,11 @@ public class LocationManager {
             time *= 60;
         //Minutes
         if (time > 1) {
+            System.out.println(time);
             if (time % 1 != 0) {
                 time %= 1;
                 time *= 60;
             }
-
             if (str.length() > 0)
                 str.append(", ");
             //Calculation rounding-error handling
@@ -97,6 +100,8 @@ public class LocationManager {
             else
                 str.append(String.format("%.0f mins",  Math.floor(time)));
         }
+//        else
+//            time *= 60;
         //Seconds
         if (time > 1) {
             time %= 1;
