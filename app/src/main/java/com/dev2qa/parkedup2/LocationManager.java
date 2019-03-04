@@ -10,12 +10,11 @@ public class LocationManager {
     private double[] parkingCoord;
     private double parkingElev;
 
-    public LocationManager() {
-        coordinates = new double[]{0f,0f};
-        //distance = distanceToCar(coordinates);
-        distance = 0; // for testing
+    public LocationManager(Location location) {
+        coordinates = new double[]{location.getLatitude(),location.getLongitude()};
+        distance = 0;
         elevation = 0;
-        parkingCoord = new double[]{0f,0f};
+        parkingCoord = null;
         parkingElev = 0;
     }
 
@@ -27,10 +26,10 @@ public class LocationManager {
         return elevation;
     }
 
-    //public void setParkCoord(Location location) {
-    public void setParkCoord(double lat1, double lng1, double lat2, double lng2) { // for testing
-       parkingCoord = new double[]{lat1,lng1};
-       coordinates = new double[]{lat2,lng2}; // for testing
+    public void setParkCoord(Location location) {
+    //public void setParkCoord(double lat1, double lng1, double lat2, double lng2) { // for testing
+       parkingCoord = new double[]{location.getLatitude(),location.getLongitude()};
+       //coordinates = new double[]{lat2,lng2}; // for testing
     }
 
     public void setParkElev(Location location) {
