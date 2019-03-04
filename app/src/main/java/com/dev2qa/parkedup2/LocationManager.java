@@ -29,10 +29,11 @@ public class LocationManager {
     public void setParkCoord(Location location) {
     //public void setParkCoord(double lat1, double lng1, double lat2, double lng2) { // for testing
        parkingCoord = new double[]{location.getLatitude(),location.getLongitude()};
-       distanceToCar();
        //coordinates = new double[]{lat2,lng2}; // for testing
     }
-
+    public double[] getParkCoord() {
+        return parkingCoord;
+    }
     public void setParkElev(Location location) {
         //Will set parkingElev
     }
