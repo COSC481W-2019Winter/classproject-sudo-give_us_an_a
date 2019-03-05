@@ -51,6 +51,7 @@ public class ParkedActivity extends FragmentActivity implements
     private LocationRequest locationRequest;
     private Location lastLocation;
     private Marker currentUserLocationMarker;
+    private LocationManager locMng = new LocationManager();
     private static final int Request_User_Location_Code = 99;
 
     public static boolean forceExit = false;
@@ -240,7 +241,10 @@ public class ParkedActivity extends FragmentActivity implements
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomBy(15));//map zoom level greater numbers zoom in closer
 
-
+        if (location != null){
+            locMng.setCurrCoord(location);
+            currCoord.append(locMng.displayCoord());
+        }
 
 
         //start the location

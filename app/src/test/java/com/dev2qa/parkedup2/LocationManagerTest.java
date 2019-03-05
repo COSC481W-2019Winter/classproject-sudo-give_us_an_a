@@ -46,4 +46,5 @@ public class LocationManagerTest {
         assertEquals("36 mins",obj.timeToCar(1.2)); //pass
         assertEquals("36 secs",obj.timeToCar(0.02)); //pass
     }
+
 }

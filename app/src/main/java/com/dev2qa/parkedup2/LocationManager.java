@@ -10,6 +10,14 @@ public class LocationManager {
     private double[] parkingCoord;
     private double parkingElev;
 
+    public LocationManager(){
+        coordinates = new double[]{};
+        distance = 0;
+        elevation = 0;
+        parkingCoord = null;
+        parkingElev = 0;
+    }
+
     public LocationManager(Location location) {
         coordinates = new double[]{location.getLatitude(),location.getLongitude()};
         distance = 0;
@@ -31,6 +39,20 @@ public class LocationManager {
        parkingCoord = new double[]{location.getLatitude(),location.getLongitude()};
        //coordinates = new double[]{lat2,lng2}; // for testing
     }
+
+    public void setCurrCoord(Location location) {
+        coordinates = new double[]{location.getLatitude(),location.getLongitude()};
+    }
+
+    public String displayCoord(){//quick class to build string from array of coordinates
+        StringBuilder coords = new StringBuilder();
+        for (int i = 0; i < coordinates.length; i++){
+            coords.append(coordinates[i]);
+            coords.append(" ");
+        }
+        return coords.toString();
+    }
+
     public double[] getParkCoord() {
         return parkingCoord;
     }
