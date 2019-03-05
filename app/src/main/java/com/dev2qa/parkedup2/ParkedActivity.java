@@ -241,7 +241,7 @@ public class ParkedActivity extends FragmentActivity implements
         if (location != null){
             locMng.setCurrCoord(location);
             currCoord.setText("GPS Coordinates: " + locMng.displayCoord());
-            distance.setText("Distance: " + locMng.getDistance());
+            distance.setText("Distance: " + locMng.getDistance() + " Miles");
         }
 
 

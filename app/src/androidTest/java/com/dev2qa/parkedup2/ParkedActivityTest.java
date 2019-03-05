@@ -42,6 +42,16 @@ public class ParkedActivityTest {
         onView(withId(R.id.deleteButton)).perform(click());
     }
 
+    @Test
+    public void isCoordinatesDisplayed(){
+        onView(withId(R.id.parkedCoord)).check(matches(isCompletelyDisplayed()));
+        onView(withId(R.id.currCoord)).check(matches(isCompletelyDisplayed()));
+    }
+
+    @Test
+    public void isDistanceDisplayed(){
+        onView(withId(R.id.distance)).check(matches(isCompletelyDisplayed()));
+    }
 //    @Test
 //    public void popupViewsMustBeVisibleTest(){
 //        onView(withId(android.R.id.text1))
