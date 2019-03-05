@@ -45,6 +45,7 @@ public class ParkedActivity extends FragmentActivity implements
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private Location lastLocation;
+    private Location locationFirst;
     private Marker currentUserLocationMarker;
     private LocationManager locMng = new LocationManager();
     private static final int Request_User_Location_Code = 99;
@@ -239,7 +240,8 @@ public class ParkedActivity extends FragmentActivity implements
 
         if (location != null){
             locMng.setCurrCoord(location);
-            currCoord.append(locMng.displayCoord());
+            currCoord.setText("GPS Coordinates: " + locMng.displayCoord());
+            distance.setText("Distance: " + locMng.getDistance());
         }
 
 
@@ -261,8 +263,10 @@ public class ParkedActivity extends FragmentActivity implements
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         }
-
-
+        // permissions ok, we get last location. new initial condition
+        locationFirst = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        locMng.setParkCoord(locationFirst);
+        parkedCoord.setText("GPS Coordinates: " + locMng.displayParkCoord());
     }
 
     @Override

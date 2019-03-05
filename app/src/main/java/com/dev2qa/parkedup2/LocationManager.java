@@ -53,6 +53,15 @@ public class LocationManager {
         return coords.toString();
     }
 
+    public String displayParkCoord(){//quick class to build string from array of coordinates
+        StringBuilder coords = new StringBuilder();
+        for (int i = 0; i < coordinates.length; i++){
+            coords.append(coordinates[i]);
+            coords.append(" ");
+        }
+        return coords.toString();
+    }
+
     public double[] getParkCoord() {
         return parkingCoord;
     }
