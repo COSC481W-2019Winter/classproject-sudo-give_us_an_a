@@ -1,9 +1,7 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -33,8 +31,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import android.content.Intent;
 //import android.location.LocationListener;
 
 //public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -65,6 +61,7 @@ public class BeginActivity extends FragmentActivity implements
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
         }
+
         //Find your views
         button = (Button) findViewById(R.id.parkButton);
         button2 = (Button) findViewById(R.id.exit);
@@ -88,7 +85,7 @@ public class BeginActivity extends FragmentActivity implements
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.exit(0);
+                finish();
             }
         });
 
@@ -96,10 +93,7 @@ public class BeginActivity extends FragmentActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
     }
-
 
 
     /**

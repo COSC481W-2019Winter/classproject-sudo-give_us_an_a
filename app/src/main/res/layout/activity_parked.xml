@@ -17,23 +17,33 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/textView2"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
             android:id="@+id/title"
-            android:layout_width="256dp"
+            android:layout_width="wrap_content"
             android:layout_height="59dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
             android:background="@android:color/holo_blue_light"
             android:gravity="center"
-        android:paddingTop="5dp"
-        android:paddingRight="125dp"
             android:text="ParkedUp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="30sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/exit"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="X" />
 
@@ -48,8 +58,6 @@
         android:layout_width="match_parent"
         android:layout_height="447dp" /><![CDATA[
         tools:context=".MapsActivity" />
-        tools:context=".parked_activity" />
-
     ]]>
 
     <TextView

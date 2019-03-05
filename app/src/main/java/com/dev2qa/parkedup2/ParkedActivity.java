@@ -1,8 +1,9 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
-import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -30,12 +31,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import android.content.Intent;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-
-import java.io.IOException;
 
 //import android.location.LocationListener;
 
@@ -71,9 +66,9 @@ public class ParkedActivity extends FragmentActivity implements
         currCoord = findViewById(R.id.currCoord);
         distance = findViewById(R.id.distance);
 
-        parkedCoord.append("");
-        currCoord.append("");
-        distance.append("");
+        parkedCoord.append(" Update");
+        currCoord.append(" Update");
+        distance.append(" Update");
 
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
@@ -88,7 +83,7 @@ public class ParkedActivity extends FragmentActivity implements
                        public void onClick(DialogInterface dialog, int choice) {
                            switch (choice) {
                                case DialogInterface.BUTTON_POSITIVE:
-                                   System.exit(0);
+                                   finish();
                                    break;
                                    case DialogInterface.BUTTON_NEGATIVE:
                                        break;
@@ -97,6 +92,7 @@ public class ParkedActivity extends FragmentActivity implements
                    };
 
                    AlertDialog.Builder builder = new AlertDialog.Builder(ParkedActivity.this);
+                   builder.setTitle("abc");
                    builder.setMessage("Are you sure you want to delete? (This will be permanent)")
                            .setPositiveButton("Yes", dialogClickListener)
                            .setNegativeButton("No", dialogClickListener).show();
