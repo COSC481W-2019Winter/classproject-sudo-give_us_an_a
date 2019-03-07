@@ -7,7 +7,10 @@ Initializes android application. Handles all calls to GoogleMaps APIs as well as
 | Name | Type | Description |
 | ---- | --- | --- |
 | mMap | GoogleMap | The GoogleMap object |
-| location | LocationManager | LocationManager Instance for storing map data and then displaying it.| 
+| location | LocationManager | LocationManager Instance for storing map data and then displaying it.|
+| mapFrag | SupportMapFragment | A fragment map component for placing a map in the app. |
+| googleApiClient | GoogleApiClient | The main entry point for Google Play services integration. |
+| locationRequest | LocationRequest |  Data object that contains quality of service parameters for requests |
 
 ### Functionality
 | Name | Parameters | Return | Behavior |
@@ -15,8 +18,8 @@ Initializes android application. Handles all calls to GoogleMaps APIs as well as
 | onCreate() | Bundle | None | Launches `View` activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains `getMapAsync` which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. Also contains functionality for button clicks of parkButton and exit button|
 | onMapReady() | GoogleMap | None | Callback interface for when the map is ready to be used. Once an instance of this interface is set on a MapFragment or MapView object, the `onMapReady(GoogleMap)` method is triggered when the map is ready to be used and provides a non-null instance of GoogleMap |
 | onRequestPermissionResult | Bundle | None | Handels permission requests in regard to access granted verses denied. |
-| onLocationChange | Location | None | Moves google maps to the users current location and will add markers on the map. |
-| onConnected | Bundle | None | Has the location being udated and checked every second. |
+| onLocationChange | Location | None | Moves google maps to the users current location. Also uses CameraUpdate to center camera and zoom in|
+| onConnected | Bundle | None | Sets the rate for which the app requests current location to once per second. |
 | onConnectionSuspended | int | None | N/A |
 | onConnectionFailed | ConnectionResult | None | N/A |
 
@@ -36,7 +39,11 @@ Initializes android application. Handles all calls to GoogleMaps APIs as well as
 | Name | Type | Description |
 | ---- | --- | --- |
 | mMap | GoogleMap | The GoogleMap object |
-| location | LocationManager | LocationManager Instance for storing map data and then displaying it.| 
+| location | LocationManager | LocationManager Instance for storing map data and then displaying it.|
+| mapFrag | SupportMapFragment | A fragment map component for placing a map in the app. |
+| googleApiClient | GoogleApiClient | The main entry point for Google Play services integration. |
+| locationRequest | LocationRequest |  Data object that contains quality of service parameters for requests |
+| currentUserLocationMarker | Marker | The map marker object |
 
 ### Functionality
 | Name | Parameters | Return | Behavior |
@@ -44,8 +51,8 @@ Initializes android application. Handles all calls to GoogleMaps APIs as well as
 | onCreate() | Bundle | None | Launches `View` activity layout (interactive GUI) as well as places a map in the application using SupportMapFragment. Also contains `getMapAsync` which sets a callback object which will be triggered when the GoogleMap instance is ready to be used. Also contains functionality for button clicks of unparkButton and exit button, then also handels the popups which appear when a button is sclicked on this screen. This method will also handle displaying the locations information on the screen in the form of GPS position|
 | onMapReady() | GoogleMap | None | Callback interface for when the map is ready to be used. Once an instance of this interface is set on a MapFragment or MapView object, the `onMapReady(GoogleMap)` method is triggered when the map is ready to be used and provides a non-null instance of GoogleMap |
 | onRequestPermissionResult | Bundle | None | Handels permission requests in regard to access granted verses denied. |
-| onLocationChange | Location | None | Moves google maps to the users current location and will add markers on the map. |
-| onConnected | Bundle | None | Has the location being udated and checked every second. |
+| onLocationChange | Location | None | Moves google maps to the users current location. |
+| onConnected | Bundle | None | Sets the rate for which the app requests current location to once per second. Also places initial marker for parked location|
 | onConnectionSuspended | int | None | N/A |
 | onConnectionFailed | ConnectionResult | None | N/A |
 
