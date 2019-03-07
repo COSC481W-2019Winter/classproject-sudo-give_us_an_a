@@ -1,6 +1,8 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -10,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -42,11 +45,13 @@ public class ParkedActivity extends FragmentActivity implements
     //latitude longitude of static parked position
     public double latitudeFirst, longitudeFirst;
     //latitude longitude of current updating position
-    public double latitudeCurrent, longitudeCurrent;
+    //public double latitudeCurrent, longitudeCurrent;
 
     private Location location;
     private Location locationFirst;
     private Location locationCurrent;
+
+    private static final String TAG = "MyLog";
 
     private GoogleMap mMap;
     private SupportMapFragment mapFrag;
@@ -54,41 +59,99 @@ public class ParkedActivity extends FragmentActivity implements
     private LocationRequest locationRequest;
     private Location lastLocation;
     private Marker currentUserLocationMarker;
+
+    private LocationManager locMng = new LocationManager();
+
     private static final int Request_User_Location_Code = 99;
 
-    private FusedLocationProviderClient mFusedLocationProviderClient;//not used yet
-
-    //TextViews
-    private TextView parkedCoordActual;
-    private TextView currCoordActual;
-
+    public static boolean forceExit = false;
+    TextView text;
     Button button;
+    Button button2;
+    TextView parkedCoord;
+    TextView currCoord;
+    TextView distance;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
 
+        // set strings with updated data
+        parkedCoord = findViewById(R.id.parkedCoord);
+        currCoord = findViewById(R.id.currCoord);
+        distance = findViewById(R.id.distance);
+
+        parkedCoord.append(" Update");
+        currCoord.append(" Update");
+        distance.append(" Update");
+
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
-        parkedCoordActual = findViewById(R.id.parkedCoordActual);
-        currCoordActual = findViewById(R.id.currCoordActual);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
-                startActivity(intent);
+
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int choice) {
+                        switch (choice) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                finish();
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ParkedActivity.this);
+                builder.setTitle("abc");
+                builder.setMessage("Are you sure you want to delete? (This will be permanent)")
+                        .setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
             }
         });
+
+        //Find your views
+        button2 = (Button) findViewById(R.id.exit);
+
+        //Assign a listener to your button
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // pop up for complete exit out off program
+                DialogInterface.OnClickListener dialogClickListener2 = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int choice) {
+                        switch (choice) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.putExtra("EXIT", true);
+                                startActivity(intent);
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(ParkedActivity.this);
+                builder2.setMessage("Are you sure you want to exit? (This will be delete your parked location)")
+                        .setPositiveButton("Yes", dialogClickListener2)
+                        .setNegativeButton("No", dialogClickListener2).show();
+            }
+        });
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkUserLocationPermission();
         }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
-
     }
 
     /**
@@ -175,14 +238,13 @@ public class ParkedActivity extends FragmentActivity implements
 
         // permissions ok, we get last location. new initial condition
         locationFirst = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+        locMng.setParkCoord(locationFirst);
+        parkedCoord.setText("GPS Coordinates: " + locMng.displayParkCoord());
+
         //split up latitude/longitude into variables before creating LatLng object
         latitudeFirst = locationFirst.getLatitude();
         longitudeFirst = locationFirst.getLongitude();
-
-        //sets layout text for Parking Spot:
-        if (locationFirst != null) {
-            parkedCoordActual.setText("\tLATITUDE #1 : " + latitudeFirst + "\tLONGITUDE #1 : " + longitudeFirst);
-        }
 
         //this makes sure only one marker is placed
         if(currentUserLocationMarker != null){
@@ -199,44 +261,16 @@ public class ParkedActivity extends FragmentActivity implements
 
         // actually adds the marker
         currentUserLocationMarker = mMap.addMarker(markerOptions);
-
-        //startLocationUpdates();//new kill?
-
     }
-//    //new kill?
-//    private void startLocationUpdates() {
-//        Toast.makeText(this, "Fucking here in startLocationUpdates", Toast.LENGTH_SHORT).show();
-//        locationRequest = new LocationRequest();
-//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//        locationRequest.setInterval(UPDATE_INTERVAL);
-//        locationRequest.setFastestInterval(FASTEST_INTERVAL);
-//
-//        if (ActivityCompat.checkSelfPermission(this,
-//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-//                &&  ActivityCompat.checkSelfPermission(this,
-//                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            Toast.makeText(this, "You need to enable permissions to display location !", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
-//    }
 
     //new implemented methods for establishing our current location
     @Override
     public void onLocationChanged(Location location) {//called when location is changed
 
-        if (location != null) {
-            currCoordActual.setText("\tLATITUDE #2 : " + location.getLatitude() + "\tLONGITUDE #2 : " + location.getLongitude());
-        }
+        lastLocation = location;
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-        locationCurrent = location;
-
-        //split up latitude/longitude into variables before creating LatLng object
-        latitudeCurrent = locationCurrent.getLatitude();
-        longitudeCurrent = locationCurrent.getLongitude();
-
-        LatLng latLng = new LatLng(latitudeCurrent, longitudeCurrent);//instantiate lat/lng object
-
+        // Need to move this to onCreate later
         //moves camera to this location
         CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
         CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 19);//2.0 to 21.0 -higher double = more zoom
@@ -244,6 +278,12 @@ public class ParkedActivity extends FragmentActivity implements
         //mMap.animateCamera(zoom);//animated zoom in
         mMap.moveCamera(zoom);//non-animated zoom in
 
+
+        if (location != null){
+            locMng.setCurrCoord(location);
+            currCoord.setText("GPS Coordinates: " + locMng.displayCoord());
+            distance.setText("Distance: " + locMng.getDistance() + " Miles");
+        }
         //this was stopping location updates
 //        if(googleApiClient != null){
 //            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);

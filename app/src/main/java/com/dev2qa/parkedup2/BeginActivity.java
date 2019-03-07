@@ -57,14 +57,20 @@ public class BeginActivity extends FragmentActivity implements
 
     TextView text;
     Button button;
+    Button button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_begin);
 
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
+
         //Find your views
         button = (Button) findViewById(R.id.parkButton);
+        button2 = (Button) findViewById(R.id.exit);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +83,17 @@ public class BeginActivity extends FragmentActivity implements
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkUserLocationPermission();
         }
+
+        //Find your views
+        button2 = (Button) findViewById(R.id.exit);
+
+        //Assign a listener to your button
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
