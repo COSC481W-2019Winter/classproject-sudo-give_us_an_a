@@ -78,12 +78,12 @@ Holds user information for location data. Contains latitude and longitude coordi
 ### Functionality
 | Name | Parameters | Return | Description |
 | ---- | ---- | ---- | ---- |
-| getCoordinates() | None | float[] |Returns a float array containing the coordinate values stored in an array |
-| getElevation() | None | float | Returns elevation value as a floating point number. |
-| setParkCoord() | mMap | None | Input of coordinates from GoogleMaps mMap type and stores them as a float[]. |
-| setParkElev() | mMap | None | Input of elevation contained with an mMap type converted and then stored as a float. |
-| distanceToCar() | float[] | float | Finds the distance from the user to their car using the coordinates and elevation of both the saved parking spot and the user's position. |
-| timeToCar() | float | String | Computes the time to travel to the parked car using the parking position coordinates/elevation and the current position coordinates/elevation. |
+| getCoordinates() | None | double[] |Returns a double array containing the coordinate values stored in an array |
+| getElevation() | None | double | Returns elevation value as a double. |
+| setParkCoord() | Location | None | Input of coordinates from GoogleMaps mMap type and stores them as a float[]. |
+| setParkElev() | Location | None | Input of elevation contained with an mMap type converted and then stored as a float. |
+| distanceToCar() | None | None | Finds the distance from the user to their car using the coordinates both the saved parking spot and the user's position. |
+| timeToCar() | None | String | Computes the time to travel to the parked car using the parking position coordinates/elevation and the current position coordinates/elevation. |
 
 ### Connections
 **Inputs**
