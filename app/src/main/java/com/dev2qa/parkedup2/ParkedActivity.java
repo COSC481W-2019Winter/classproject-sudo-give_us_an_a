@@ -109,7 +109,6 @@ public class ParkedActivity extends FragmentActivity implements
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(ParkedActivity.this);
-                builder.setTitle("abc");
                 builder.setMessage("Are you sure you want to delete? (This will be permanent)")
                         .setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
