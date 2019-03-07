@@ -57,18 +57,18 @@ Holds user information for location data. Contains latitude and longitude coordi
 ### Properties
 | Name | Type | Description |
 | ---- | --- | --- |
-| coordinates | float[] | Google Maps latitude and longitude data values passed in from MainActivity | 
-| elevation | float | Elevation of user's current position provided by MainActivity.
-| parkingCoord | float[] | Coordinates of parking spot saved from MainActivity |
-| parkingElev | float | Elevation of user's parked vehicle saved from MainActivity. |
+| coordinates | double[] | Google Maps latitude and longitude data values passed in from MainActivity | 
+| elevation | double | Elevation of user's current position provided by MainActivity.
+| parkingCoord | double[] | Coordinates of parking spot saved from MainActivity |
+| parkingElev | double | Elevation of user's parked vehicle saved from MainActivity. |
 
 ### Functionality
 | Name | Parameters | Return | Description |
 | ---- | ---- | ---- | ---- |
 | getCoordinates() | None | double[] |Returns a double array containing the coordinate values stored in an array |
 | getElevation() | None | double | Returns elevation value as a double. |
-| setParkCoord() | Location | None | Input of coordinates from GoogleMaps mMap type and stores them as a float[]. |
-| setParkElev() | Location | None | Input of elevation contained with an mMap type converted and then stored as a float. |
+| setParkCoord() | Location | None | Input of coordinates from GoogleMaps mMap type and stores them as a double[]. |
+| setParkElev() | Location | None | Input of elevation contained with an mMap type converted and then stored as a double. |
 | distanceToCar() | None | None | Finds the distance from the user to their car using the coordinates both the saved parking spot and the user's position. |
 | timeToCar() | None | String | Computes the time to travel to the parked car using the parking position coordinates/elevation and the current position coordinates/elevation. |
 
