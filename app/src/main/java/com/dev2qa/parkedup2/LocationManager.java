@@ -2,8 +2,6 @@ package com.dev2qa.parkedup2;
 
 import android.location.Location;
 
-import com.google.android.gms.maps.model.LatLng;
-
 //public class LocationManager implements LocationI {
 public class LocationManager {
     private double[] coordinates;
@@ -28,10 +26,6 @@ public class LocationManager {
         parkingElev = 0;
     }
 
-    public double[] getCoordinates() {
-        return coordinates;
-    }
-
     public double getElevation() {
         return elevation;
     }
@@ -45,27 +39,32 @@ public class LocationManager {
     public void setCurrCoord(Location location) {
         coordinates = new double[]{location.getLatitude(),location.getLongitude()};
     }
+    private String displayFormatted(double[] coords) {
+        //Default coordinate is positive
+        String lat = "N";
+        String lng = "E";
 
-    public String displayCoord(){//quick class to build string from array of coordinates
-        StringBuilder coords = new StringBuilder();
-        for (int i = 0; i < coordinates.length; i++){
-            coords.append(coordinates[i]);
-            coords.append(" ");
+        StringBuilder str = new StringBuilder();
+        if (coords[0] < 0) {
+            lat = "S";
+            coords[0] *= -1;
         }
-        return coords.toString();
+        str.append(String.format("%.4f",coords[0]) + "°" + lat);
+        str.append(", ");
+        if (coords[1] < 0) {
+            lng = "W";
+            coords[1] *= -1;
+        }
+        str.append(String.format("%.4f",coords[1]) + "°" + lng);
+        return str.toString();
+
+    }
+    public String displayCoord(){
+        return displayFormatted(coordinates);
     }
 
-    public String displayParkCoord(){//quick class to build string from array of coordinates
-        StringBuilder coords = new StringBuilder();
-        for (int i = 0; i < parkingCoord.length; i++){
-            coords.append(parkingCoord[i]);
-            coords.append(" ");
-        }
-        return coords.toString();
-    }
-
-    public double[] getParkCoord() {
-        return parkingCoord;
+    public String displayParkCoord(){
+        return displayFormatted(parkingCoord);
     }
 
     public void setParkElev(Location location) {
