@@ -2,7 +2,6 @@ package com.dev2qa.parkedup2;
 
 import android.location.Location;
 
-//public class LocationManager implements LocationI {
 public class LocationManager {
     private double[] coordinates;
     private double distance;
@@ -12,14 +11,6 @@ public class LocationManager {
 
     public LocationManager(){
         coordinates = new double[]{};
-        distance = 0;
-        elevation = 0;
-        parkingCoord = null;
-        parkingElev = 0;
-    }
-
-    public LocationManager(Location location) {
-        coordinates = new double[]{location.getLatitude(),location.getLongitude()};
         distance = 0;
         elevation = 0;
         parkingCoord = null;
@@ -39,7 +30,7 @@ public class LocationManager {
     public void setCurrCoord(Location location) {
         coordinates = new double[]{location.getLatitude(),location.getLongitude()};
     }
-    private String displayFormatted(double[] coords) {
+    private String formattedCoords(double[] coords) {
         //Default coordinate is positive
         String lat = "N";
         String lng = "E";
@@ -60,11 +51,11 @@ public class LocationManager {
 
     }
     public String displayCoord(){
-        return displayFormatted(coordinates);
+        return formattedCoords(coordinates);
     }
 
     public String displayParkCoord(){
-        return displayFormatted(parkingCoord);
+        return formattedCoords(parkingCoord);
     }
 
     public void setParkElev(Location location) {
@@ -87,7 +78,6 @@ public class LocationManager {
         return deg * Math.PI / 180;
     }
     public void distanceToCar() {
-        //public double distanceToCar() {
         int earthRadius = 3959; //mi
 
         double lat = degToRad(coordinates[0]-parkingCoord[0]);
@@ -170,8 +160,8 @@ public class LocationManager {
 
         return str.toString();
     }
-    //in miles
-    public String timeToCar() {
+
+    public String timeToCar() { //in miles
         //public String timeToCar(double distance) {  // for testing
         double time = distance/2; //2mph; average walking pace
         return timeFormatted(time);
