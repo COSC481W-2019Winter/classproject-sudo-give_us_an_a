@@ -6,6 +6,8 @@
 * Make distance display feet when <0.5mi from car
 
 ## Eleanor
+* Reformat park here button
+* Create and add icon for the app
 
 ## Lucas
 
