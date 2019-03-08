@@ -70,9 +70,18 @@ public class LocationManager {
     public void setParkElev(Location location) {
         //Will set parkingElev
     }
-    public double getDistance() {
+    public String getDistance() {
         distanceToCar();
-        return distance;
+
+        double dist = distance;
+        String units = "miles";
+
+        if (dist < 0.5) {
+            dist*=5280; //miles to feet
+            units = "feet";
+        }
+        
+        return String.format("%.3f",dist) + " " + units;
     }
     private double degToRad(double deg) {
         return deg * Math.PI / 180;
