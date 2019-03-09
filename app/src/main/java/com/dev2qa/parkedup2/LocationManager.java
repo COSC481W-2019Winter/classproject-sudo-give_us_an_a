@@ -40,13 +40,13 @@ public class LocationManager {
             lat = "S";
             coords[0] *= -1;
         }
-        str.append(String.format("%.4f",coords[0]) + "°" + lat);
+        str.append(String.format("%.6f",coords[0]) + "°" + lat);
         str.append(", ");
         if (coords[1] < 0) {
             lng = "W";
             coords[1] *= -1;
         }
-        str.append(String.format("%.4f",coords[1]) + "°" + lng);
+        str.append(String.format("%.6f",coords[1]) + "°" + lng);
         return str.toString();
 
     }
@@ -68,7 +68,7 @@ public class LocationManager {
         String units = "miles";
 
         if (dist < 0.5) {
-            dist*=5280; //miles to feet
+            dist *= 5280; //miles to feet
             units = "feet";
         }
         
