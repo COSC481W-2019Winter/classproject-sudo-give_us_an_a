@@ -12,3 +12,5 @@
 ## Lucas
 
 ## Drew
+* Refactor both activities to reduce redundancies
+* Fix ParkedActivity shifting camera on every map update
