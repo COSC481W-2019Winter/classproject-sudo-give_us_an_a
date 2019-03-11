@@ -9,7 +9,7 @@
 ## Eleanor
 * Reformat park here button
 * Create and add icon for the app
-
+* Add time to get to car section for Brian
 ## Lucas
 
 ## Drew
