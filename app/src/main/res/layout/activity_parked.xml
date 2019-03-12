@@ -123,7 +123,7 @@
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="match_parent"
-        android:layout_height="37dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center_vertical"
         android:background="@android:color/holo_red_dark"
