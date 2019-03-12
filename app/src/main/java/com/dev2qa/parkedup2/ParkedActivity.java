@@ -68,6 +68,7 @@ public class ParkedActivity extends FragmentActivity implements
     TextView parkedCoord;
     TextView currCoord;
     TextView distance;
+    TextView time;
 
 
     @Override
@@ -79,6 +80,7 @@ public class ParkedActivity extends FragmentActivity implements
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
         distance = findViewById(R.id.distance);
+        time = findViewById(R.id.timeToCar);
 
         parkedCoord.append(" Update");
         currCoord.append(" Update");
@@ -279,6 +281,7 @@ public class ParkedActivity extends FragmentActivity implements
             locMng.setCurrCoord(location);
             currCoord.setText("GPS Coordinates: " + locMng.displayCoord());
             distance.setText("Distance: " + locMng.getDistance());
+            time.setText("Time to Car: " + locMng.timeToCar());
         }
         //this was stopping location updates
 //        if(googleApiClient != null){

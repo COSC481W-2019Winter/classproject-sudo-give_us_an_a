@@ -77,7 +77,7 @@ public class LocationManager {
     private double degToRad(double deg) {
         return deg * Math.PI / 180;
     }
-    public void distanceToCar() {
+    private void distanceToCar() {
         int earthRadius = 3959; //mi
 
         double lat = degToRad(coordinates[0]-parkingCoord[0]);
