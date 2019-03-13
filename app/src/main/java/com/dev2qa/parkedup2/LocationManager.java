@@ -64,7 +64,7 @@ public class LocationManager {
         str.append(String.format("%.0f",Math.floor(lngMin)));
         str.append("'");
         str.append(String.format("%.2f", lngSec));
-        str.append("\"" + lat);
+        str.append("\"" + lng);
 
         return str.toString();
 
