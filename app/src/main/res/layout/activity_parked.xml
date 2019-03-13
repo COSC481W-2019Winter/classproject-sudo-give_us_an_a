@@ -77,7 +77,7 @@
         android:background="@android:color/holo_blue_light"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="\t GPS Coordinates:"
+        android:text="\t\t\t "
         android:textSize="18sp" />
 
     <TextView
@@ -97,7 +97,7 @@
         android:background="@android:color/holo_blue_light"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="\t GPS Coordinates:"
+        android:text="\t\t\t "
         android:textSize="18sp" />
 
     <TextView
