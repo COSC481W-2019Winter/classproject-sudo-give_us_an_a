@@ -38,7 +38,7 @@ public class LocationManagerTest {
 //    }
 
     @Test
-    public void timeToCar1() {
+    public void timeToCar() {
         assertEquals("4 days, 5 hrs, 7 mins, 30 secs",obj.timeToCar(202.25)); //pass
         assertEquals("4 days, 5 hrs, 6 mins",obj.timeToCar(202.2)); //pass
         assertEquals("4 days, 5 hrs",obj.timeToCar(202)); //pass

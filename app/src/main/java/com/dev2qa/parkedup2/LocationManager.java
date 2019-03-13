@@ -34,19 +34,38 @@ public class LocationManager {
         //Default coordinate is positive
         String lat = "N";
         String lng = "E";
-
         StringBuilder str = new StringBuilder();
+
+        //Latitude
         if (coords[0] < 0) {
             lat = "S";
             coords[0] *= -1;
         }
-        str.append(String.format("%.6f",coords[0]) + "°" + lat);
+        double latMin = (coords[0] % 1) * 60.0;
+        double latSec = (latMin % 1 ) * 60.0;
+        str.append(String.format("%.0f",Math.floor(coords[0])));
+        str.append("°");
+        str.append(String.format("%.0f",Math.floor(latMin)));
+        str.append("'");
+        str.append(String.format("%.2f", latSec));
+        str.append("\"" + lat);
+
         str.append(", ");
+
+        //Longitude
         if (coords[1] < 0) {
             lng = "W";
             coords[1] *= -1;
         }
-        str.append(String.format("%.6f",coords[1]) + "°" + lng);
+        double lngMin = (coords[1] % 1) * 60.0;
+        double lngSec = (lngMin % 1 ) * 60.0;
+        str.append(String.format("%.0f",Math.floor(coords[1])));
+        str.append("°");
+        str.append(String.format("%.0f",Math.floor(lngMin)));
+        str.append("'");
+        str.append(String.format("%.2f", lngSec));
+        str.append("\"" + lat);
+
         return str.toString();
 
     }
