@@ -129,11 +129,18 @@ public class LocationManager {
             //Calculation rounding-error handling
             if ((1 - (time % 1)) < (1 / 24.0)) {
                 time = Math.ceil(time);
-                str.append(String.format("%.0f hrs",  time));
+                if (time == 1)
+                    str.append(String.format("%.0f hr",  time));
+                else
+                    str.append(String.format("%.0f hrs",  time));
                 time %= 1;
             }
-            else
-                str.append(String.format("%.0f hrs",  Math.floor(time)));
+            else {
+                if (Math.floor(time) == 1)
+                    str.append(String.format("%.0f hr", Math.floor(time)));
+                else
+                    str.append(String.format("%.0f hrs", Math.floor(time)));
+            }
         }
         else
             time *= 60;
@@ -148,11 +155,19 @@ public class LocationManager {
             //Calculation rounding-error handling
             if ((1 - (time % 1)) < (1 / 60.0)) {
                 time = Math.ceil(time);
-                str.append(String.format("%.0f mins",  time));
+                if (time == 1)
+                    str.append(String.format("%.0f min",  time));
+                else
+                    str.append(String.format("%.0f mins",  time));
                 time %= 1;
             }
-            else
-                str.append(String.format("%.0f mins",  Math.floor(time)));
+            else {
+                if (Math.floor(time) == 1)
+                    str.append(String.format("%.0f min",  Math.floor(time)));
+                else
+                    str.append(String.format("%.0f mins",  Math.floor(time)));
+            }
+
         }
         else
             time *= 60;
@@ -167,13 +182,19 @@ public class LocationManager {
                 time = Math.ceil(time);
                 if (str.length() > 0)
                     str.append(", ");
-                str.append(String.format("%.0f secs",  time));
+                if (time == 1)
+                    str.append(String.format("%.0f sec",  time));
+                else
+                    str.append(String.format("%.0f secs",  time));
                 time %= 1;
             }
             else if (time > 0) {
                 if (str.length() > 0)
                     str.append(", ");
-                str.append(String.format("%.0f secs", Math.floor(time)));
+                if (Math.floor(time) == 1)
+                    str.append(String.format("%.0f sec",  Math.floor(time)));
+                else
+                    str.append(String.format("%.0f secs",  Math.floor(time)));
             }
         }
 
