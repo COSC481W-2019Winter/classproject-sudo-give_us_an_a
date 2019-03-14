@@ -82,9 +82,9 @@ public class ParkedActivity extends FragmentActivity implements
         distance = findViewById(R.id.distance);
         time = findViewById(R.id.timeToCar);
 
-        parkedCoord.append(" Update");
-        currCoord.append(" Update");
-        distance.append(" Update");
+        parkedCoord.append(" \t");
+        currCoord.append(" \t");
+        distance.append(" \t");
 
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
@@ -238,7 +238,7 @@ public class ParkedActivity extends FragmentActivity implements
         locationFirst = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
         locMng.setParkCoord(locationFirst);
-        parkedCoord.setText("GPS Coordinates: " + locMng.displayParkCoord());
+        parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
         //split up latitude/longitude into variables before creating LatLng object
         latitudeFirst = locationFirst.getLatitude();
@@ -279,7 +279,7 @@ public class ParkedActivity extends FragmentActivity implements
 
         if (location != null){
             locMng.setCurrCoord(location);
-            currCoord.setText("GPS Coordinates: " + locMng.displayCoord());
+            currCoord.setText("\t\t\t " + locMng.displayCoord());
             distance.setText("Distance: " + locMng.getDistance());
             time.setText("Time to Car: " + locMng.timeToCar());
         }
