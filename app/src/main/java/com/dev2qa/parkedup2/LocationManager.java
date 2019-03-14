@@ -177,7 +177,10 @@ public class LocationManager {
             }
         }
 
-        return str.toString();
+        if (str.length() < 1)
+            return "0 secs";
+        else
+            return str.toString();
     }
 
     public String timeToCar() { //in miles
