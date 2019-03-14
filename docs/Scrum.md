@@ -16,7 +16,9 @@ Medium
 ## Acceptance Criteria
 * Notification Toggle
 * Mi/Km toggle
+* Simple and Large or complex and Average
 * About
+
 ## Who is doing it
 Eleanor
 ## User Story
