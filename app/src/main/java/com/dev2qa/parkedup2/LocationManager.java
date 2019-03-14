@@ -86,7 +86,7 @@ public class LocationManager {
         double dist = distance;
         String units = "miles";
 
-        if (dist < 0.5) {
+        if (dist < 0.19) {
             dist *= 5280; //miles to feet
             units = "feet";
         }
