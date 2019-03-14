@@ -3,7 +3,7 @@
 ## Brian
 * Format coordinates to display cardinal directions and an appropriate number of decimal places
 * Format distance to display appropriate number of decimal places
-* Make distance display feet when <0.5mi from car
+* Make distance display feet when <0.19 mi (~1000 ft) from car
 * Add time to get to car (timeToCar from LocationManager to ParkedActivity)
 
 ## Eleanor
