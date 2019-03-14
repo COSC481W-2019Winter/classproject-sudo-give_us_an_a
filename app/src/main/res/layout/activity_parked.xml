@@ -107,7 +107,7 @@
         android:background="@android:color/holo_blue_light"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text=" \t Distance:"
+        android:text="Distance:"
         android:textSize="18sp" />
 
     <TextView
@@ -117,7 +117,7 @@
         android:background="@android:color/holo_blue_light"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="\t Time to Car:"
+        android:text="Time to Car:"
         android:textSize="18sp" />
 
     <Button
