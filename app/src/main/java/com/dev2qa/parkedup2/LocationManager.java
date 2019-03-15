@@ -8,8 +8,10 @@ public class LocationManager {
     private double elevation;
     private double[] parkingCoord;
     private double parkingElev;
+    private boolean usUnits;
 
     public LocationManager(){
+        usUnits = true; //default is US
         coordinates = new double[]{};
         distance = 0;
         elevation = 0;
@@ -84,11 +86,25 @@ public class LocationManager {
         distanceToCar();
 
         double dist = distance;
-        String units = "miles";
+        String units, smallUnit;
+        double threashold;
+        int conversionFactor;
 
-        if (dist < 0.19) {
-            dist *= 5280; //miles to feet
-            units = "feet";
+        if (usUnits) {
+            units = "miles";
+            smallUnit = "feet";
+            threashold = 0.19;
+            conversionFactor = 5280; //miles to feet
+        }
+        else {
+            units = "kilometers";
+            smallUnit = "meters";
+            threashold = 1;
+            conversionFactor = 1000; //km to m
+        }
+        if (dist < threashold) {
+            dist *= conversionFactor;
+            units = smallUnit;
         }
         
         return String.format("%.3f",dist) + " " + units;
@@ -97,7 +113,11 @@ public class LocationManager {
         return deg * Math.PI / 180;
     }
     private void distanceToCar() {
-        int earthRadius = 3959; //mi
+        int earthRadius;
+        if (usUnits)
+            earthRadius = 3959; //mi
+        else
+            earthRadius = 6371; //km
 
         double lat = degToRad(coordinates[0]-parkingCoord[0]);
         double lon = degToRad(coordinates[1]-parkingCoord[1]);
@@ -112,6 +132,10 @@ public class LocationManager {
         //return c * earthRadius; //for testing
         distance = c * earthRadius;
     }
+    public void toggleUnits() {
+        usUnits = !usUnits;
+    }
+
     private String timeFormatted(double time) { //hours
         StringBuilder str = new StringBuilder();
         //Days
