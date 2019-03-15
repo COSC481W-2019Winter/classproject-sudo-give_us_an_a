@@ -7,7 +7,7 @@ Small
 ## Who is doing it
 Drew
 ## User Story
-So that the user can visually see where they are in relation to their car. So they won't get lost.
+To allow the user to visually see where they are in relation to their car. This will prevent them from getting lost.
 ## Tasks
 
 # 2 Setting Menu
@@ -16,14 +16,14 @@ Medium
 ## Acceptance Criteria
 * Notification Toggle
 * Mi/Km toggle
-* Simple and Large or complex and Average
+* Detailed (small font)/Simple (large font) toggle for more and less display options. Ease of Use for the visually impared.
 * About
 
 ## Who is doing it
 Eleanor
 ## User Story
+The user can change preferences and find out more about the app.
 ## Tasks
-So the user can change preferences and find out more about the app.
 ## 2.1 Notification
 ### Effort
 Small
@@ -34,7 +34,7 @@ Small
 ### Who is doing it
 Lucas
 ### User Story
-To remind the user they have a parked loaction and give them information on where their car is.
+To remind the user they have a parked location and give them information on where their car is.
 ## Tasks
 ## 2.2 Miles / Km
 ### Effort
@@ -44,7 +44,7 @@ Small
 ### Who is doing it
 Brian 
 ### User Story
-So the userr can see miles or Km and decide once.
+For internation users to select their perferred unit of measure (km/m or mi/feet).
 ## Tasks
 # 3 Walking Navigation
 ## Effort
@@ -55,7 +55,7 @@ Medium
 ## Who is doing it
 Brian
 ## User Story
-So the user has an accutae time/distance to get to theri car and the way to get there.
+In order for the user to have an accurate time/distance to get to their car and the way to get there.
 ## Tasks
 # 4 Elevation
 ## Effort
