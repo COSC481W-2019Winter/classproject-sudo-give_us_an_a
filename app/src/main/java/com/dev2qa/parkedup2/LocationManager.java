@@ -2,9 +2,6 @@ package com.dev2qa.parkedup2;
 
 import android.location.Location;
 
-import com.google.android.gms.maps.model.LatLng;
-
-//public class LocationManager implements LocationI {
 public class LocationManager {
     private double[] coordinates;
     private double distance;
@@ -20,18 +17,6 @@ public class LocationManager {
         parkingElev = 0;
     }
 
-    public LocationManager(Location location) {
-        coordinates = new double[]{location.getLatitude(),location.getLongitude()};
-        distance = 0;
-        elevation = 0;
-        parkingCoord = null;
-        parkingElev = 0;
-    }
-
-    public double[] getCoordinates() {
-        return coordinates;
-    }
-
     public double getElevation() {
         return elevation;
     }
@@ -45,41 +30,73 @@ public class LocationManager {
     public void setCurrCoord(Location location) {
         coordinates = new double[]{location.getLatitude(),location.getLongitude()};
     }
+    private String formattedCoords(double[] coords) {
+        //Default coordinate is positive
+        String lat = "N";
+        String lng = "E";
+        StringBuilder str = new StringBuilder();
 
-    public String displayCoord(){//quick class to build string from array of coordinates
-        StringBuilder coords = new StringBuilder();
-        for (int i = 0; i < coordinates.length; i++){
-            coords.append(coordinates[i]);
-            coords.append(" ");
+        //Latitude
+        if (coords[0] < 0) {
+            lat = "S";
+            coords[0] *= -1;
         }
-        return coords.toString();
+        double latMin = (coords[0] % 1) * 60.0;
+        double latSec = (latMin % 1 ) * 60.0;
+        str.append(String.format("%.0f",Math.floor(coords[0])));
+        str.append("°");
+        str.append(String.format("%.0f",Math.floor(latMin)));
+        str.append("'");
+        str.append(String.format("%.2f", latSec));
+        str.append("\"" + lat);
+
+        str.append(", ");
+
+        //Longitude
+        if (coords[1] < 0) {
+            lng = "W";
+            coords[1] *= -1;
+        }
+        double lngMin = (coords[1] % 1) * 60.0;
+        double lngSec = (lngMin % 1 ) * 60.0;
+        str.append(String.format("%.0f",Math.floor(coords[1])));
+        str.append("°");
+        str.append(String.format("%.0f",Math.floor(lngMin)));
+        str.append("'");
+        str.append(String.format("%.2f", lngSec));
+        str.append("\"" + lng);
+
+        return str.toString();
+
+    }
+    public String displayCoord(){
+        return formattedCoords(coordinates);
     }
 
-    public String displayParkCoord(){//quick class to build string from array of coordinates
-        StringBuilder coords = new StringBuilder();
-        for (int i = 0; i < parkingCoord.length; i++){
-            coords.append(parkingCoord[i]);
-            coords.append(" ");
-        }
-        return coords.toString();
-    }
-
-    public double[] getParkCoord() {
-        return parkingCoord;
+    public String displayParkCoord(){
+        return formattedCoords(parkingCoord);
     }
 
     public void setParkElev(Location location) {
         //Will set parkingElev
     }
-    public double getDistance() {
+    public String getDistance() {
         distanceToCar();
-        return distance;
+
+        double dist = distance;
+        String units = "miles";
+
+        if (dist < 0.19) {
+            dist *= 5280; //miles to feet
+            units = "feet";
+        }
+        
+        return String.format("%.3f",dist) + " " + units;
     }
     private double degToRad(double deg) {
         return deg * Math.PI / 180;
     }
-    public void distanceToCar() {
-        //public double distanceToCar() {
+    private void distanceToCar() {
         int earthRadius = 3959; //mi
 
         double lat = degToRad(coordinates[0]-parkingCoord[0]);
@@ -112,11 +129,18 @@ public class LocationManager {
             //Calculation rounding-error handling
             if ((1 - (time % 1)) < (1 / 24.0)) {
                 time = Math.ceil(time);
-                str.append(String.format("%.0f hrs",  time));
+                if (time == 1)
+                    str.append(String.format("%.0f hr",  time));
+                else
+                    str.append(String.format("%.0f hrs",  time));
                 time %= 1;
             }
-            else
-                str.append(String.format("%.0f hrs",  Math.floor(time)));
+            else {
+                if (Math.floor(time) == 1)
+                    str.append(String.format("%.0f hr", Math.floor(time)));
+                else
+                    str.append(String.format("%.0f hrs", Math.floor(time)));
+            }
         }
         else
             time *= 60;
@@ -131,11 +155,19 @@ public class LocationManager {
             //Calculation rounding-error handling
             if ((1 - (time % 1)) < (1 / 60.0)) {
                 time = Math.ceil(time);
-                str.append(String.format("%.0f mins",  time));
+                if (time == 1)
+                    str.append(String.format("%.0f min",  time));
+                else
+                    str.append(String.format("%.0f mins",  time));
                 time %= 1;
             }
-            else
-                str.append(String.format("%.0f mins",  Math.floor(time)));
+            else {
+                if (Math.floor(time) == 1)
+                    str.append(String.format("%.0f min",  Math.floor(time)));
+                else
+                    str.append(String.format("%.0f mins",  Math.floor(time)));
+            }
+
         }
         else
             time *= 60;
@@ -150,20 +182,29 @@ public class LocationManager {
                 time = Math.ceil(time);
                 if (str.length() > 0)
                     str.append(", ");
-                str.append(String.format("%.0f secs",  time));
+                if (time == 1)
+                    str.append(String.format("%.0f sec",  time));
+                else
+                    str.append(String.format("%.0f secs",  time));
                 time %= 1;
             }
             else if (time > 0) {
                 if (str.length() > 0)
                     str.append(", ");
-                str.append(String.format("%.0f secs", Math.floor(time)));
+                if (Math.floor(time) == 1)
+                    str.append(String.format("%.0f sec",  Math.floor(time)));
+                else
+                    str.append(String.format("%.0f secs",  Math.floor(time)));
             }
         }
 
-        return str.toString();
+        if (str.length() < 1)
+            return "0 secs";
+        else
+            return str.toString();
     }
-    //in miles
-    public String timeToCar() {
+
+    public String timeToCar() { //in miles
         //public String timeToCar(double distance) {  // for testing
         double time = distance/2; //2mph; average walking pace
         return timeFormatted(time);
