@@ -3,6 +3,7 @@ package com.dev2qa.parkedup2;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -12,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -33,8 +32,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import android.content.Intent;
 
 public class ParkedActivity extends FragmentActivity implements
         OnMapReadyCallback,
@@ -71,6 +68,7 @@ public class ParkedActivity extends FragmentActivity implements
     TextView parkedCoord;
     TextView currCoord;
     TextView distance;
+    TextView time;
 
 
     @Override
@@ -82,10 +80,11 @@ public class ParkedActivity extends FragmentActivity implements
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
         distance = findViewById(R.id.distance);
+        time = findViewById(R.id.timeToCar);
 
-        parkedCoord.append(" Update");
-        currCoord.append(" Update");
-        distance.append(" Update");
+        parkedCoord.append(" \t");
+        currCoord.append(" \t");
+        distance.append(" \t");
 
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
@@ -239,7 +238,7 @@ public class ParkedActivity extends FragmentActivity implements
         locationFirst = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
         locMng.setParkCoord(locationFirst);
-        parkedCoord.setText("GPS Coordinates: " + locMng.displayParkCoord());
+        parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
         //split up latitude/longitude into variables before creating LatLng object
         latitudeFirst = locationFirst.getLatitude();
@@ -280,8 +279,9 @@ public class ParkedActivity extends FragmentActivity implements
 
         if (location != null){
             locMng.setCurrCoord(location);
-            currCoord.setText("GPS Coordinates: " + locMng.displayCoord());
-            distance.setText("Distance: " + locMng.getDistance() + " Miles");
+            currCoord.setText("\t\t\t " + locMng.displayCoord());
+            distance.setText("Distance: " + locMng.getDistance());
+            time.setText("Time to Car: " + locMng.timeToCar());
         }
         //this was stopping location updates
 //        if(googleApiClient != null){

@@ -56,7 +56,7 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="447dp" /><![CDATA[
+        android:layout_height="391dp" /><![CDATA[
         tools:context=".MapsActivity" />
     ]]>
 
@@ -77,7 +77,7 @@
         android:background="@android:color/holo_blue_light"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="\t GPS Coordinates:"
+        android:text="\t\t\t "
         android:textSize="18sp" />
 
     <TextView
@@ -97,7 +97,7 @@
         android:background="@android:color/holo_blue_light"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="\t GPS Coordinates:"
+        android:text="\t\t\t "
         android:textSize="18sp" />
 
     <TextView
@@ -107,7 +107,17 @@
         android:background="@android:color/holo_blue_light"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text=" \t Distance Back To Car:"
+        android:text="Distance:"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/timeToCar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Time to Car:"
         android:textSize="18sp" />
 
     <Button
