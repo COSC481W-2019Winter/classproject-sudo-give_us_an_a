@@ -46,6 +46,10 @@ Brian
 ### User Story
 For internation users to select their perferred unit of measure (km/m or mi/feet).
 ## Tasks
+* Create units variable
+* Create toggle method
+* Modify distanceToCar for metric
+* Modify getDistance for metric
 # 3 Walking Navigation
 ## Effort
 Medium
