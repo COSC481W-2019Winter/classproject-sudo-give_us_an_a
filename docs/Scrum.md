@@ -16,14 +16,18 @@ Medium
 ## Acceptance Criteria
 * Notification Toggle
 * Mi/Km toggle
-* Detailed (small font)/Simple (large font) toggle for more and less display options. Ease of Use for the visually impared.
-* About
+* About page
 
 ## Who is doing it
 Eleanor
 ## User Story
 The user can change preferences and find out more about the app.
 ## Tasks
+* Create empty menu
+* Add KI/KM toggle button
+* Add Notification toggle button
+* Add about toggle button
+* Add in functionality
 ## 2.1 Notification
 ### Effort
 Small
@@ -102,6 +106,7 @@ Large
 * Icon 
 * Map view
 * Are you walking back notification?
+* Detailed (small font)/Simple (large font) toggle for more and less display options. Ease of Use for the visually impared.
 ## Who is doing it
 
 ## User Story
