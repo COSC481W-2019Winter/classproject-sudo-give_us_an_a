@@ -48,7 +48,7 @@ Small
 ### Who is doing it
 Brian 
 ### User Story
-For internation users to select their perferred unit of measure (km/m or mi/feet).
+For international users to select their perferred unit of measure (km/m or mi/feet).
 ## Tasks
 * Create units variable
 * Create toggle method
@@ -65,6 +65,9 @@ Brian
 ## User Story
 In order for the user to have an accurate time/distance to get to their car and the way to get there.
 ## Tasks
+* Research Walk Navigation API methods and implement
+* Ensure Walk path is automatically updating upon movement
+* Calculate speed based on user movement ensuring if user is stationary, the walking speed is defaulted to average human walking speed (2mph)
 # 4 Elevation
 ## Effort
 Large
