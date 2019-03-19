@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup2;
 
 import android.location.Location;
+import android.os.Build.VERSION;
 
 public class LocationManager {
     private double[] coordinates;
@@ -8,6 +9,8 @@ public class LocationManager {
     private double elevation;
     private double[] parkingCoord;
     private double parkingElev;
+    private float speed;
+    private float speedAccuracy;
 
     public LocationManager(){
         coordinates = new double[]{};
@@ -15,11 +18,19 @@ public class LocationManager {
         elevation = 0;
         parkingCoord = null;
         parkingElev = 0;
+        speed = 0f;
+        speedAccuracy = 0f;
     }
 
-    public double getElevation() {
-        return elevation;
+    public void setSpeed(Location location) {
+        speed = location.getSpeed();
     }
+    public void setSpeedAccuracy(Location location) {
+        //Requires API level >= 26
+        if (VERSION.SDK_INT >= 27)
+            speedAccuracy = location.getSpeedAccuracyMetersPerSecond();
+    }
+
 
     public void setParkCoord(Location location) {
         //public void setParkCoord(double lat1, double lng1, double lat2, double lng2) { // for testing
@@ -27,9 +38,7 @@ public class LocationManager {
         //coordinates = new double[]{lat2,lng2}; // for testing
     }
 
-    public void setCurrCoord(Location location) {
-        coordinates = new double[]{location.getLatitude(),location.getLongitude()};
-    }
+    public void setCurrCoord(Location location) { coordinates = new double[]{location.getLatitude(),location.getLongitude()}; }
     private String formattedCoords(double[] coords) {
         //Default coordinate is positive
         String lat = "N";
@@ -77,6 +86,9 @@ public class LocationManager {
         return formattedCoords(parkingCoord);
     }
 
+    public double getElevation() {
+        return elevation;
+    }
     public void setParkElev(Location location) {
         //Will set parkingElev
     }

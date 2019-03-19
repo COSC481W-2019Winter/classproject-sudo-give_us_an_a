@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -152,17 +153,17 @@ public class ParkedActivity extends FragmentActivity implements
         mapFrag.getMapAsync(this);
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        /*
+        * Manipulates the map once available.
+        * This callback is triggered when the map is ready to be used.
+        * This is where we can add markers or lines, add listeners or move the camera. In this case,
+        * we just add a marker near Sydney, Australia.
+        * If Google Play services is not installed on the device, the user will be prompted to install
+        * it inside the SupportMapFragment. This method will only be triggered once the user has
+        * installed Google Play services and returned to the app.
+        */
         mMap = googleMap;
         //Change type of map to hybrid ie satellite and roads
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
@@ -266,6 +267,12 @@ public class ParkedActivity extends FragmentActivity implements
     public void onLocationChanged(Location location) {//called when location is changed
 
         lastLocation = location;
+        locMng.setSpeed(location);
+        locMng.setSpeedAccuracy(location);
+        Toast.makeText(this, String.valueOf(location.getSpeed()) + "\n" + String.valueOf(location.getSpeedAccuracyMetersPerSecond()), Toast.LENGTH_SHORT).show();
+        Log.i("speed", String.valueOf(location.getSpeed()));
+        Log.i("accuracy", String.valueOf(location.getSpeedAccuracyMetersPerSecond()));
+
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         // Need to move this to onCreate later
