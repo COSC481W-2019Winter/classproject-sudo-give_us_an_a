@@ -31,6 +31,7 @@ The user can change preferences and find out more about the app.
 * Add Notification toggle button
 * Add about toggle button
 * Add in functionality
+* Add saving user preferences
 ## 2.1 Notification
 ### Effort
 Small
