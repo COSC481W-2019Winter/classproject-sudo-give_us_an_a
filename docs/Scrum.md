@@ -40,6 +40,10 @@ Lucas
 ### User Story
 To remind the user they have a parked location and give them information on where their car is.
 ## Tasks
+* Verify needed library is included in dependencies
+* Use NotificationCompat.Builder to create notification text and title
+* Set the notification's tap action to open app
+* Create parameters that cause a notification to appear
 ## 2.2 Miles / Km
 ### Effort
 Small
