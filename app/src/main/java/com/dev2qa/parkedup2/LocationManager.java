@@ -15,7 +15,7 @@ public class LocationManager {
         coordinates = new double[]{};
         distance = 0;
         elevation = 0;
-        parkingCoord = null;
+        parkingCoord = new double[]{};
         parkingElev = 0;
     }
 
@@ -24,9 +24,7 @@ public class LocationManager {
     }
 
     public void setParkCoord(Location location) {
-        //public void setParkCoord(double lat1, double lng1, double lat2, double lng2) { // for testing
         parkingCoord = new double[]{location.getLatitude(),location.getLongitude()};
-        //coordinates = new double[]{lat2,lng2}; // for testing
     }
 
     public void setCurrCoord(Location location) {
@@ -93,13 +91,13 @@ public class LocationManager {
         if (usUnits) {
             units = "miles";
             smallUnit = "feet";
-            threashold = 0.19;
+            threashold = 0.19; //mi
             conversionFactor = 5280; //miles to feet
         }
         else {
             units = "kilometers";
             smallUnit = "meters";
-            threashold = 1;
+            threashold = 1; //km
             conversionFactor = 1000; //km to m
         }
         if (dist < threashold) {
@@ -129,11 +127,10 @@ public class LocationManager {
                 Math.cos(latCurrent) * Math.cos(latParked) * Math.sin(lon/2) * Math.sin(lon/2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-        //return c * earthRadius; //for testing
         distance = c * earthRadius;
     }
     public void toggleUnits() {
-        usUnits = !usUnits;
+        usUnits ^= true;
     }
 
     private String timeFormatted(double time) { //hours
@@ -228,8 +225,7 @@ public class LocationManager {
             return str.toString();
     }
 
-    public String timeToCar() { //in miles
-        //public String timeToCar(double distance) {  // for testing
+    public String timeToCar() {
         double time = distance/2; //2mph; average walking pace
         return timeFormatted(time);
     }
