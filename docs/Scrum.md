@@ -1,4 +1,4 @@
-# 1 Map to fit both loactions
+# 1 Map to fit both locations
 ## Effort
 Small
 ## Acceptance Criteria
@@ -9,6 +9,9 @@ Drew
 ## User Story
 To allow the user to visually see where they are in relation to their car. This will prevent them from getting lost.
 ## Tasks
+* Modify markerOptions.icon to HUE_RED
+* Use LatLngBounds.Builder to create a bounds variable of Marker & current location
+* Use CameraUpdateFactory to zoom the camera to the saved bounds
 
 # 2 Setting Menu
 ## Effort
