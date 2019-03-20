@@ -23,8 +23,14 @@
 * Use CameraUpdateFactory to zoom the camera to the saved bounds
 ## Elaenor
 ### What I did last time
+* Researched on how to create the menu
+* Went through a toutorial, completed the empty menu an it majory broke the app. 
+* I have started going through a differnt way to implement the menu.
 ### Problems
+* It is much more difficult than anticipated to add in a menu option once most of our code already exists, there are not many toutoriaals about adding in a menu with existign activites.
+* We need to save the users prefences per phone, is a bit outside my comfort zone (Brian offered to help).
 ### What I will do next
+* Continue to get basic functionality working on the menu.
 ## Lucas
 ### What I did last time
 ### Problems
