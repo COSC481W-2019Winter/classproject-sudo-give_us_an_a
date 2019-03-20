@@ -77,6 +77,7 @@ In order for the user to have an accurate time/distance to get to their car and 
 * Ensure Walk path is automatically updating upon movement
 * Calculate speed based on user movement
 * Handle scenario where user is stationary
+# 4. Elevation
 ## Effort
 Large
 ## Acceptance Criteria
