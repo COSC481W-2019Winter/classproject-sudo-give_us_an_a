@@ -12,8 +12,15 @@
 * Try to implement navigation
 ## Drew
 ### What I did last time
+* Researched how to change Marker color
+* Researched how to make screen zoom accordingly to show current and parked locations
+* Attempted further refactoring
 ### Problems
+* Furthur refactoring proved to be much more difficult than previously expected. Because the Android Google Maps API is required to implement so many methods that all need to be within the same "thread" of the map object's original instantiation, it becomes difficult to abstract required map methods (and team created variables and methods we have assigned to map related tasks) out of the activity without taking everything out, and therefore just duplicating our problem to a brand new activity.
 ### What I will do next
+* Modify markerOptions.icon to HUE_RED
+* Use LatLngBounds.Builder to create a bounds variable of Marker & current location
+* Use CameraUpdateFactory to zoom the camera to the saved bounds
 ## Elaenor
 ### What I did last time
 ### Problems
