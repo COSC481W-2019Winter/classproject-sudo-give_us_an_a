@@ -13,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -269,9 +268,9 @@ public class ParkedActivity extends FragmentActivity implements
         lastLocation = location;
         locMng.setSpeed(location);
         locMng.setSpeedAccuracy(location);
-        Toast.makeText(this, String.valueOf(location.getSpeed()) + "\n" + String.valueOf(location.getSpeedAccuracyMetersPerSecond()), Toast.LENGTH_SHORT).show();
-        Log.i("speed", String.valueOf(location.getSpeed()));
-        Log.i("accuracy", String.valueOf(location.getSpeedAccuracyMetersPerSecond()));
+        //for testing
+        TextView debug = findViewById(R.id.debug);
+        debug.setText(String.valueOf(location.getSpeed()) + "\n" + String.valueOf(location.getSpeedAccuracyMetersPerSecond()));
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
