@@ -48,7 +48,7 @@ To remind the user they have a parked location and give them information on wher
 * Use NotificationCompat.Builder to create notification text and title
 * Set the notification's tap action to open app
 * Create parameters that cause a notification to appear
-## 2.2 Miles / Km
+## 2.2 Metric Units
 ### Effort
 Small
 ### Acceptance Criteria
@@ -75,8 +75,8 @@ In order for the user to have an accurate time/distance to get to their car and 
 ## Tasks
 * Research Walk Navigation API methods and implement
 * Ensure Walk path is automatically updating upon movement
-* Calculate speed based on user movement ensuring if user is stationary, the walking speed is defaulted to average human walking speed (2mph)
-# 4 Elevation
+* Calculate speed based on user movement
+* Handle scenario where user is stationary
 ## Effort
 Large
 ## Acceptance Criteria
