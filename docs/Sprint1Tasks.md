@@ -44,12 +44,14 @@
 ### Not Started
 | Task | Story |
 | ---- | --- |
-| Add KI/KM toggle button | 2. Settings |
-| Add Notification toggle button | 2. Settings |
-| Add about toggle button | 2. Settings |
 | Add in functionality | 2. Settings |
 ### In Progress
 | Task | Story |
 | ---- | --- |
-| Create empty menu | 2. Settings |
+| Add about info | 2. Settings |
 ### Completed
+| Task | Story |
+| ---- | --- |
+| Create empty menu | 2. Settings |
+| Add KI/KM toggle button | 2. Settings |
+| Add Notification toggle button | 2. Settings |
