@@ -30,6 +30,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -56,6 +57,7 @@ public class ParkedActivity extends FragmentActivity implements
     private LocationRequest locationRequest;
     private Location lastLocation;
     private Marker currentUserLocationMarker;
+    private int locationChanges = 0;
 
     private LocationManager locMng = new LocationManager();
 
@@ -225,8 +227,8 @@ public class ParkedActivity extends FragmentActivity implements
     public void onConnected(@Nullable Bundle bundle) {//called when device is connected
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(1500);//1000ms = 1sec
-        locationRequest.setFastestInterval(1000);
+        locationRequest.setInterval(900);//1000ms = 1sec
+        locationRequest.setFastestInterval(900);
         //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         //essential check before next lines of code are allowed
@@ -255,7 +257,7 @@ public class ParkedActivity extends FragmentActivity implements
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Your Parking Spot");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
         // actually adds the marker
         currentUserLocationMarker = mMap.addMarker(markerOptions);
@@ -265,17 +267,28 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     public void onLocationChanged(Location location) {//called when location is changed
 
-        lastLocation = location;
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-        // Need to move this to onCreate later
-        //moves camera to this location
-        CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
-        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 19);//2.0 to 21.0 -higher double = more zoom
-        mMap.moveCamera(center);//centers camera right above before zooming
-        //mMap.animateCamera(zoom);//animated zoom in
-        mMap.moveCamera(zoom);//non-animated zoom in
+        //do this only the first time for initial location
+        if(locationChanges == 0){
+            CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
+            CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 19);//2.0 to 21.0 -higher double = more zoom
+            mMap.moveCamera(center);//centers camera right above before zooming
+            //mMap.animateCamera(zoom);//animated zoom in
+            mMap.moveCamera(zoom);//non-animated zoom in
+        }
 
+        //moves camera to bounds of marker and current position
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        builder.include(currentUserLocationMarker.getPosition());//original marker position
+        builder.include(latLng);//current location
+        LatLngBounds bounds = builder.build();//set the bounds
+
+        int padding = 60; // offset from edges of the map in pixels. value may need to be altered
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        //mMap.moveCamera(updateCam);//maybe better on battery life?
+        mMap.animateCamera(updateCam);
 
         if (location != null){
             locMng.setCurrCoord(location);
@@ -283,10 +296,7 @@ public class ParkedActivity extends FragmentActivity implements
             distance.setText("Distance: " + locMng.getDistance());
             time.setText("Time to Car: " + locMng.timeToCar());
         }
-        //this was stopping location updates
-//        if(googleApiClient != null){
-//            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-//        }
+        locationChanges += 1;//update number of times location has changed
     }
 
     @Override
