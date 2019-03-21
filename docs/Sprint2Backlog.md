@@ -1,4 +1,4 @@
-# 2 Setting Menu
+# 1 Setting Menu
 Sprint 2
 ## Effort
 Medium
@@ -6,7 +6,6 @@ Medium
 * Notification Toggle
 * Mi/Km toggle
 * About page
-
 ## Who is doing it
 Eleanor
 ## User Story
@@ -18,7 +17,9 @@ The user can change preferences and find out more about the app.
 * Add about toggle button
 * Add in functionality
 * Add saving user preferences
-# 3 Walking Navigation
+
+
+# 2 Walking Navigation
 Sprint 1
 ## Effort
 Medium
@@ -32,7 +33,48 @@ In order for the user to have an accurate time/distance to get to their car and 
 ## Tasks
 * Research Walk Navigation API methods and implement
 * Ensure Walk path is automatically updating upon movement
-# 4. Elevation
+
+# 3. Text formatting for lower pixle
+Sprint 2
+## Effort
+## Acceptance Criteria
+## who is doing it
+Brain
+## user story
+## Tasks
+
+# 4. How long will parked location last
+Sprint 2
+## Effort
+## Acceptance Criteria
+## who is doing it
+Drew
+## user story
+## Tasks
+
+# 5. Notification refator
+Sprint 2
+## Effort
+## Acceptance Criteria
+## who is doing it
+Lucas
+## user story
+## Tasks
+
+
+# 6 Font Change
+Sprint 2
+## Effort
+Small
+## Acceptance Criteria
+* change to nicer font
+* change to different size
+## Who is doing it
+Eleanaor
+## User Story
+## Tasks
+
+# 7. Elevation
 ## Effort
 Large
 ## Acceptance Criteria
@@ -42,29 +84,7 @@ Large
 ## User Story
 ## Tasks
 
-# 5 Text formatting for Higher Pixel
-## Effort
-Small
-## Acceptance Criteria
-* testing
-* possibly already fixed
-## Who is doing it
-
-## User Story
-## Tasks
-
-# 6 Font Change
-## Effort
-Small
-## Acceptance Criteria
-* change to nicer font
-* change to different size
-## Who is doing it
-
-## User Story
-## Tasks
-
-# 7 Overall UI style
+# 8 Overall UI style
 ## Effort
 Large
 ## Acceptance Criteria
