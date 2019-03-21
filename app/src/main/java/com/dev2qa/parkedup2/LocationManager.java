@@ -12,13 +12,15 @@ public class LocationManager {
 
     public LocationManager(){
         usUnits = true; //default is US
-        coordinates = new double[]{};
+        coordinates = null;
         distance = 0;
         elevation = 0;
         parkingCoord = new double[]{};
         parkingElev = 0;
     }
-
+    public double[] getCoordinates(){
+        return coordinates;
+    }
     public double getElevation() {
         return elevation;
     }

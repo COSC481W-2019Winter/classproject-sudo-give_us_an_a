@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -145,11 +146,17 @@ public class ParkedActivity extends FragmentActivity implements
                         .setNegativeButton("No", dialogClickListener2).show();
             }
         });
+
         menuButton = findViewById(R.id.menubutton);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ParkedActivity.this, MenuActivity.class);
+
+                double[] coord = locMng.getCoordinates();
+                Log.i(TAG, "this is output "+ coord);
+                intent.putExtra("Parked Coords",coord);
+
                 startActivity(intent);
             }
         });
