@@ -44,7 +44,7 @@
 ### Not Started
 | Task | Story |
 | ---- | --- |
-
+| Add saving user preferences | 2. Settings |
 ### In Progress
 | Task | Story |
 | ---- | --- |
