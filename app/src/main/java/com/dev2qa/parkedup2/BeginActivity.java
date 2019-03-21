@@ -72,7 +72,7 @@ public class BeginActivity extends FragmentActivity implements
         //Find your views
         button = (Button) findViewById(R.id.parkButton);
         button2 = (Button) findViewById(R.id.exit);
-        buttonMenu = (Button) findViewById(R.id.menuButton);
+        buttonMenu = (Button) findViewById(R.id.menubutton);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {

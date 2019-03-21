@@ -15,12 +15,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/menuButton"
-            android:layout_width="150dp"
-            android:layout_height="31dp"
+        <Button
+            android:id="@+id/menubutton"
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Menu" />
+            android:text="Settings" />
 
         <TextView
             android:id="@+id/textView2"
