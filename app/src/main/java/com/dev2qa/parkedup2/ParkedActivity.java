@@ -79,7 +79,7 @@ public class ParkedActivity extends FragmentActivity implements
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
-        distance = findViewById(R.id.distance);
+            distance = findViewById(R.id.distance);
         time = findViewById(R.id.timeToCar);
 
         parkedCoord.append(" \t");

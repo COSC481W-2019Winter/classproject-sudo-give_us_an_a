@@ -20,6 +20,9 @@
             android:name=".ParkedActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".MenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".BeginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
