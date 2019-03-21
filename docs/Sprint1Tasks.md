@@ -5,7 +5,6 @@
 | Task | Story |
 | ---- | --- |
 | Ensure Walk path is automatically updating upon movement | 3. Navigation |
-| Add saving user preferences | 2. Settings |
 
 ### In Progress
 | Task | Story |
@@ -42,12 +41,10 @@
 | Use CameraUpdateFactory to zoom the camera to the saved bounds | 1 Map to fit both locations |
 ## Eleanor
 ### Not Started
-| Task | Story |
-| ---- | --- |
-| Add saving user preferences | 2. Settings |
 ### In Progress
 | Task | Story |
 | ---- | --- |
+| Add saving user preferences | 2. Settings |
 | Add in functionality | 2. Settings |
 
 ### Completed
