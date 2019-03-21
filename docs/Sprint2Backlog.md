@@ -72,7 +72,10 @@ Small
 ## Who is doing it
 Eleanaor
 ## User Story
+We want to make the text easier to read while being fun and different.
 ## Tasks
+* Add new font
+* Formmat new font with size and spacing
 
 # 7. Elevation
 ## Effort
