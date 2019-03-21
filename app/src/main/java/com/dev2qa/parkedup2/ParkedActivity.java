@@ -30,6 +30,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -41,12 +42,8 @@ public class ParkedActivity extends FragmentActivity implements
 
     //latitude longitude of static parked position
     public double latitudeFirst, longitudeFirst;
-    //latitude longitude of current updating position
-    //public double latitudeCurrent, longitudeCurrent;
 
-    private Location location;
     private Location locationFirst;
-    private Location locationCurrent;
 
     private static final String TAG = "MyLog";
 
@@ -54,15 +51,13 @@ public class ParkedActivity extends FragmentActivity implements
     private SupportMapFragment mapFrag;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-    private Location lastLocation;
     private Marker currentUserLocationMarker;
+    private boolean locationChanged = false;
 
     private LocationManager locMng = new LocationManager();
 
     private static final int Request_User_Location_Code = 99;
-
-    public static boolean forceExit = false;
-    TextView text;
+    
     Button button;
     Button button2;
     TextView parkedCoord;
@@ -152,17 +147,17 @@ public class ParkedActivity extends FragmentActivity implements
         mapFrag.getMapAsync(this);
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        /*
+        * Manipulates the map once available.
+        * This callback is triggered when the map is ready to be used.
+        * This is where we can add markers or lines, add listeners or move the camera. In this case,
+        * we just add a marker near Sydney, Australia.
+        * If Google Play services is not installed on the device, the user will be prompted to install
+        * it inside the SupportMapFragment. This method will only be triggered once the user has
+        * installed Google Play services and returned to the app.
+        */
         mMap = googleMap;
         //Change type of map to hybrid ie satellite and roads
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
@@ -225,8 +220,8 @@ public class ParkedActivity extends FragmentActivity implements
     public void onConnected(@Nullable Bundle bundle) {//called when device is connected
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(1500);//1000ms = 1sec
-        locationRequest.setFastestInterval(1000);
+        locationRequest.setInterval(900);//1000ms = 1sec
+        locationRequest.setFastestInterval(900);
         //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         //essential check before next lines of code are allowed
@@ -255,7 +250,7 @@ public class ParkedActivity extends FragmentActivity implements
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Your Parking Spot");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
         // actually adds the marker
         currentUserLocationMarker = mMap.addMarker(markerOptions);
@@ -265,17 +260,31 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     public void onLocationChanged(Location location) {//called when location is changed
 
-        lastLocation = location;
+        locMng.setSpeed(location);
+
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-        // Need to move this to onCreate later
-        //moves camera to this location
-        CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
-        CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 19);//2.0 to 21.0 -higher double = more zoom
-        mMap.moveCamera(center);//centers camera right above before zooming
-        //mMap.animateCamera(zoom);//animated zoom in
-        mMap.moveCamera(zoom);//non-animated zoom in
+        //do this only the first time for initial location
+        if(!locationChanged){
+            CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
+            CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 19);//2.0 to 21.0 -higher double = more zoom
+            mMap.moveCamera(center);//centers camera right above before zooming
+            //mMap.animateCamera(zoom);//animated zoom in
+            mMap.moveCamera(zoom);//non-animated zoom in
+            locationChanged = true;
+        }
 
+        //moves camera to bounds of marker and current position
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        builder.include(currentUserLocationMarker.getPosition());//original marker position
+        builder.include(latLng);//current location
+        LatLngBounds bounds = builder.build();//set the bounds
+
+        int padding = 60; // offset from edges of the map in pixels. value may need to be altered
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        //mMap.moveCamera(updateCam);//maybe better on battery life?
+        mMap.animateCamera(updateCam);
 
         if (location != null){
             locMng.setCurrCoord(location);
@@ -283,10 +292,6 @@ public class ParkedActivity extends FragmentActivity implements
             distance.setText("Distance: " + locMng.getDistance());
             time.setText("Time to Car: " + locMng.timeToCar());
         }
-        //this was stopping location updates
-//        if(googleApiClient != null){
-//            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-//        }
     }
 
     @Override
