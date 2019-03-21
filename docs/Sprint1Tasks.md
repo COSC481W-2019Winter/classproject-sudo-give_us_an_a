@@ -33,13 +33,13 @@
 ### Completed
 ## Drew
 ### Not Started
+### In Progress
+### Completed
 | Task | Story |
 | ---- | --- |
 | Modify markerOptions.icon to HUE_RED | 1 Map to fit both locations |
 | Use LatLngBounds.Builder to create a bounds variable of Marker & current location | 1 Map to fit both locations |
 | Use CameraUpdateFactory to zoom the camera to the saved bounds | 1 Map to fit both locations |
-### In Progress
-### Completed
 ## Eleanor
 ### Not Started
 | Task | Story |
