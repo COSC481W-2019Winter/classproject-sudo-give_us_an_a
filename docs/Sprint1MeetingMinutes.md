@@ -33,5 +33,11 @@
 * Continue to get basic functionality working on the menu.
 ## Lucas
 ### What I did last time
+* Created new working branch for notifications to be integrated with the existing settings branch. 
+* Did research on what dependencies and methods are required to run notifications from the app.
 ### Problems
+* We are using depreciated libraries in our build files, they should be updated to allow for proper testing.
 ### What I will do next
+* Begin initializing the necessary changes to produce notifications using the ParkedActivity.
+* Create tapAction for notificaiton to cause the app to open when the android notification is touched.
+* Print a message in the notification to signal to the user that they have saved a parking space.
