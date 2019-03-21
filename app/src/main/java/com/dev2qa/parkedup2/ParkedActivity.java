@@ -42,12 +42,8 @@ public class ParkedActivity extends FragmentActivity implements
 
     //latitude longitude of static parked position
     public double latitudeFirst, longitudeFirst;
-    //latitude longitude of current updating position
-    //public double latitudeCurrent, longitudeCurrent;
 
-    private Location location;
     private Location locationFirst;
-    private Location locationCurrent;
 
     private static final String TAG = "MyLog";
 
@@ -55,16 +51,13 @@ public class ParkedActivity extends FragmentActivity implements
     private SupportMapFragment mapFrag;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-    private Location lastLocation;
     private Marker currentUserLocationMarker;
-    private int locationChanges = 0;
+    private boolean locationChanged = false;
 
     private LocationManager locMng = new LocationManager();
 
     private static final int Request_User_Location_Code = 99;
-
-    public static boolean forceExit = false;
-    TextView text;
+    
     Button button;
     Button button2;
     TextView parkedCoord;
@@ -270,12 +263,13 @@ public class ParkedActivity extends FragmentActivity implements
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         //do this only the first time for initial location
-        if(locationChanges == 0){
+        if(!locationChanged){
             CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
             CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 19);//2.0 to 21.0 -higher double = more zoom
             mMap.moveCamera(center);//centers camera right above before zooming
             //mMap.animateCamera(zoom);//animated zoom in
             mMap.moveCamera(zoom);//non-animated zoom in
+            locationChanged = true;
         }
 
         //moves camera to bounds of marker and current position
@@ -296,7 +290,6 @@ public class ParkedActivity extends FragmentActivity implements
             distance.setText("Distance: " + locMng.getDistance());
             time.setText("Time to Car: " + locMng.timeToCar());
         }
-        locationChanges += 1;//update number of times location has changed
     }
 
     @Override
