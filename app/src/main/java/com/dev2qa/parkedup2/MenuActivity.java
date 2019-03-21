@@ -2,7 +2,9 @@ package com.dev2qa.parkedup2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +33,7 @@ public class MenuActivity extends FragmentActivity {
         setContentView(R.layout.activity_menu);
 
         MIKI = (ToggleButton) findViewById(R.id.MIKItoggle);
+
         MIKI.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -40,6 +43,7 @@ public class MenuActivity extends FragmentActivity {
                 }
             }
         });
+
         Notify = (ToggleButton) findViewById(R.id.notify);
         Notify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -59,7 +63,7 @@ public class MenuActivity extends FragmentActivity {
             }
         });
         mapButton = (Button) findViewById(R.id.mapsBack);
-        homeButton.setOnClickListener(new View.OnClickListener() {
+        mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {

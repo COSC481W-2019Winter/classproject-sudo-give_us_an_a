@@ -50,7 +50,17 @@
             android:textOff="Miles"
             android:textOn="Kilometers"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Parked was created to solve the problem of   of not being able to figure out where you parked and how far away you are at all times from your car." />
 
+    <TextView
+        android:id="@+id/missionStatement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Our misson statement was simple 'Helping to lead people on the path back to their cars'. " />
     <Button
         android:id="@+id/home"
         android:layout_width="match_parent"
