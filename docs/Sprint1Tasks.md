@@ -23,14 +23,14 @@
 
 ## Lucas
 ### Not Started
+### In Progress
+### Completed
 | Task | Story |
 | ---- | --- |
 | Verify needed library is included in dependencies | 2.1 Notification |
 | Use NotificationCompat.Builder to create notification text and title | 2.1 Notification |
 | Set the notification's tap action to open app | 2.1 Notification |
 | Create parameters that cause a notification to appear | 2.1 Notification |
-### In Progress
-### Completed
 ## Drew
 ### Not Started
 ### In Progress
