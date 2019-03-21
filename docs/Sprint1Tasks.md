@@ -4,15 +4,13 @@
 ### Not Started
 | Task | Story |
 | ---- | --- |
-| Research Walk Navigation API methods and implement | 3. Navigation |
 | Ensure Walk path is automatically updating upon movement | 3. Navigation |
 | Add saving user preferences | 2. Settings |
 
 ### In Progress
 | Task | Story |
 | ---- | --- |
-| Calculate speed based on user movement | 3. Navigation |
-| Handle scenario where user is stationary | 3. Navigation |
+| Research Walk Navigation API methods and implement | 3. Navigation |
 ### Completed
 | Task | Story |
 | ---- | --- |
@@ -20,6 +18,8 @@
 | Create toggle method | 2.2 Metric Units |
 | Modify distanceToCar for metric | 2.2 Metric Units |
 | Modify getDistance for metric | 2.2 Metric Units |
+| Calculate speed based on user movement | 3. Navigation |
+| Handle scenario where user is stationary | 3. Navigation |
 
 ## Lucas
 ### Not Started
