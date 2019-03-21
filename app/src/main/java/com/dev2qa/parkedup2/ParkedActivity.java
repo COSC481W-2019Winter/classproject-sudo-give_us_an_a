@@ -267,10 +267,6 @@ public class ParkedActivity extends FragmentActivity implements
 
         lastLocation = location;
         locMng.setSpeed(location);
-        locMng.setSpeedAccuracy(location);
-        //for testing
-        TextView debug = findViewById(R.id.debug);
-        debug.setText(String.valueOf(location.getSpeed()) + "\n" + String.valueOf(location.getSpeedAccuracyMetersPerSecond()));
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 

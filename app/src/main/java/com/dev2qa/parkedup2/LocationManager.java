@@ -1,7 +1,6 @@
 package com.dev2qa.parkedup2;
 
 import android.location.Location;
-import android.os.Build.VERSION;
 
 public class LocationManager {
     private double[] coordinates;
@@ -9,8 +8,7 @@ public class LocationManager {
     private double elevation;
     private double[] parkingCoord;
     private double parkingElev;
-    private float speed;
-    private float speedAccuracy;
+    private double speed;
 
     public LocationManager(){
         coordinates = new double[]{};
@@ -18,19 +16,12 @@ public class LocationManager {
         elevation = 0;
         parkingCoord = null;
         parkingElev = 0;
-        speed = 0f;
-        speedAccuracy = 0f;
+        speed = 0;
     }
 
     public void setSpeed(Location location) {
-        speed = location.getSpeed();
+        speed = (double) location.getSpeed();
     }
-    public void setSpeedAccuracy(Location location) {
-        //Requires API level >= 26
-        if (VERSION.SDK_INT >= 27)
-            speedAccuracy = location.getSpeedAccuracyMetersPerSecond();
-    }
-
 
     public void setParkCoord(Location location) {
         //public void setParkCoord(double lat1, double lng1, double lat2, double lng2) { // for testing
