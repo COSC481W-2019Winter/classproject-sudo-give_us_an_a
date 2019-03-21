@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -65,6 +66,7 @@ public class ParkedActivity extends FragmentActivity implements
     TextView text;
     Button button;
     Button button2;
+    Button menuButton;
     TextView parkedCoord;
     TextView currCoord;
     TextView distance;
@@ -141,6 +143,14 @@ public class ParkedActivity extends FragmentActivity implements
                 builder2.setMessage("Are you sure you want to exit? (This will be delete your parked location)")
                         .setPositiveButton("Yes", dialogClickListener2)
                         .setNegativeButton("No", dialogClickListener2).show();
+            }
+        });
+        menuButton = findViewById(R.id.menubutton);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ParkedActivity.this, MenuActivity.class);
+                startActivity(intent);
             }
         });
 

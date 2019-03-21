@@ -14,6 +14,7 @@ import android.widget.ToggleButton;
 
 public class MenuActivity extends FragmentActivity {
     static Boolean notify = true;
+    static Boolean Miles = true;
 
     private LocationManager locMng = new LocationManager();
 
@@ -62,7 +63,7 @@ public class MenuActivity extends FragmentActivity {
                     editor.commit();
                 }
                 LocationManager lm = new LocationManager();
-                lm.toggleUnits();
+                lm.toggleUnits(Miles);
             }
         });
 
@@ -90,20 +91,14 @@ public class MenuActivity extends FragmentActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, BeginActivity.class);
-                startActivity(intent);
-            }
-        });
-        mapButton = (Button) findViewById(R.id.mapsBack);
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    locMng.getDistance();
-
-                    Intent intent = new Intent(MenuActivity.this, ParkedActivity.class);
+                LocationManager lm = new LocationManager();
+                // redirects user back to previous screen depending onn if a parked location is stored
+                if (true) {
+                    Intent intent = new Intent(MenuActivity.this, BeginActivity.class);
                     startActivity(intent);
-                } catch(Exception ArrayIndexOutOfBoundsException) {
+                } else {
+                    Intent intent2 = new Intent(MenuActivity.this, ParkedActivity.class);
+                    startActivity(intent2);
                 }
             }
         });

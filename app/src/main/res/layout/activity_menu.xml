@@ -61,16 +61,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Our misson statement was simple 'Helping to lead people on the path back to their cars'. " />
+
     <Button
         android:id="@+id/home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Home" />
+        android:text="Return" />
 
-    <Button
-        android:id="@+id/mapsBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Back to parking location" />
+    <!--<Button-->
+        <!--android:id="@+id/mapsBack"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Back to parking location" />-->
 
 </LinearLayout>
