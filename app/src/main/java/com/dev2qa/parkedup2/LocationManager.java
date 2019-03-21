@@ -129,8 +129,8 @@ public class LocationManager {
 
         distance = c * earthRadius;
     }
-    public void toggleUnits() {
-        usUnits ^= true;
+    public void toggleUnits(boolean toggle) {
+        usUnits = toggle;
     }
 
     private String timeFormatted(double time) { //hours
