@@ -9,7 +9,7 @@ public class LocationManager {
     private double[] parkingCoord;
     private double parkingElev;
     private boolean usUnits;
-	public double speed;
+	private double speed;
 
     public LocationManager(){
         usUnits = true; //default is US
@@ -231,7 +231,24 @@ public class LocationManager {
     }
 
     public String timeToCar() {
-        double time = distance/2; //2mph; average walking pace
+        double convertedSpeed;
+        double averageWalkingPace;
+        if (usUnits) {
+            convertedSpeed = speed * 2.237; //m/s to mph
+            averageWalkingPace = 2; //mph
+        }
+        else {
+            convertedSpeed = speed * 3.6; //m/s to km/h
+            averageWalkingPace = 3.219; //km/h
+        }
+
+        double time;
+        //if walking slower than half averageWalkingPace, assume stationary
+        if (convertedSpeed < averageWalkingPace/2)
+            time = distance/averageWalkingPace;
+        else
+            time = distance/convertedSpeed;
+
         return timeFormatted(time);
     }
 
