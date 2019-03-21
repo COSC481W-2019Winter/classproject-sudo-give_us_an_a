@@ -1,4 +1,5 @@
 # 1 Map to fit both locations
+Sprint 1
 ## Effort
 Small
 ## Acceptance Criteria
@@ -14,6 +15,7 @@ To allow the user to visually see where they are in relation to their car. This 
 * Use CameraUpdateFactory to zoom the camera to the saved bounds
 
 # 2 Setting Menu
+Sprint 1
 ## Effort
 Medium
 ## Acceptance Criteria
@@ -33,6 +35,7 @@ The user can change preferences and find out more about the app.
 * Add in functionality
 * Add saving user preferences
 ## 2.1 Notification
+Sprint 1
 ### Effort
 Small
 ### Acceptance Criteria
@@ -49,6 +52,7 @@ To remind the user they have a parked location and give them information on wher
 * Set the notification's tap action to open app
 * Create parameters that cause a notification to appear
 ## 2.2 Metric Units
+Sprint 1
 ### Effort
 Small
 ### Acceptance Criteria
@@ -63,6 +67,7 @@ For international users to select their perferred unit of measure (km/m or mi/fe
 * Modify distanceToCar for metric
 * Modify getDistance for metric
 # 3 Walking Navigation
+Sprint 1
 ## Effort
 Medium
 ## Acceptance Criteria
