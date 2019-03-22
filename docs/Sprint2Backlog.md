@@ -11,10 +11,6 @@ Eleanor
 ## User Story
 The user can change preferences and find out more about the app.
 ## Tasks
-* Create empty menu
-* Add KI/KM toggle button
-* Add Notification toggle button
-* Add about toggle button
 * Add in functionality
 * Add saving user preferences
 
@@ -25,33 +21,36 @@ Sprint 1
 Medium
 ## Acceptance Criteria
 * on path 
-* live walking speed
 ## Who is doing it
-Brian
+Brian/Lucas
 ## User Story
 In order for the user to have an accurate time/distance to get to their car and the way to get there.
 ## Tasks
 * Research Walk Navigation API methods and implement
 * Ensure Walk path is automatically updating upon movement
 
-# 3. Text formatting for lower pixle
+# 3. Text formatting for lower pixel phones
 Sprint 2
 ## Effort
+Small
 ## Acceptance Criteria
-## who is doing it
-Brain
-## user story
+* Layout displays correctly
+## Who is doing it
+Brian/Eleanaor
+## User Story
+Users with older phones will need to view the app properly in lower resolution.
 ## Tasks
-
+* Test on older phone
+* Fix layout if affected
 # 4. How long will parked location last
 Sprint 2
 ## Effort
 Small
 ## Acceptance Criteria
 * Prove that when parked Marker has been placed, and the app is in the background for and extended time that it still maintains original parked location.
-## who is doing it
+## Who is doing it
 Drew
-## user story
+## User story
 * The user should be able to let the application be in the background without loosing Marker location data. When the app becomes the focus again, it should show the original Marker location pinned.
 ## Tasks
 * Research which way I should implement this
@@ -61,9 +60,9 @@ Drew
 Sprint 2
 ## Effort
 ## Acceptance Criteria
-## who is doing it
+## Who is doing it
 Lucas
-## user story
+## User Story
 ## Tasks
 
 
