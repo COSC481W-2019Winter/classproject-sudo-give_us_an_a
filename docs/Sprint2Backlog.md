@@ -46,11 +46,16 @@ Brain
 # 4. How long will parked location last
 Sprint 2
 ## Effort
+Small
 ## Acceptance Criteria
+* Prove that when parked Marker has been placed, and the app is in the background for and extended time that it still maintains original parked location.
 ## who is doing it
 Drew
 ## user story
+* The user should be able to let the application be in the background without loosing Marker location data. When the app becomes the focus again, it should show the original Marker location pinned.
 ## Tasks
+* Research which way I should implement this
+* Implement the desired outcome
 
 # 5. Notification refator
 Sprint 2
