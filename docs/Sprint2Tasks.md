@@ -1,4 +1,4 @@
-# Sprint 1 Tasks
+# Sprint 2 Tasks
 
 ## Brian
 ### Not Started
@@ -14,6 +14,8 @@
 
 ## Lucas
 ### Not Started
+| Task | Story |
+| ---- | --- |
 | Ensure Walk path is automatically updating upon movement | 2. Navigation |
 ### In Progress
 | Task | Story |
@@ -31,6 +33,8 @@
 
 ## Eleanor
 ### Not Started
+| Task | Story |
+| ---- | --- |
 | Fix layout if affected | 4. Text Formatting |
 ### In Progress
 | Task | Story |
