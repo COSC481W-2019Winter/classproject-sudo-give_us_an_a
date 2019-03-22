@@ -25,7 +25,7 @@
 ### Not Started
 | Task | Story |
 | ---- | --- |
-| Research which way I should implement the app lasting after it is not the main focus | 4. How long will parked location last |
+| Research which way I should implement the app lasting after it is not the main focus and implement the answer | 4. How long will parked location last |
 ### In Progress
 ### Completed
 
