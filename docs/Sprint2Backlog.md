@@ -56,7 +56,7 @@ Drew
 * Research which way I should implement this
 * Implement the desired outcome
 
-# 5. Notification refator
+# 5. Notification Refactor
 Sprint 2
 ## Effort
 ## Acceptance Criteria
