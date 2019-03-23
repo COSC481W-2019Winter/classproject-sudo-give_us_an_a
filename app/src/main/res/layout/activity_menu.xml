@@ -9,6 +9,18 @@
     android:layout_marginBottom="0dp"
     android:background="@android:color/holo_blue_light"
     android:orientation="vertical">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="59dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center|center_vertical"
+        android:background="@android:color/holo_blue_light"
+        android:fontFamily="@font/comfortaa"
+        android:gravity="center"
+        android:text="ParkedUp"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -58,21 +70,16 @@
             android:fontFamily="@font/comfortaa"
             android:textSize="18dp"/>
     </LinearLayout>
-    <TextView
-        android:id="@+id/about"
+
+    <Button
+        android:id="@+id/aboutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Parked was created to solve the problem of   of not being able to figure out where you parked and how far away you are at all times from your car."
+        android:text="About"
         android:fontFamily="@font/comfortaa"
         android:textSize="18dp"/>
 
-    <TextView
-        android:id="@+id/missionStatement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Our misson statement was simple 'Helping to lead people on the path back to their cars'. "
-        android:fontFamily="@font/comfortaa"
-        android:textSize="18dp"/>
+
 
     <Button
         android:id="@+id/home"

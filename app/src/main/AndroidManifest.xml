@@ -30,7 +30,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- make sure to add this so it works on newer devices -->
+        </activity>
+        <activity android:name=".AboutActivity" /> <!-- make sure to add this so it works on newer devices -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

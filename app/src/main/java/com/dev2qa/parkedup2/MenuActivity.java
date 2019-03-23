@@ -1,5 +1,6 @@
 package com.dev2qa.parkedup2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,9 +33,11 @@ public class MenuActivity extends FragmentActivity {
         setContentView(R.layout.activity_menu);
 
         final SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-        boolean MiKi = preferences.getBoolean("MiKi", true);  //default is true
-
-        //MIKI.setChecked(MiKi);
+//        if(MIKI.equals(null)){
+//            boolean MiKi = preferences.getBoolean("MiKi", true);  //default is true
+//        }
+//
+//        MIKI.setChecked(MiKi);
 
         MIKI = (ToggleButton) findViewById(R.id.MIKItoggle);
 //        MIKI.setOnClickListener(new ToggleButton.OnClickListener() {
@@ -107,6 +110,14 @@ public class MenuActivity extends FragmentActivity {
                     Intent intent2 = new Intent(MenuActivity.this, ParkedActivity.class);
                     startActivity(intent2);
                 }
+            }
+        });
+        Button aboutButton = (Button) findViewById(R.id.aboutButton);
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, AboutActivity.class);
+                startActivity(intent);
             }
         });
     }
