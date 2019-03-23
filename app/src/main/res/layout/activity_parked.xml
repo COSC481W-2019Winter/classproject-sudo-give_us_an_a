@@ -25,7 +25,7 @@
             android:text="Settings" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/debug"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />

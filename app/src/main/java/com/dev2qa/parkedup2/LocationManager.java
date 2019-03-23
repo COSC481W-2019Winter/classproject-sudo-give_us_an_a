@@ -9,6 +9,7 @@ public class LocationManager {
     private double[] parkingCoord;
     private double parkingElev;
     private boolean usUnits;
+	private double speed;
 
     public LocationManager(){
         usUnits = true; //default is US
@@ -17,12 +18,13 @@ public class LocationManager {
         elevation = 0;
         parkingCoord = new double[]{};
         parkingElev = 0;
+		speed = 0;
     }
     public double[] getCoordinates(){
         return coordinates;
     }
-    public double getElevation() {
-        return elevation;
+    public void setSpeed(Location location) {
+        speed = (double) location.getSpeed();
     }
 
     public void setParkCoord(Location location) {
@@ -79,6 +81,9 @@ public class LocationManager {
         return formattedCoords(parkingCoord);
     }
 
+    public double getElevation() {
+        return elevation;
+    }
     public void setParkElev(Location location) {
         //Will set parkingElev
     }
@@ -228,7 +233,24 @@ public class LocationManager {
     }
 
     public String timeToCar() {
-        double time = distance/2; //2mph; average walking pace
+        double convertedSpeed;
+        double averageWalkingPace;
+        if (usUnits) {
+            convertedSpeed = speed * 2.237; //m/s to mph
+            averageWalkingPace = 2; //mph
+        }
+        else {
+            convertedSpeed = speed * 3.6; //m/s to km/h
+            averageWalkingPace = 3.219; //km/h
+        }
+
+        double time;
+        //if walking slower than half averageWalkingPace, assume stationary
+        if (convertedSpeed < averageWalkingPace/2)
+            time = distance/averageWalkingPace;
+        else
+            time = distance/convertedSpeed;
+
         return timeFormatted(time);
     }
 
