@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Settings"
-            app:fontFamily="@font/comfortaa"
+            android:fontFamily="@font/comfortaa"
             android:textSize="14dp"/>
 
         <TextView
@@ -42,7 +42,7 @@
             android:background="@android:color/holo_blue_light"
             android:gravity="center"
             android:text="ParkedUp"
-            app:fontFamily="@font/comfortaa"
+            android:fontFamily="@font/comfortaa"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="X"
-            app:fontFamily="@font/comfortaa"
+            android:fontFamily="@font/comfortaa"
             android:textSize="18dp"/>
 
     </LinearLayout>
@@ -80,7 +80,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Parking Spot:"
-        app:fontFamily="@font/comfortaa"
+        android:fontFamily="@font/comfortaa"
         android:textSize="24sp" />
 
     <TextView
@@ -91,7 +91,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="\t\t\t "
-        app:fontFamily="@font/comfortaa"
+        android:fontFamily="@font/comfortaa"
         android:textSize="18dp"/>
 
     <TextView
@@ -102,7 +102,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Current Location:"
-        app:fontFamily="@font/comfortaa"
+        android:fontFamily="@font/comfortaa"
         android:textSize="24sp" />
 
     <TextView
@@ -114,7 +114,7 @@
         android:inputType="textPersonName"
         android:text="\t\t\t "
         android:textSize="18sp"
-        app:fontFamily="@font/comfortaa"/>
+        android:fontFamily="@font/comfortaa" />
 
     <TextView
         android:id="@+id/distance"
@@ -124,7 +124,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Distance:"
-        app:fontFamily="@font/comfortaa"
+        android:fontFamily="@font/comfortaa"
         android:textSize="18sp" />
 
     <TextView
@@ -135,7 +135,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Time to Car:"
-        app:fontFamily="@font/comfortaa"
+        android:fontFamily="@font/comfortaa"
         android:textSize="18sp" />
 
     <Button
@@ -147,7 +147,7 @@
         android:background="@android:color/holo_red_dark"
         android:gravity="center"
         android:text="Delete Paking Spot"
-        app:fontFamily="@font/comfortaa"
+        android:fontFamily="@font/comfortaa"
         android:textSize="18dp"/>
 
 </LinearLayout>

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Settings"
-            app:fontFamily="@font/comfortaa"
+            android:fontFamily="@font/comfortaa"
             android:textSize="14dp"/>
 
         <TextView
@@ -39,7 +39,7 @@
             android:background="@android:color/holo_blue_light"
             android:gravity="center"
             android:text="ParkedUp"
-            app:fontFamily="@font/comfortaa"
+            android:fontFamily="@font/comfortaa"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="X"
-            app:fontFamily="@font/comfortaa"
+            android:fontFamily="@font/comfortaa"
             android:textSize="18dp"/>
 
 
@@ -79,7 +79,7 @@
         android:background="@android:color/holo_green_light"
         android:gravity="center"
         android:text="Park Here"
-        app:fontFamily="@font/comfortaa"
+        android:fontFamily="@font/comfortaa"
         android:textSize="18dp"/>
 
 </LinearLayout>
