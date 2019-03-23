@@ -59,12 +59,16 @@ Drew
 # 5. Notification Refactor
 Sprint 2
 ## Effort
+Small
 ## Acceptance Criteria
+* Phone doesn't vibrate when notification is deleted.
 ## Who is doing it
 Lucas
 ## User Story
+ * User may find it annoying if the phone vibrates when the notification is removed by the user.
 ## Tasks
-
+* Find source of what is causing the phone to vibrate on deletion of notificaiton
+* Remove code/refractor so that the vibration is no longer present.
 
 # 6 Font Change
 Sprint 2
