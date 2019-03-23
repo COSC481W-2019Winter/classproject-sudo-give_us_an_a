@@ -19,7 +19,9 @@
             android:id="@+id/notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Turn Notifications on or off" />
+            android:text="Turn Notifications on or off"
+            app:fontFamily="@font/comfortaa"
+            android:textSize="18dp"/>
 
         <ToggleButton
             android:id="@+id/notify"
@@ -28,7 +30,9 @@
             android:layout_weight="1"
             android:text="ToggleButton"
             android:textOff="Off"
-            android:textOn="On" />
+            android:textOn="On"
+            app:fontFamily="@font/comfortaa"
+            android:textSize="18dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -39,7 +43,9 @@
             android:id="@+id/MIKI"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Miles or Kilometers" />
+            android:text="Miles or Kilometers"
+            app:fontFamily="@font/comfortaa"
+            android:textSize="18dp"/>
 
         <ToggleButton
             android:id="@+id/MIKItoggle"
@@ -48,25 +54,33 @@
             android:layout_weight="1"
             android:text="ToggleButton"
             android:textOff="Miles"
-            android:textOn="Kilometers"/>
+            android:textOn="Kilometers"
+            app:fontFamily="@font/comfortaa"
+            android:textSize="18dp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Parked was created to solve the problem of   of not being able to figure out where you parked and how far away you are at all times from your car." />
+        android:text="Parked was created to solve the problem of   of not being able to figure out where you parked and how far away you are at all times from your car."
+        app:fontFamily="@font/comfortaa"
+        android:textSize="18dp"/>
 
     <TextView
         android:id="@+id/missionStatement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Our misson statement was simple 'Helping to lead people on the path back to their cars'. " />
+        android:text="Our misson statement was simple 'Helping to lead people on the path back to their cars'. "
+        app:fontFamily="@font/comfortaa"
+        android:textSize="18dp"/>
 
     <Button
         android:id="@+id/home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Return" />
+        android:text="Return"
+        app:fontFamily="@font/comfortaa"
+        android:textSize="18dp"/>
 
     <!--<Button-->
         <!--android:id="@+id/mapsBack"-->
