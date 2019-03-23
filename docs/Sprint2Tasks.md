@@ -36,6 +36,8 @@
 | Task | Story |
 | ---- | --- |
 | Fix layout if affected | 4. Text Formatting |
+| Change font | 6. Font Change |
+| Change font size| 6. Font Change |
 ### In Progress
 | Task | Story |
 | ---- | --- |
