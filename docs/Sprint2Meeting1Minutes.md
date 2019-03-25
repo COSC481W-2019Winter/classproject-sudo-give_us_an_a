@@ -7,7 +7,7 @@
 ### What I did last time
 ### Problems
 ### What I will do next
-## Elaenor
+## Eleanor
 ### What I did last time
 * I changed the font and size styles.
 * I seperated the about page.
