@@ -3,6 +3,7 @@ package com.dev2qa.parkedup2;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,6 +14,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -57,6 +60,7 @@ public class ParkedActivity extends FragmentActivity implements
     private boolean locationChanged = false;
 
     private LocationManager locMng = new LocationManager();
+    private NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
 
     private static final int Request_User_Location_Code = 99;
     
@@ -84,6 +88,22 @@ public class ParkedActivity extends FragmentActivity implements
         currCoord.append(" \t");
         distance.append(" \t");
 
+            Intent intent = new Intent(this, ParkedActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+            builder.setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                    .setContentTitle("ParkedUp!")
+                    .setContentText("Your parking spot has been saved!")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            if(MenuActivity.getNotify()) {
+                // notificationId is a unique int for each notification that you must define
+                notificationManager.notify(1, builder.build());
+            }
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
 
