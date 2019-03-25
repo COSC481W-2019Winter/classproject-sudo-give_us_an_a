@@ -1,4 +1,4 @@
-# Sprint 1 Meeting Minutes
+# Sprint 2 Meeting 1 Minutes
 ## Brian
 ### What I did last time
 ### Problems
