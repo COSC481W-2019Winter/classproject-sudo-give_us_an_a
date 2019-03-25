@@ -5,8 +5,10 @@
 ### What I will do next
 ## Drew
 ### What I did last time
+* Researched which way I should implement the app lasting after it is not the main focus
 ### Problems
 ### What I will do next
+* Implement what I discover in order to solve this problem
 ## Eleanor
 ### What I did last time
 * I changed the font and size styles.
