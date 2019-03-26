@@ -94,7 +94,7 @@ public class LocationManager {
         String units, smallUnit;
         double threashold;
         int conversionFactor;
-
+        usUnits = MenuActivity.getMiles();
         if (usUnits) {
             units = "miles";
             smallUnit = "feet";
@@ -135,9 +135,6 @@ public class LocationManager {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
         distance = c * earthRadius;
-    }
-    public void toggleUnits(boolean toggle) {
-        usUnits = toggle;
     }
 
     private String timeFormatted(double time) { //hours

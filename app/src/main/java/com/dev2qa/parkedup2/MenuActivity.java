@@ -43,9 +43,11 @@ public class MenuActivity extends FragmentActivity {
         MIKI.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    locMng.toggleUnits(false);
+                    Miles = true;
+                    //locMng.toggleUnits(false);
                 } else {
-                    locMng.toggleUnits(true);
+                    Miles = false;
+                   // locMng.toggleUnits(true);
                 }
                 saveState(isChecked);
             }
@@ -91,6 +93,9 @@ public class MenuActivity extends FragmentActivity {
     }
     public static boolean getNotify(){
         return notify;
+    }
+    public static boolean getMiles(){
+        return Miles;
     }
     private void saveState(boolean isFavourite) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
