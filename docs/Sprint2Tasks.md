@@ -5,12 +5,13 @@
 | Task | Story |
 | ---- | --- |
 | Ensure Walk path is automatically updating upon movement | 2. Navigation |
-| Test on older phone | 4. Text Formatting |
 ### In Progress
 | Task | Story |
 | ---- | --- |
+| Unit Tests | 2.2 Metric Units |
 | Research Walk Navigation API methods and implement | 2. Navigation |
 ### Completed
+| Test on older phone | 4. Text Formatting |
 
 ## Lucas
 ### Not Started
