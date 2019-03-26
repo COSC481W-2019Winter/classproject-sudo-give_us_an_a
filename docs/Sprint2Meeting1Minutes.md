@@ -26,6 +26,9 @@ I still am figuring out saving and I discover the issue with returning. I didn't
 * fix issue with returning from parked after going into settings.
 ## Lucas
 ### What I did last time
+* Started refactoring code for notifications to help eliminate some bugs
 ### Problems
+* Currently, if the app is closed and the notification still exists, it opens the ParkedActivity but will has not intent for BeginActivity
 ### What I will do next
-
+* Work with Eleanor to figure out how we can improve the current scheme that we are using for activity related intents.
+* Research more on setting up notifications in a way that allows for app persistence.
