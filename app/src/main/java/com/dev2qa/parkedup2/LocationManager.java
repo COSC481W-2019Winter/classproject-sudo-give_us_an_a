@@ -12,7 +12,7 @@ public class LocationManager {
 	private double speed;
 
     public LocationManager(){
-        usUnits = true; //default is US
+        usUnits = MenuActivity.getMiles();
         coordinates = null;
         distance = 0;
         elevation = 0;
@@ -94,7 +94,6 @@ public class LocationManager {
         String units, smallUnit;
         double threashold;
         int conversionFactor;
-        usUnits = MenuActivity.getMiles();
         if (usUnits) {
             units = "miles";
             smallUnit = "feet";
