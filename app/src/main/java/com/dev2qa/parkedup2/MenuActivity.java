@@ -1,5 +1,6 @@
 package com.dev2qa.parkedup2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -88,6 +89,14 @@ public class MenuActivity extends FragmentActivity {
                     Intent intent2 = new Intent(MenuActivity.this, ParkedActivity.class);
                     startActivity(intent2);
                 }
+            }
+        });
+        Button aboutButton = (Button) findViewById(R.id.aboutButton);
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, AboutActivity.class);
+                startActivity(intent);
             }
         });
     }
