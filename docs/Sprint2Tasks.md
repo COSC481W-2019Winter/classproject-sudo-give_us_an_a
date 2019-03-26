@@ -38,7 +38,7 @@
 ### Not Started
 | Task | Story |
 | ---- | --- |
-| Fix layout if affected | 4. Text Formatting |
+
 
 ### In Progress
 | Task | Story |
@@ -53,3 +53,4 @@
 | Change font size| 6. Font Change |
 | Add saving user preferences | 1. Settings |
 | Add in functionality | 1. Settings |
+| Fix layout if affected | 4. Text Formatting |
