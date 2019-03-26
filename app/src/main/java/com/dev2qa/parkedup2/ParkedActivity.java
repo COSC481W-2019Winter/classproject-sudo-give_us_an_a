@@ -100,6 +100,7 @@ public class ParkedActivity extends FragmentActivity implements
                     .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
             if(MenuActivity.getNotify()) {
                 // notificationId is a unique int for each notification that you must define
                 notificationManager.notify(1, builder.build());
@@ -169,7 +170,6 @@ public class ParkedActivity extends FragmentActivity implements
                 Intent intent = new Intent(ParkedActivity.this, MenuActivity.class);
 
                 double[] coord = locMng.getCoordinates();
-                Log.i(TAG, "this is output "+ coord);
                 intent.putExtra("Parked Coords",coord);
 
                 startActivity(intent);

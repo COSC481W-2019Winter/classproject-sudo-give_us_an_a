@@ -3,10 +3,13 @@ package com.dev2qa.parkedup2;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.ToggleButton;
 
 public class MenuActivity extends FragmentActivity {
@@ -34,57 +37,33 @@ public class MenuActivity extends FragmentActivity {
         final SharedPreferences preferences = getPreferences(MODE_PRIVATE);
         boolean MiKi = preferences.getBoolean("MiKi", true);  //default is true
 
-        //MIKI.setChecked(MiKi);
-
+        //https://stackoverflow.com/questions/43166650/save-state-of-togglebutton-android
         MIKI = (ToggleButton) findViewById(R.id.MIKItoggle);
-//        MIKI.setOnClickListener(new ToggleButton.OnClickListener() {
-//
-//            public void onClick(View v) {
-//                SharedPreferences sharedPreferences = PreferenceManager
-//                        .getDefaultSharedPreferences(getApplicationContext());
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putBoolean("toggleButton", MIKI.isChecked());
-//                editor.commit();
-//            }
-//        });
-
-        MIKI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if((MIKI.isChecked())) {
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putBoolean("Miles", true); // value to store
-                    editor.commit();
+        MIKI.setChecked(readState());
+        MIKI.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    locMng.toggleUnits(false);
                 } else {
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putBoolean("Kilometers", false); // value to store
-                    editor.commit();
+                    locMng.toggleUnits(true);
                 }
-                LocationManager lm = new LocationManager();
-                lm.toggleUnits(Miles);
+                saveState(isChecked);
             }
         });
 
-//        MIKI.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    miles = false;
-//                } else {
-//                    // The toggle is disabled
-//                }
-//            }
-//        });
-
         Notify = (ToggleButton) findViewById(R.id.notify);
+        Notify.setChecked(readState());
         Notify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     notify = false;
                 } else {
-                    // The toggle is disabled
+                    notify = true;
                 }
+                saveState(isChecked);
             }
         });
+
         homeButton = (Button) findViewById(R.id.home);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +91,14 @@ public class MenuActivity extends FragmentActivity {
     }
     public static boolean getNotify(){
         return notify;
+    }
+    private void saveState(boolean isFavourite) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedPreferences.edit().putBoolean("State", isFavourite).apply();
+    }
+    private boolean readState() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return sharedPreferences.getBoolean("State", true);
     }
 
 }
