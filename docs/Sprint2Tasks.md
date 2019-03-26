@@ -43,11 +43,12 @@
 ### In Progress
 | Task | Story |
 | ---- | --- |
-| Add saving user preferences | 1. Settings |
+| Add in functionality | 1. Settings |
+
 
 ### Completed
 | Task | Story |
 | ---- | --- |
 | Change font | 6. Font Change |
 | Change font size| 6. Font Change |
-| Add in functionality | 1. Settings |
+| Add saving user preferences | 1. Settings |
