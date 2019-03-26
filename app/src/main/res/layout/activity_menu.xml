@@ -19,7 +19,7 @@
             android:id="@+id/notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Turn Notifications on or off" />
+            android:text="Turn Notifications on or off   " />
 
         <ToggleButton
             android:id="@+id/notify"
@@ -29,6 +29,7 @@
             android:text="ToggleButton"
             android:textOff="Off"
             android:textOn="On" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -47,8 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="ToggleButton"
-            android:textOff="Miles"
-            android:textOn="Kilometers"/>
+            android:textOff="Kilometers"
+            android:textOn="Miles"/>
     </LinearLayout>
     <TextView
         android:id="@+id/about"
