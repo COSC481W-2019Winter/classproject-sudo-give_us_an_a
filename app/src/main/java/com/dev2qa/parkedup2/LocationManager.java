@@ -230,6 +230,13 @@ public class LocationManager {
             return str.toString();
     }
 
+    //for testing
+    public void setDistance(double dist) {
+        distance = dist;
+    }
+    public void setSpeed(double spd) {
+        speed = spd;
+    }
     public String timeToCar() {
         double convertedSpeed;
         double averageWalkingPace;
