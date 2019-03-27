@@ -46,6 +46,11 @@ import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.TravelMode;
+import java.util.concurrent.TimeUnit;
+import org.joda.time.DateTime;
+import java.io.IOException;
+import com.google.maps.errors.ApiException;
 
 public class ParkedActivity extends FragmentActivity implements
         OnMapReadyCallback,
@@ -353,6 +358,35 @@ public class ParkedActivity extends FragmentActivity implements
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+    private DirectionsResult getDirectionsDetails(String origin,String destination,TravelMode mode) {
+        DateTime now = new DateTime();
+        try {
+            return DirectionsApi.newRequest(getGeoContext())
+                    .mode(mode)
+                    .origin(origin)
+                    .destination(destination)
+                    .departureTime(now)
+                    .await();
+        } catch (ApiException e) {
+            e.printStackTrace();
+            return null;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private GeoApiContext getGeoContext() {
+        GeoApiContext geoApiContext = new GeoApiContext();
+        return geoApiContext
+                .setQueryRateLimit(3)
+                .setApiKey(getString(R.string.directionsApiKey))
+                .setConnectTimeout(1, TimeUnit.SECONDS)
+                .setReadTimeout(1, TimeUnit.SECONDS)
+                .setWriteTimeout(1, TimeUnit.SECONDS);
     }
     @Override
     public void onConnectionSuspended(int i) {
