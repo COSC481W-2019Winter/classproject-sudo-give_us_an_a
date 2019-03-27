@@ -8,8 +8,10 @@
 * Complete Navigation
 ## Drew
 ### What I did last time
+* Further research on what would be the best way to make sure the app remembers parked location when returning from being in the background
 ### Problems
 ### What I will do next
+* Implement the prefered method of saving the parked Marker location
 ## Eleanor
 ### What I did last time
 ### Problems
