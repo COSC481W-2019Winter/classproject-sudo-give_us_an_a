@@ -1,4 +1,4 @@
-# Sprint 2 Meeting 1 Minutes
+# Sprint 2 Meeting 2 Minutes
 ## Brian
 ### What I did last time
 * Finished 2.2 Metric Unit Tests
