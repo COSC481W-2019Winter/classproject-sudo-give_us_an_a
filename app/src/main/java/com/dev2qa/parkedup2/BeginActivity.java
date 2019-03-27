@@ -58,6 +58,7 @@ public class BeginActivity extends FragmentActivity implements
     TextView text;
     Button button;
     Button button2;
+    Button buttonMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class BeginActivity extends FragmentActivity implements
         //Find your views
         button = (Button) findViewById(R.id.parkButton);
         button2 = (Button) findViewById(R.id.exit);
+        buttonMenu = (Button) findViewById(R.id.menubutton);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +94,14 @@ public class BeginActivity extends FragmentActivity implements
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        buttonMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BeginActivity.this, MenuActivity.class);
+                startActivity(intent);
             }
         });
 

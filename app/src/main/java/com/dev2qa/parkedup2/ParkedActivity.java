@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,9 +16,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -68,6 +72,7 @@ public class ParkedActivity extends FragmentActivity implements
     
     Button button;
     Button button2;
+    Button menuButton;
     TextView parkedCoord;
     TextView currCoord;
     TextView distance;
@@ -77,13 +82,12 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createNotificationChannel();
         setContentView(R.layout.activity_parked);
-
+        createNotificationChannel();
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
-        distance = findViewById(R.id.distance);
+            distance = findViewById(R.id.distance);
         time = findViewById(R.id.timeToCar);
 
         parkedCoord.append(" \t");
@@ -119,7 +123,8 @@ public class ParkedActivity extends FragmentActivity implements
                     public void onClick(DialogInterface dialog, int choice) {
                         switch (choice) {
                             case DialogInterface.BUTTON_POSITIVE:
-                                finish();
+                                Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
+                                startActivity(intent);
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
@@ -147,6 +152,8 @@ public class ParkedActivity extends FragmentActivity implements
                     public void onClick(DialogInterface dialog, int choice) {
                         switch (choice) {
                             case DialogInterface.BUTTON_POSITIVE:
+                                finish();
+                                finish();
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("EXIT", true);
@@ -161,6 +168,19 @@ public class ParkedActivity extends FragmentActivity implements
                 builder2.setMessage("Are you sure you want to exit? (This will be delete your parked location)")
                         .setPositiveButton("Yes", dialogClickListener2)
                         .setNegativeButton("No", dialogClickListener2).show();
+            }
+        });
+
+        menuButton = findViewById(R.id.menubutton);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ParkedActivity.this, MenuActivity.class);
+
+                double[] coord = locMng.getCoordinates();
+                intent.putExtra("Parked Coords",coord);
+
+                startActivity(intent);
             }
         });
 
@@ -318,7 +338,20 @@ public class ParkedActivity extends FragmentActivity implements
             time.setText("Time to Car: " + locMng.timeToCar());
         }
     }
-
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("1", name, importance);
+            channel.setDescription("1");
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
     @Override
     public void onConnectionSuspended(int i) {
 
