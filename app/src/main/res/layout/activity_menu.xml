@@ -65,8 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="ToggleButton"
-            android:textOff="Miles"
-            android:textOn="Kilometers"
+            android:textOff="Kilometers"
+            android:textOn="Miles"
             android:fontFamily="@font/comfortaa"
             android:textSize="18dp"/>
     </LinearLayout>
