@@ -14,8 +14,13 @@
 * Implement the prefered method of saving the parked Marker location
 ## Eleanor
 ### What I did last time
+* I started testing
+* I added saving of the prefences
+* I added in the checks for notification and miles/km changes
 ### Problems
+* Notification is not in my branch I am working out of so I need to move it in so I can do testing.
 ### What I will do next
+* fix some bug issues that have come up with the new intents being added
 ## Lucas
 ### What I did last time
 * Helped solve some intent problems that caused bugs in how Activities interact with eachother
