@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -19,6 +20,7 @@ public class MenuActivity extends FragmentActivity {
 
     static double[] coords;
     private LocationManager locMng = new LocationManager();
+    private static final String TAG = "MyLog";
 
     Button homeButton;
     Button mapButton;
@@ -32,11 +34,14 @@ public class MenuActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
         final SharedPreferences preferences = getPreferences(MODE_PRIVATE);
         boolean MiKi = preferences.getBoolean("MiKi", true);  //default is true
+
+
 
         //https://stackoverflow.com/questions/43166650/save-state-of-togglebutton-android
         MIKI = (ToggleButton) findViewById(R.id.MIKItoggle);
@@ -59,9 +64,9 @@ public class MenuActivity extends FragmentActivity {
         Notify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    notify = false;
-                } else {
                     notify = true;
+                } else {
+                    notify = false;
                 }
                 saveState(isChecked);
             }
@@ -81,6 +86,7 @@ public class MenuActivity extends FragmentActivity {
                 } else {
                     coords = (double[]) savedInstanceState.getSerializable("Parked Coords");
                 }
+                Log.i(TAG, "MENU coords are "+ coords);
                 // redirects user back to previous screen depending onn if a parked location is stored
                 if (coords == null) {
                     Intent intent = new Intent(MenuActivity.this, BeginActivity.class);
@@ -96,6 +102,14 @@ public class MenuActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, AboutActivity.class);
+                Bundle extras = getIntent().getExtras();
+                try {
+                    coords = (double[]) extras.get("Parked Coords");
+                    intent.putExtra("Parked Coords", coords);
+                    Log.i(TAG, "MENU onclick coords are "+ coords);
+                } catch(Exception NullPointerException){
+
+                }
                 startActivity(intent);
             }
         });

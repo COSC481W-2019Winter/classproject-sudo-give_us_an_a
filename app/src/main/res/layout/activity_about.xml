@@ -5,18 +5,19 @@
     android:orientation="vertical"
     android:background="@android:color/holo_blue_light">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="59dp"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center|center_vertical"
-        android:background="@android:color/holo_blue_light"
-        android:fontFamily="@font/comfortaa"
-        android:gravity="center"
-        android:text="ParkedUp"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="59dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center|center_vertical"
+            android:background="@android:color/holo_blue_light"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="center"
+            android:text="ParkedUp"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
     <TextView
         android:id="@+id/about"
         android:layout_width="match_parent"
