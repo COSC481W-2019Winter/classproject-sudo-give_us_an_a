@@ -18,6 +18,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,20 +39,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-//For Directions
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
+import com.google.maps.android.PolyUtil;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
-import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.maps.android.PolyUtil;
-import org.joda.time.DateTime;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import java.util.List;
 
+import org.joda.time.DateTime;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class ParkedActivity extends FragmentActivity implements
@@ -372,7 +373,7 @@ public class ParkedActivity extends FragmentActivity implements
             notificationManager.createNotificationChannel(channel);
         }
     }
-    private DirectionsResult getDirectionsDetails(String orig,String dest) {
+    private DirectionsResult getDirectionsDetails(String orig, String dest) {
         DateTime now = new DateTime();
         try {
             return DirectionsApi.newRequest(getGeoContext())
@@ -382,12 +383,15 @@ public class ParkedActivity extends FragmentActivity implements
                     .departureTime(now)
                     .await();
         } catch (ApiException e) {
+            Log.e(TAG, e.toString());
             e.printStackTrace();
             return null;
         } catch (InterruptedException e) {
+            Log.e(TAG, e.toString());
             e.printStackTrace();
             return null;
         } catch (IOException e) {
+            Log.e(TAG, e.toString());
             e.printStackTrace();
             return null;
         }
