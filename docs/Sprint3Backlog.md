@@ -1,5 +1,5 @@
 # 1. Walking Navigation
-Sprint 3
+Sprint 1
 ## Effort
 Medium
 ## Acceptance Criteria
@@ -12,7 +12,7 @@ In order for the user to have an accurate time/distance to get to their car and 
 * Ensure Walk path is automatically updating upon movement
 
 # 2. Notification Refactor
-Sprint 3
+Sprint 2
 ## Effort
 Small
 ## Acceptance Criteria
@@ -43,7 +43,7 @@ We want the layout to scale with the phone on size change so taht everything is 
 * Change About Activity -- Elle
 * ReRun and update Test Classes -- Elle
 
-# 4. Not reloading Activites
+# 4. Not Reloading Activites
 Sprint 3
 ## Effort
 medium
