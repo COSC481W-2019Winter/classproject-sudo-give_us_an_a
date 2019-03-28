@@ -2,16 +2,16 @@
 
 ## Brian
 ### Not Started
-| Task | Story |
-| ---- | --- |
-| Ensure Walk path is automatically updating upon movement | 2. Navigation |
 ### In Progress
 | Task | Story |
 | ---- | --- |
+| Ensure Walk path is automatically updating upon movement | 2. Navigation |
+### Completed
+| Task | Story |
+| ---- | --- |
+| Test on older phone | 4. Text Formatting |
 | Unit Tests | 2.2 Metric Units |
 | Research Walk Navigation API methods and implement | 2. Navigation |
-### Completed
-| Test on older phone | 4. Text Formatting |
 
 ## Lucas
 ### Not Started
