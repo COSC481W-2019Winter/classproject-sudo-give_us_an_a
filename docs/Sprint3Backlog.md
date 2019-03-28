@@ -54,6 +54,9 @@ Drew
 ## User Story
 ## Tasks
 
+ _________
+# End Of Sprint 3 Tasks
+ _________
 # 5. Elevation
 ## Effort
 Large
