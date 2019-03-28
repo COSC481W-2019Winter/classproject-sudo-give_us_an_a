@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class BeginActivity extends FragmentActivity implements
 
     //variables of current latitude/longitude
     double latitude, longitude;
+    private static final String TAG = "MyLog";
 
     private GoogleMap mMap;
     private SupportMapFragment mapFrag;
@@ -93,7 +95,7 @@ public class BeginActivity extends FragmentActivity implements
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finishAffinity();
+                finishAffinity();//Call requires API level 16 (current min is 15)
             }
         });
 
@@ -214,7 +216,6 @@ public class BeginActivity extends FragmentActivity implements
         //split up latitude/longitude into variables before creating LatLng object
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        //Toast.makeText(this, "latitude: " + latitude + "\nlongitude: " + longitude, Toast.LENGTH_LONG).show();
 
         LatLng latLng = new LatLng(latitude, longitude);//instantiate lat/lng object
 
@@ -234,19 +235,19 @@ public class BeginActivity extends FragmentActivity implements
         mMap.moveCamera(center);//centers camera right above before zooming
         mMap.animateCamera(zoom);//animated zoom in
 
-        //start the location
-        if(googleApiClient != null){
-            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-        }
+//        //start the location
+//        if(googleApiClient != null){
+//            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+//        }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        //Log.i(TAG, "Location services suspended. Please reconnect.");
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {//called when connection is severed
-
+        //Log.i(TAG, "Location services connection was severed and failed.");
     }
 }
