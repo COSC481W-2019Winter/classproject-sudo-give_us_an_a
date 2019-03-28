@@ -36,6 +36,7 @@ medium
 ## Who is doing it
 Eleanor
 ## User Story
+We want the layout to scale with the phone on size change so taht everything is always lookign nice and all buttons are visable.
 ## Tasks
 * Change Begin Activity
 * Change Parked Activty
