@@ -28,24 +28,15 @@
 
 ## Drew
 ### Not Started
+### In Progress
+### Completed
 | Task | Story |
 | ---- | --- |
 | Research which way I should implement the app lasting after it is not the main focus and implement the answer | 4. How long will parked location last |
-### In Progress
-### Completed
 
 ## Eleanor
 ### Not Started
-| Task | Story |
-| ---- | --- |
-
-
 ### In Progress
-| Task | Story |
-| ---- | --- |
-
-
-
 ### Completed
 | Task | Story |
 | ---- | --- |
