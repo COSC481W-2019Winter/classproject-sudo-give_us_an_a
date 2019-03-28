@@ -1,4 +1,4 @@
-# 1 Setting Menu
+# 1. Setting Menu
 Sprint 2
 ## Effort
 Medium
@@ -15,7 +15,7 @@ The user can change preferences and find out more about the app.
 * Add saving user preferences
 
 
-# 2 Walking Navigation
+# 2. Walking Navigation
 Sprint 1
 ## Effort
 Medium
@@ -95,7 +95,7 @@ Large
 ## User Story
 ## Tasks
 
-# 8 Overall UI style
+# 8. Overall UI style
 ## Effort
 Large
 ## Acceptance Criteria
