@@ -1,9 +1,8 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,9 +14,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -62,10 +64,13 @@ public class ParkedActivity extends FragmentActivity implements
     private LocationManager locMng = new LocationManager();
     private NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
 
+    public static final String CHANNEL_ID = "name";
+
     private static final int Request_User_Location_Code = 99;
     
     Button button;
     Button button2;
+    Button menuButton;
     TextView parkedCoord;
     TextView currCoord;
     TextView distance;
@@ -75,35 +80,40 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createNotificationChannel();
         setContentView(R.layout.activity_parked);
 
+        //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+
+        startService();
+
+        createNotificationChannel();
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
-        distance = findViewById(R.id.distance);
+            distance = findViewById(R.id.distance);
         time = findViewById(R.id.timeToCar);
 
         parkedCoord.append(" \t");
         currCoord.append(" \t");
         distance.append(" \t");
 
-        Intent intent = new Intent(this, ParkedActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+            Intent intent = new Intent(this, ParkedActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        builder.setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
-                .setContentTitle("ParkedUp!")
-                .setContentText("Your parking spot has been saved!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+            builder.setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                    .setContentTitle("ParkedUp!")
+                    .setContentText("Your parking spot has been saved!")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-// notificationId is a unique int for each notification that you must define
-        notificationManager.notify(1, builder.build());
-
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
+            if(MenuActivity.getNotify()) {
+                // notificationId is a unique int for each notification that you must define
+                notificationManager.notify(1, builder.build());
+            }
         //Find your views
         button = (Button) findViewById(R.id.deleteButton);
 
@@ -117,7 +127,8 @@ public class ParkedActivity extends FragmentActivity implements
                     public void onClick(DialogInterface dialog, int choice) {
                         switch (choice) {
                             case DialogInterface.BUTTON_POSITIVE:
-                                finish();
+                                Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
+                                startActivity(intent);
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
@@ -145,6 +156,8 @@ public class ParkedActivity extends FragmentActivity implements
                     public void onClick(DialogInterface dialog, int choice) {
                         switch (choice) {
                             case DialogInterface.BUTTON_POSITIVE:
+                                finish();
+                                finish();
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("EXIT", true);
@@ -159,6 +172,19 @@ public class ParkedActivity extends FragmentActivity implements
                 builder2.setMessage("Are you sure you want to exit? (This will be delete your parked location)")
                         .setPositiveButton("Yes", dialogClickListener2)
                         .setNegativeButton("No", dialogClickListener2).show();
+            }
+        });
+
+        menuButton = findViewById(R.id.menubutton);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ParkedActivity.this, MenuActivity.class);
+
+                double[] coord = locMng.getCoordinates();
+                intent.putExtra("Parked Coords",coord);
+
+                startActivity(intent);
             }
         });
 
@@ -243,7 +269,7 @@ public class ParkedActivity extends FragmentActivity implements
     public void onConnected(@Nullable Bundle bundle) {//called when device is connected
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(900);//1000ms = 1sec
+        locationRequest.setInterval(1000);//1000ms = 1sec
         locationRequest.setFastestInterval(900);
         //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
@@ -304,7 +330,7 @@ public class ParkedActivity extends FragmentActivity implements
         builder.include(latLng);//current location
         LatLngBounds bounds = builder.build();//set the bounds
 
-        int padding = 60; // offset from edges of the map in pixels. value may need to be altered
+        int padding = 70; // offset from edges of the map in pixels. value may need to be altered
         CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         //mMap.moveCamera(updateCam);//maybe better on battery life?
         mMap.animateCamera(updateCam);
@@ -316,7 +342,21 @@ public class ParkedActivity extends FragmentActivity implements
             time.setText("Time to Car: " + locMng.timeToCar());
         }
     }
-
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+//            NotificationChannel channel = new NotificationChannel("1", name, importance);
+            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
+            channel.setDescription("1");
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
     @Override
     public void onConnectionSuspended(int i) {
 
@@ -327,18 +367,57 @@ public class ParkedActivity extends FragmentActivity implements
 
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("1", name, importance);
-            channel.setDescription("1");
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+    public void startService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
     }
+
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
+        stopService();//deleting this will allow you to keep the app running in background, even after exiting
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
+    }
+
+
+//    Test code to determine which part of the activity lifecycle your in
+//
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+//    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+//    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+//    }
+//    @Override
+//    protected void onPause() {
+//        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+//        super.onPause();
+//    }
+//    @Override
+//    protected void onStop() {
+//        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+//        super.onStop();
+//    }
+//    @Override
+//    protected void onDestroy() {
+//        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+//        super.onDestroy();
+//    }
+
+
+
 }

@@ -20,6 +20,9 @@
             android:name=".ParkedActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".MenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".BeginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -27,7 +30,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- make sure to add this so it works on newer devices -->
+        </activity>
+        <activity android:name=".AboutActivity" /> <!-- make sure to add this so it works on newer devices -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -42,6 +46,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        
+        <service android:name=".ForegroundService" />
+
     </application>
 
 </manifest>

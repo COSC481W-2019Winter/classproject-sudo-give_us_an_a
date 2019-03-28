@@ -15,9 +15,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/menubutton"
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Settings"
+            android:fontFamily="@font/comfortaa"
+            android:textSize="14dp"/>
+
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="250dp"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
@@ -30,7 +39,7 @@
             android:background="@android:color/holo_blue_light"
             android:gravity="center"
             android:text="ParkedUp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:fontFamily="@font/comfortaa"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -44,7 +53,9 @@
             android:id="@+id/exit"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="X" />
+            android:text="X"
+            android:fontFamily="@font/comfortaa"
+            android:textSize="18dp"/>
 
 
     </LinearLayout>
@@ -67,6 +78,8 @@
         android:layout_gravity="center_vertical"
         android:background="@android:color/holo_green_light"
         android:gravity="center"
-        android:text="Park Here" />
+        android:text="Park Here"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="18dp"/>
 
 </LinearLayout>
