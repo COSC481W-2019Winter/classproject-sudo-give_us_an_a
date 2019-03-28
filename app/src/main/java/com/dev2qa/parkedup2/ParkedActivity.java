@@ -15,12 +15,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -44,13 +41,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 //For Directions
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
+import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
-import java.util.concurrent.TimeUnit;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
 import org.joda.time.DateTime;
 import java.io.IOException;
-import com.google.maps.errors.ApiException;
+import java.util.concurrent.TimeUnit;
+import java.util.List;
+
+
 
 public class ParkedActivity extends FragmentActivity implements
         OnMapReadyCallback,
@@ -76,7 +78,8 @@ public class ParkedActivity extends FragmentActivity implements
     private NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
 
     private static final int Request_User_Location_Code = 99;
-    
+    private static final int overview = 0;
+
     Button button;
     Button button2;
     Button menuButton;
@@ -344,6 +347,16 @@ public class ParkedActivity extends FragmentActivity implements
             distance.setText("Distance: " + locMng.getDistance());
             time.setText("Time to Car: " + locMng.timeToCar());
         }
+        double[] parkingCoord = locMng.getParkingCoord();
+        String origin = parkingCoord[0] + ", " + parkingCoord[1];
+        String destination = location.getLatitude() + ", " + location.getLongitude();
+
+        DirectionsResult results = getDirectionsDetails(origin,destination);
+        if (results != null) {
+            addPolyline(results, mMap);
+            positionCamera(results.routes[overview], mMap);
+            addMarkersToMap(results, mMap);
+        }
     }
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -359,13 +372,13 @@ public class ParkedActivity extends FragmentActivity implements
             notificationManager.createNotificationChannel(channel);
         }
     }
-    private DirectionsResult getDirectionsDetails(String origin,String destination,TravelMode mode) {
+    private DirectionsResult getDirectionsDetails(String orig,String dest) {
         DateTime now = new DateTime();
         try {
             return DirectionsApi.newRequest(getGeoContext())
-                    .mode(mode)
-                    .origin(origin)
-                    .destination(destination)
+                    .mode(TravelMode.WALKING)
+                    .origin(orig)
+                    .destination(dest)
                     .departureTime(now)
                     .await();
         } catch (ApiException e) {
@@ -387,6 +400,22 @@ public class ParkedActivity extends FragmentActivity implements
                 .setConnectTimeout(1, TimeUnit.SECONDS)
                 .setReadTimeout(1, TimeUnit.SECONDS)
                 .setWriteTimeout(1, TimeUnit.SECONDS);
+    }
+    private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
+        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].startLocation.lat,results.routes[overview].legs[overview].startLocation.lng)).title(results.routes[overview].legs[overview].startAddress));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].endLocation.lat,results.routes[overview].legs[overview].endLocation.lng)).title(results.routes[overview].legs[overview].startAddress).snippet(getEndLocationTitle(results)));
+    }
+
+    private void positionCamera(DirectionsRoute route, GoogleMap mMap) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(route.legs[overview].startLocation.lat, route.legs[overview].startLocation.lng), 12));
+    }
+
+    private void addPolyline(DirectionsResult results, GoogleMap mMap) {
+        List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
+        mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
+    }
+    private String getEndLocationTitle(DirectionsResult results){
+        return  "Time :"+ results.routes[overview].legs[overview].duration.humanReadable + " Distance :" + results.routes[overview].legs[overview].distance.humanReadable;
     }
     @Override
     public void onConnectionSuspended(int i) {

@@ -23,6 +23,9 @@ public class LocationManager {
     public double[] getCoordinates(){
         return coordinates;
     }
+    public double[] getParkingCoord() {
+        return parkingCoord;
+    }
     public void setSpeed(Location location) {
         speed = (double) location.getSpeed();
     }
