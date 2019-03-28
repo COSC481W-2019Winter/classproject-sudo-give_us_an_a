@@ -37,10 +37,11 @@ Eleanor
 ## User Story
 We want the layout to scale with the phone on size change so taht everything is always lookign nice and all buttons are visable.
 ## Tasks
-* Change Begin Activity
-* Change Parked Activty
-* Change Menu Activity
-* Change About Activity
+* Change Begin Activity -- Elle
+* Change Parked Activty -- Elle
+* Change Menu Activity -- Elle
+* Change About Activity -- Elle
+* ReRun and update Test Classes -- Elle
 
 # 4. Not reloading Activites
 Sprint 3
