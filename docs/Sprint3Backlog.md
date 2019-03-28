@@ -9,7 +9,6 @@ Brian/Lucas
 ## User Story
 In order for the user to have an accurate time/distance to get to their car and the way to get there.
 ## Tasks
-* Research Walk Navigation API methods and implement
 * Ensure Walk path is automatically updating upon movement
 
 # 2. Notification Refactor
@@ -29,7 +28,7 @@ Lucas
 # 3. Change layouts
 Sprint 3
 ## Effort
-medium
+Medium
 ## Acceptance Criteria
 * Change the layouts from linear to constraint 
 * Change buttons to not be whole width
