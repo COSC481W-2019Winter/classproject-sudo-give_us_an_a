@@ -26,7 +26,7 @@ public class ParkedActivityTest {
     {
         onView(withId(R.id.deleteButton)).check(matches(isCompletelyDisplayed()));
         onView(withId(R.id.exit)).check(matches(isCompletelyDisplayed()));
-
+        onView(withId(R.id.menubutton)).check(matches(isCompletelyDisplayed()));
     }
 
     @Test
@@ -65,5 +65,9 @@ public class ParkedActivityTest {
         onView(withId(R.id.exit)).perform(click());
         onView(withText("Are you sure you want to exit? (This will be delete your parked location)")).check(matches(isDisplayed()));
         onView(withText("No")).perform(click());
+    }
+    @Test
+    public void menuButtonClickTest() {
+        onView(withId(R.id.menubutton)).perform(click());
     }
 }

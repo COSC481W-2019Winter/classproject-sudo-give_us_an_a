@@ -26,6 +26,7 @@ public class BeginActivityTest {
     {
         onView(withId(R.id.parkButton)).check(matches(isCompletelyDisplayed()));
         onView(withId(R.id.exit)).check(matches(isCompletelyDisplayed()));
+        onView(withId(R.id.menubutton)).check(matches(isCompletelyDisplayed()));
     }
 
     @Test
@@ -36,5 +37,9 @@ public class BeginActivityTest {
     @Test
     public void exitButtonClickTest() {
         onView(withId(R.id.exit)).perform(click());
+    }
+    @Test
+    public void menuButtonClickTest() {
+        onView(withId(R.id.menubutton)).perform(click());
     }
 }

@@ -12,15 +12,17 @@ public class LocationManager {
 	private double speed;
 
     public LocationManager(){
-        usUnits = true; //default is US
-        coordinates = new double[]{};
+        usUnits = MenuActivity.getMiles();
+        coordinates = null;
         distance = 0;
         elevation = 0;
         parkingCoord = new double[]{};
         parkingElev = 0;
 		speed = 0;
     }
-
+    public double[] getCoordinates(){
+        return coordinates;
+    }
     public void setSpeed(Location location) {
         speed = (double) location.getSpeed();
     }
@@ -92,7 +94,6 @@ public class LocationManager {
         String units, smallUnit;
         double threashold;
         int conversionFactor;
-
         if (usUnits) {
             units = "miles";
             smallUnit = "feet";
@@ -133,9 +134,6 @@ public class LocationManager {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
         distance = c * earthRadius;
-    }
-    public void toggleUnits() {
-        usUnits ^= true;
     }
 
     private String timeFormatted(double time) { //hours
