@@ -383,15 +383,15 @@ public class ParkedActivity extends FragmentActivity implements
                     .departureTime(now)
                     .await();
         } catch (ApiException e) {
-            Log.e(TAG, e.toString());
+            Log.e("ApiException", e.toString());
             e.printStackTrace();
             return null;
         } catch (InterruptedException e) {
-            Log.e(TAG, e.toString());
+            Log.e("InterruptedException", e.toString());
             e.printStackTrace();
             return null;
         } catch (IOException e) {
-            Log.e(TAG, e.toString());
+            Log.e("IOException", e.toString());
             e.printStackTrace();
             return null;
         }
