@@ -20,6 +20,9 @@
 
 ## Drew
 ### Not Started
+| Task | Story |
+| ---- | --- |
+| Alter ForegroundService code to make sure this works correctly | 4. Not Reloading Activites |
 ### In Progress
 ### Completed
 
