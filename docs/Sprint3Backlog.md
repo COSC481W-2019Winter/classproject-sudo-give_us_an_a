@@ -9,7 +9,8 @@ Brian/Lucas
 ## User Story
 In order for the user to have an accurate time/distance to get to their car and the way to get there.
 ## Tasks
-* Ensure Walk path is automatically updating upon movement
+* Implement walking directions
+* Test to ensure walking path is automatically updating upon movement
 
 # 2. Notification Refactor
 Sprint 2
