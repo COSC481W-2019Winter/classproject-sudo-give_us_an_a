@@ -2,19 +2,22 @@
 
 ## Brian
 ### Not Started
+| Task | Story |
+| ---- | --- |
+| Test to ensure walking path is automatically updating upon movement | 1. Navigation |
 ### In Progress
 | Task | Story |
 | ---- | --- |
-| Ensure Walk path is automatically updating upon movement | 2. Navigation |
+| Implement walking directions | 1. Navigation |
 ### Completed
 
 ## Lucas
 ### Not Started
 | Task | Story |
 | ---- | --- |
-| Ensure Walk path is automatically updating upon movement | 2. Navigation |
-| Find source of what is causing the phone to vibrate on deletion of notificaiton | 5. Notification Refactor |
-| Remove code/refractor so that the vibration is no longer present. | 5. Notification Refactor |
+| Ensure Walk path is automatically updating upon movement | 1. Navigation |
+| Find source of what is causing the phone to vibrate on deletion of notificaiton | 2. Notification Refactor |
+| Remove code/refractor so that the vibration is no longer present. | 2. Notification Refactor |
 ### In Progress
 ### Completed
 
