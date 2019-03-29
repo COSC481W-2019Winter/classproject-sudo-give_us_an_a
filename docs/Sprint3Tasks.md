@@ -26,6 +26,7 @@
 | Task | Story |
 | ---- | --- |
 | Alter ForegroundService code to make sure clicking the notification button opens last state of ParkedActivity | 4. Not Reloading Activites |
+| Test by clicking the notification button and looking for desired results |
 ### In Progress
 ### Completed
 
