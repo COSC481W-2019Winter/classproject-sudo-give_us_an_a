@@ -54,7 +54,7 @@ Drew
 ## User Story
 * We would like the user to be able to press the parked notification at any time, when Parked Up is in the background, and have it return to the correct screen with the Marker in the correct position still
 ## Tasks
-* Alter ForgroundService code to make sure this works correctly
+* Alter ForegroundService code to make sure this works correctly
 
  _________
 # End Of Sprint 3 Tasks
