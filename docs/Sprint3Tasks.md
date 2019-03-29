@@ -22,7 +22,7 @@
 ### Not Started
 | Task | Story |
 | ---- | --- |
-| Alter ForegroundService code to make sure this works correctly | 4. Not Reloading Activites |
+| Alter ForegroundService code to make sure clicking the notification button opens last state of ParkedActivity | 4. Not Reloading Activites |
 ### In Progress
 ### Completed
 
