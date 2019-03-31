@@ -22,7 +22,7 @@
         android:id="@+id/about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Parked was created to solve the problem of   of not being able to figure out where you parked and how far away you are at all times from your car."
+        android:text="Parked was created to solve the problem of not being able to figure out where you parked and how far away you are at all times from your car."
         android:fontFamily="@font/comfortaa"
         android:textSize="18dp"/>
 

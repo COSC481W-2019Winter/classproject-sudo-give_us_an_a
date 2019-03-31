@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -78,6 +79,8 @@ public class ParkedActivity extends FragmentActivity implements
     private LocationManager locMng = new LocationManager();
     private NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
 
+    public static final String CHANNEL_ID = "name";
+
     private static final int Request_User_Location_Code = 99;
     private static final int overview = 0;
 
@@ -94,6 +97,11 @@ public class ParkedActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
+
+        //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+
+        startService();
+
         createNotificationChannel();
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
@@ -276,7 +284,7 @@ public class ParkedActivity extends FragmentActivity implements
     public void onConnected(@Nullable Bundle bundle) {//called when device is connected
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(900);//1000ms = 1sec
+        locationRequest.setInterval(1000);//1000ms = 1sec
         locationRequest.setFastestInterval(900);
         //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
@@ -337,7 +345,7 @@ public class ParkedActivity extends FragmentActivity implements
         builder.include(latLng);//current location
         LatLngBounds bounds = builder.build();//set the bounds
 
-        int padding = 60; // offset from edges of the map in pixels. value may need to be altered
+        int padding = 70; // offset from edges of the map in pixels. value may need to be altered
         CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         //mMap.moveCamera(updateCam);//maybe better on battery life?
         mMap.animateCamera(updateCam);
@@ -370,9 +378,10 @@ public class ParkedActivity extends FragmentActivity implements
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("1", name, importance);
+//            NotificationChannel channel = new NotificationChannel("1", name, importance);
+            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
             channel.setDescription("1");
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
@@ -439,4 +448,58 @@ public class ParkedActivity extends FragmentActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {//called when connection is severed
 
     }
+
+    public void startService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
+        stopService();//deleting this will allow you to keep the app running in background, even after exiting
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
+    }
+
+
+//    Test code to determine which part of the activity lifecycle your in
+//
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+//    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+//    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+//    }
+//    @Override
+//    protected void onPause() {
+//        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+//        super.onPause();
+//    }
+//    @Override
+//    protected void onStop() {
+//        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+//        super.onStop();
+//    }
+//    @Override
+//    protected void onDestroy() {
+//        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+//        super.onDestroy();
+//    }
+
+
+
 }

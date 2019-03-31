@@ -89,10 +89,10 @@
         android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_light"
         android:ems="10"
+        android:fontFamily="@font/comfortaa"
         android:inputType="textPersonName"
         android:text="\t\t\t "
-        android:fontFamily="@font/comfortaa"
-        android:textSize="18dp"/>
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/header2"

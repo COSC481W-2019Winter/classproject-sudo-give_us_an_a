@@ -22,7 +22,6 @@ public class MenuActivityTest {
         onView(withId(R.id.notify)).check(matches(isCompletelyDisplayed()));
         onView(withId(R.id.MIKItoggle)).check(matches(isCompletelyDisplayed()));
         onView(withId(R.id.home)).check(matches(isCompletelyDisplayed()));
-        onView(withId(R.id.exit)).check(matches(isCompletelyDisplayed()));
         onView(withId(R.id.aboutButton)).check(matches(isCompletelyDisplayed()));
     }
 
@@ -37,10 +36,6 @@ public class MenuActivityTest {
     @Test
     public void homeButtonClickTest(){
         onView(withId(R.id.home)).perform(click());
-    }
-    @Test
-    public void exitButtonClickTest(){
-        onView(withId(R.id.exit)).perform(click());
     }
     @Test
     public void aboutButtonClickTest(){
