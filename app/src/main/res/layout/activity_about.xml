@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/holo_blue_light">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_blue_light">
 
         <TextView
             android:id="@+id/title"
@@ -11,35 +13,68 @@
             android:layout_height="59dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center|center_vertical"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="28dp"
             android:background="@android:color/holo_blue_light"
             android:fontFamily="@font/comfortaa"
             android:gravity="center"
             android:text="ParkedUp"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/missionStatement"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="32dp" />
 
     <TextView
         android:id="@+id/about"
-        android:layout_width="match_parent"
+        android:layout_width="308dp"
         android:layout_height="wrap_content"
-        android:text="Parked was created to solve the problem of not being able to figure out where you parked and how far away you are at all times from your car."
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="76dp"
         android:fontFamily="@font/comfortaa"
-        android:textSize="18dp"/>
+        android:text="Parked was created to solve the problem of not being able to figure out where you parked and how far away you are at all times from your car."
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/missionStatement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Our misson statement was simple 'Helping to lead people on the path back to their cars'. "
+        android:layout_width="308dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="121dp"
         android:fontFamily="@font/comfortaa"
-        android:textSize="18dp"/>
+        android:text="Our misson statement was simple 'Helping to lead people on the path back to their cars'. "
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/about"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.931" />
 
     <Button
         android:id="@+id/backButton"
-        android:layout_width="match_parent"
+        android:layout_width="308dp"
         android:layout_height="wrap_content"
-        android:text="Back"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:fontFamily="@font/comfortaa"
-        android:textSize="18dp"/>
-
-</LinearLayout>
+        android:text="Back"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+    </android.support.constraint.ConstraintLayout>
