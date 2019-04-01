@@ -34,14 +34,15 @@
 ### Not Started
 | Task | Story |
 | ---- | --- |
-| Change Begin Activity | 3. Change layouts |
-| Change Parked Activty | 3. Change layouts |
-| Change Menu Activity | 3. Change layouts |
-| Change About Activity | 3. Change layouts |
+
 | ReRun and update Test Classes | 3. Change layouts |
 ### In Progress
 | Task | Story |
 | ---- | --- |
+| Change Parked Activty | 3. Change layouts |
 ### Completed
 | Task | Story |
 | ---- | --- |
+| Change Menu Activity | 3. Change layouts |
+| Change About Activity | 3. Change layouts |
+| Change Begin Activity | 3. Change layouts |
