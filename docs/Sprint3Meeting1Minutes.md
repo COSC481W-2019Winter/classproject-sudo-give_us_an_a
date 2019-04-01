@@ -10,10 +10,11 @@
 ## Eleanor
 ### What I did last time
 * I changed the about screen to constraint layout
+* I changed the menu screen to constraint layout
 ### Problems
 * There are more connections then I thought, but I think I have it figured out. I could use some help in testing for other phone sizes to make sure everything looks okay.
 ### What I will do next
-* Continue to change other screens.
+* Continue to change other screens ( parked and begin) and run tests
 ## Lucas
 ### What I did last time
 ### Problems
