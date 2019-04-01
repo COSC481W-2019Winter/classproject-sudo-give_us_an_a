@@ -5,8 +5,11 @@
 ### What I will do next
 ## Drew
 ### What I did last time
+* Tested altering the code of the ForgroundService java class, as well as the notification code to try to get the app to reload to its last state when the user clicks the persistant notification button.
 ### Problems
+* Difficulty determining the source of this issue as well as only being able to test it on one device.
 ### What I will do next
+* Continue testing different code in ForgroundService as well as notification code.
 ## Eleanor
 ### What I did last time
 * I changed the about screen to constraint layout
