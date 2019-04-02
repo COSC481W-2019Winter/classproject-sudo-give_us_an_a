@@ -68,14 +68,12 @@ Sprint 4
 small
 ## Acceptance Criteria
 * redo the icon to be better
-* Add icon to notification
 ## Who is doing it
 ## User Story
 We want the app icon to be clean cut and easily distinguishable so the user knows what app they are opening.
 ## Tasks
 * Create new icon
 * import the new icon
-* add icon to notification alert
 * test the new icon appears correctly.
 
 # 8. Background
@@ -83,7 +81,6 @@ We want the app icon to be clean cut and easily distinguishable so the user know
 small
 ## Acceptance Criteria
 * Change background to a pattern (android:background="@drawable/ic_launcher_background") in xml
-* Change font color if needed (android:textColor="@color/common_google_signin_btn_text_dark_default") in xml
 ## Who is doing it
 Eleanor 
 ## User Story
