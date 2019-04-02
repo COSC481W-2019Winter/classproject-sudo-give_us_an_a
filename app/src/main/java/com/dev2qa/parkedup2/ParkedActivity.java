@@ -353,13 +353,12 @@ public class ParkedActivity extends FragmentActivity implements
             time.setText("Time to Car: " + locMng.timeToCar());
         }
         double[] parkingCoord = locMng.getParkingCoord();
-        String origin = parkingCoord[0] + ", " + parkingCoord[1];
-        String destination = location.getLatitude() + ", " + location.getLongitude();
-//        com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0],parkingCoord[1]);
-//        com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(),location.getLongitude());
+//        String origin = parkingCoord[0] + ", " + parkingCoord[1];
+//        String destination = location.getLatitude() + ", " + location.getLongitude();
+        com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0],parkingCoord[1]);
+        com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(),location.getLongitude());
 
         DirectionsResult results = getDirectionsDetails(origin,destination);
-        Log.i(TAG,results.toString());
         if (results != null) {
             Log.i(TAG, "Results good.");
             addPolyline(results, mMap);
@@ -385,13 +384,13 @@ public class ParkedActivity extends FragmentActivity implements
             notificationManager.createNotificationChannel(channel);
         }
     }
-    private DirectionsResult getDirectionsDetails(String orig, String dest) {
-    //private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
+    //private DirectionsResult getDirectionsDetails(String orig, String dest) {
+    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
         try {
-            return DirectionsApi.getDirections(getGeoContext(), orig, dest)
+            return DirectionsApi.newRequest(getGeoContext())
                     .mode(TravelMode.WALKING)
-//                    .origin(orig)
-//                    .destination(dest)
+                    .origin(orig)
+                    .destination(dest)
                     .departureTimeNow()
                     .await();
         } catch (ApiException e) {
@@ -422,7 +421,7 @@ public class ParkedActivity extends FragmentActivity implements
     }
 
     private void addPolyline(DirectionsResult results, GoogleMap mMap) {
-        Log.i(TAG, String.valueOf(results.routes.length));
+        Log.i(TAG, "Length of results.routes:" + String.valueOf(results.routes.length));
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
         mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
     }
