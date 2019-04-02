@@ -1,8 +1,12 @@
 # Sprint 3 Meeting 1 Minutes
 ## Brian
 ### What I did last time
+* Tried to initialize Navigation API.
+* Learned API has gone under major revisions
 ### Problems
+* It would appear the API version of Google Maps Direction API I was using is old and no longer creates the right objects. Trying a newer version should solve this issue.
 ### What I will do next
+* Implement Navigation via newer API
 ## Drew
 ### What I did last time
 * Tested altering the code of the ForgroundService java class, as well as the notification code to try to get the app to reload to its last state when the user clicks the persistant notification button.
