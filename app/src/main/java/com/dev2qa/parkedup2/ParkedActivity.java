@@ -48,11 +48,10 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 
-import org.joda.time.DateTime;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.time.LocalDateTime;
 
 
 public class ParkedActivity extends FragmentActivity implements
@@ -390,7 +389,7 @@ public class ParkedActivity extends FragmentActivity implements
     }
     //private DirectionsResult getDirectionsDetails(String orig, String dest) {
     private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
-        DateTime now = new DateTime();
+        LocalDateTime now = new LocalDateTime();
         try {
             return DirectionsApi.newRequest(getGeoContext())
                     .mode(TravelMode.WALKING)
@@ -413,13 +412,8 @@ public class ParkedActivity extends FragmentActivity implements
         }
     }
     private GeoApiContext getGeoContext() {
-        GeoApiContext geoApiContext = new GeoApiContext();
-        return geoApiContext
-                .setQueryRateLimit(3)
-                .setApiKey(getString(R.string.directionsApiKey))
-                .setConnectTimeout(1, TimeUnit.SECONDS)
-                .setReadTimeout(1, TimeUnit.SECONDS)
-                .setWriteTimeout(1, TimeUnit.SECONDS);
+        GeoApiContext.Builder geoApiContext = new GeoApiContext.Builder();
+        return geoApiContext.apiKey(getString(R.string.directionsApiKey)).build();
     }
     private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
         mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].startLocation.lat,results.routes[overview].legs[overview].startLocation.lng)).title(results.routes[overview].legs[overview].startAddress));
