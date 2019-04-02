@@ -37,7 +37,6 @@
 ### In Progress
 | Task | Story |
 | ---- | --- |
-| test on other devices | 3. Change layouts |
 ### Completed
 | Task | Story |
 | ---- | --- |
@@ -46,3 +45,4 @@
 | Change Begin Activity | 3. Change layouts |
 | Change Parked Activty | 3. Change layouts |
 | ReRun and update Test Classes | 3. Change layouts |
+| test on other devices | 3. Change layouts |
