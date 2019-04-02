@@ -14,6 +14,7 @@
 * I re-ran all my test casses to make sure all buttons and view still worked and did a manual test as well.
 ### Problems
 * I had some issues with constraint layout and the maps fragment but I got them to work together.
+* I also had issues where the layout looked good on my phone but not on others, still doing testing on different devices.
 ### What I will do next
 * Test on many devices to confirm the layout is correct
 ## Lucas
