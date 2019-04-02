@@ -43,6 +43,15 @@ Drew
  _________
 # End Of Sprint 3 Tasks
  _________
+# 5. rename
+## Effort
+small
+## Acceptance Criteria
+* rename from parkedup2 to parked up
+## Who is doing it
+## User Story
+## Tasks
+
 # 5. Elevation
 ## Effort
 Large
