@@ -48,10 +48,8 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 
-
 import java.io.IOException;
 import java.util.List;
-import java.time.LocalDateTime;
 
 
 public class ParkedActivity extends FragmentActivity implements
@@ -355,10 +353,10 @@ public class ParkedActivity extends FragmentActivity implements
             time.setText("Time to Car: " + locMng.timeToCar());
         }
         double[] parkingCoord = locMng.getParkingCoord();
-        //String origin = parkingCoord[0] + ", " + parkingCoord[1];
-        com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0],parkingCoord[1]);
-        //String destination = location.getLatitude() + ", " + location.getLongitude();
-        com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(),location.getLongitude());
+        String origin = parkingCoord[0] + ", " + parkingCoord[1];
+        String destination = location.getLatitude() + ", " + location.getLongitude();
+//        com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0],parkingCoord[1]);
+//        com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(),location.getLongitude());
 
         DirectionsResult results = getDirectionsDetails(origin,destination);
         Log.i(TAG,results.toString());
@@ -387,26 +385,25 @@ public class ParkedActivity extends FragmentActivity implements
             notificationManager.createNotificationChannel(channel);
         }
     }
-    //private DirectionsResult getDirectionsDetails(String orig, String dest) {
-    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
-        LocalDateTime now = new LocalDateTime();
+    private DirectionsResult getDirectionsDetails(String orig, String dest) {
+    //private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
         try {
-            return DirectionsApi.newRequest(getGeoContext())
+            return DirectionsApi.getDirections(getGeoContext(), orig, dest)
                     .mode(TravelMode.WALKING)
-                    .origin(orig)
-                    .destination(dest)
-                    .departureTime(now)
+//                    .origin(orig)
+//                    .destination(dest)
+                    .departureTimeNow()
                     .await();
         } catch (ApiException e) {
-            Log.i("ApiException", e.toString());
+            Log.i(TAG,"ApiException" + e.toString());
             e.printStackTrace();
             return null;
         } catch (InterruptedException e) {
-            Log.i("InterruptedException", e.toString());
+            Log.i(TAG,"InterruptedException" + e.toString());
             e.printStackTrace();
             return null;
         } catch (IOException e) {
-            Log.i("IOException", e.toString());
+            Log.i(TAG,"IOException" + e.toString());
             e.printStackTrace();
             return null;
         }
