@@ -10,7 +10,7 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
-        android:layout_height="400dp"
+        android:layout_height="361dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="64dp"
         android:layout_marginRight="8dp"
@@ -48,9 +48,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="111dp"
-        android:layout_marginEnd="111dp"
-        android:layout_marginBottom="397dp"
+        android:layout_marginBottom="405dp"
         android:fontFamily="@font/comfortaa"
         android:gravity="center"
         android:text="ParkedUp"
@@ -59,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/map"
         app:layout_constraintEnd_toEndOf="@+id/exit"
         app:layout_constraintEnd_toStartOf="@+id/exit"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.91"
         app:layout_constraintStart_toStartOf="@+id/menubutton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -81,7 +79,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.868" />
+        app:layout_constraintVertical_bias="0.812" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -94,7 +92,7 @@
         android:background="@android:color/holo_red_dark"
         android:fontFamily="@font/comfortaa"
         android:gravity="center"
-        android:text="Delete Paking Spot"
+        android:text="Delete Parking Spot"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -135,7 +133,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.682" />
+        app:layout_constraintVertical_bias="0.618" />
 
     <TextView
         android:id="@+id/parkedCoord"
@@ -152,12 +150,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.718" />
+        app:layout_constraintVertical_bias="0.655" />
 
     <TextView
         android:id="@+id/currCoord"
         android:layout_width="350dp"
-        android:layout_height="27dp"
+        android:layout_height="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="32dp"
         android:ems="10"
@@ -170,7 +168,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintVertical_bias="0.737" />
 
     <TextView
         android:id="@+id/header2"
@@ -189,7 +187,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.769" />
+        app:layout_constraintVertical_bias="0.704" />
 
     <TextView
         android:id="@+id/distance"
@@ -207,6 +205,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.834" />
+        app:layout_constraintVertical_bias="0.77" />
 
 </android.support.constraint.ConstraintLayout>
