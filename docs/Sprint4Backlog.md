@@ -59,12 +59,14 @@ Sprint 4
 small
 ## Acceptance Criteria
 * redo the icon to be better
+* Add icon to notification
 ## Who is doing it
 ## User Story
 We want the app icon to be clean cut and easily distinguishable so the user knows what app they are opening.
 ## Tasks
 * Create new icon
 * import the new icon
+* add icon to notification alert
 * test the new icon appears correctly.
 
 # 8. Background
