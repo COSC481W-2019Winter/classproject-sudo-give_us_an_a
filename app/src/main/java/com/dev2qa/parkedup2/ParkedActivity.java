@@ -103,6 +103,8 @@ public class ParkedActivity extends FragmentActivity implements
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
             builder.setSmallIcon(R.mipmap.ic_launcher)
+                    .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
+                        R.mipmap.ic_launcher))
                     .setContentTitle("ParkedUp!")
                     .setContentText("Your parking spot has been saved!")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
