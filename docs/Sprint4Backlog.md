@@ -12,20 +12,6 @@ In order for the user to have an accurate time/distance to get to their car and 
 * Implement walking directions
 * Test to ensure walking path is automatically updating upon movement
 
-# 2. Notification Refactor
-Sprint 2
-## Effort
-Small
-## Acceptance Criteria
-* Phone doesn't vibrate when notification is deleted.
-## Who is doing it
-Lucas
-## User Story
- * User may find it annoying if the phone vibrates when the notification is removed by the user.
-## Tasks
-* Find source of what is causing the phone to vibrate on deletion of notificaiton
-* Remove code/refractor so that the vibration is no longer present.
-
 # 4. Not Reloading Activites
 Sprint 3
 ## Effort
@@ -49,16 +35,6 @@ small
 ## Acceptance Criteria
 * rename from parkedup2 to parked up
 ## Who is doing it
-## User Story
-## Tasks
-
-# 5. Elevation
-## Effort
-Large
-## Acceptance Criteria
-* RESEARCH
-## Who is doing it
-2 people
 ## User Story
 ## Tasks
 
@@ -91,6 +67,17 @@ Have the background of the app be muted but still eyecatching so the user thinks
 * Change About screen
 * Change Menu screen
 * Test on screen 
+
+# 5. Elevation
+## Effort
+Large
+## Acceptance Criteria
+* RESEARCH
+## Who is doing it
+2 people
+## User Story
+## Tasks
+
 
 # 7. Easy mode
 ## Effort
