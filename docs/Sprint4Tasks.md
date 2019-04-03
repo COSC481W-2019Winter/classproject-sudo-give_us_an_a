@@ -27,17 +27,17 @@
 ### Not Started
 | Task | Story |
 | ---- | --- |
-| Create new icon | 6. App icon |
-| import the new icon | 6. App icon |
-| test the new icon appears correctly. | 6. App icon |
+### In Progress
+| Task | Story 
+| ---- | --- |
+| Test the new icon appears correctly. | 6. App icon |
+### Completed
+| Task | Story |
+| ---- | --- |
 | Change Begin screen | 8. Background |
 | Change Parked screen | 8. Background |
 | Change About screen | 8. Background |
 | Change Menu screen | 8. Background |
+| Create new icon | 6. App icon |
+| Import the new icon | 6. App icon |
 | Test on screen | 8. Background |
-### In Progress
-| Task | Story |
-| ---- | --- |
-### Completed
-| Task | Story |
-| ---- | --- |
