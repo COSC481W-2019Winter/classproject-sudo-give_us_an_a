@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light">
+    android:background="@drawable/ic_launcher_background">
 
-    <fragment
+<fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
@@ -68,7 +68,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/holo_blue_light"
         android:ems="10"
         android:fontFamily="@font/comfortaa"
         android:inputType="textPersonName"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light"><![CDATA[
+    android:background="@drawable/ic_launcher_background"><![CDATA[
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -35,7 +35,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="64dp"
-        android:background="@android:color/holo_blue_light"
         android:fontFamily="@font/comfortaa"
         android:gravity="center"
         android:text="ParkedUp"
