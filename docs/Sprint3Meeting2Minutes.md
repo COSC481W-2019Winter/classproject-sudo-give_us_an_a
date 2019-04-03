@@ -5,8 +5,10 @@
 ### What I will do next
 ## Drew
 ### What I did last time
+* Researched and added code pertaining to the our map fragment's activity lifecycle to ensure that the onRestart() method and not onDestroy() method is called when clicking the foreground notification button while the app is in the background.
 ### Problems
 ### What I will do next
+* Continue testing different code in ForgroundService as well as the notification code.
 ## Eleanor
 ### What I did last time
 * I changed the begin screen to constraint layout.
