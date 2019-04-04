@@ -23,6 +23,9 @@ public class LocationManager {
     public double[] getCoordinates(){
         return coordinates;
     }
+    public double[] getParkingCoord() {
+        return parkingCoord;
+    }
     public void setSpeed(Location location) {
         speed = (double) location.getSpeed();
     }
@@ -34,7 +37,8 @@ public class LocationManager {
     public void setCurrCoord(Location location) {
         coordinates = new double[]{location.getLatitude(),location.getLongitude()};
     }
-    private String formattedCoords(double[] coords) {
+    private String formattedCoords(double[] array) {
+        double[] coords = new double[]{array[0],array[1]};
         //Default coordinate is positive
         String lat = "N";
         String lng = "E";
