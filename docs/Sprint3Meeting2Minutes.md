@@ -1,4 +1,4 @@
-# Sprint 3 Meeting 1 Minutes
+# Sprint 3 Meeting 2 Minutes
 ## Brian
 ### What I did last time
 * Tried to implement newer Navigation API
