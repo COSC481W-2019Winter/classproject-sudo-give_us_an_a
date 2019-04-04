@@ -354,19 +354,15 @@ public class ParkedActivity extends FragmentActivity implements
             distance.setText("Distance: " + locMng.getDistance());
             time.setText("Time to Car: " + locMng.timeToCar());
         }
+        
+        //Directions
         double[] parkingCoord = locMng.getParkingCoord();
         com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0],parkingCoord[1]);
         com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(),location.getLongitude());
 
         DirectionsResult results = getDirectionsDetails(origin,destination);
         if ((results != null) && (results.routes.length > 0)) {
-            Log.i(TAG, "Results good.");
             addPolyline(results, mMap);
-            Log.i(TAG, "addPoly good.");
-//            positionCamera(results.routes[overview], mMap);
-//            Log.i(TAG, "camera good.");
-//            addMarkersToMap(results, mMap);
-//            Log.i(TAG, "addmarker good.");
         }
     }
     private void createNotificationChannel() {
@@ -384,7 +380,6 @@ public class ParkedActivity extends FragmentActivity implements
             notificationManager.createNotificationChannel(channel);
         }
     }
-    //private DirectionsResult getDirectionsDetails(String orig, String dest) {
     private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
         try {
             return DirectionsApi.newRequest(getGeoContext())
@@ -407,25 +402,15 @@ public class ParkedActivity extends FragmentActivity implements
             return null;
         }
     }
+
     private GeoApiContext getGeoContext() {
         GeoApiContext.Builder geoApiContext = new GeoApiContext.Builder();
         return geoApiContext.apiKey(getString(R.string.directionsApiKey)).build();
-    }
-//    private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].startLocation.lat,results.routes[overview].legs[overview].startLocation.lng)).title(results.routes[overview].legs[overview].startAddress));
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].endLocation.lat,results.routes[overview].legs[overview].endLocation.lng)).title(results.routes[overview].legs[overview].startAddress).snippet(getEndLocationTitle(results)));
-//    }
-
-    private void positionCamera(DirectionsRoute route, GoogleMap mMap) {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(route.legs[overview].startLocation.lat, route.legs[overview].startLocation.lng), 12));
     }
 
     private void addPolyline(DirectionsResult results, GoogleMap mMap) {
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
         mMap.addPolyline(new PolylineOptions().color(Color.BLUE).addAll(decodedPath));
-    }
-    private String getEndLocationTitle(DirectionsResult results){
-        return  "Time :"+ results.routes[overview].legs[overview].duration.humanReadable + " Distance :" + results.routes[overview].legs[overview].distance.humanReadable;
     }
     @Override
     public void onConnectionSuspended(int i) {
