@@ -11,21 +11,20 @@
 
 ## Lucas
 ### Not Started
+### In Progress
+### Completed
 | Task | Story |
 | ---- | --- |
 | Ensure Walk path is automatically updating upon movement | 1. Navigation |
 | Find source of what is causing the phone to vibrate on deletion of notificaiton | 2. Notification Refactor |
 | Remove code/refractor so that the vibration is no longer present. | 2. Notification Refactor |
-### In Progress
-### Completed
-
 ## Drew
 ### Not Started
+### In Progress
 | Task | Story |
 | ---- | --- |
 | Alter ForegroundService code to make sure clicking the notification button opens last state of ParkedActivity | 4. Not Reloading Activites |
 | Test by clicking the notification button and looking for desired results | 4. Not Reloading Activites |
-### In Progress
 ### Completed
 
 ## Eleanor
