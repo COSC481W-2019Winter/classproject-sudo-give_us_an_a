@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
+import android.graphics.Color;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -354,8 +355,6 @@ public class ParkedActivity extends FragmentActivity implements
             time.setText("Time to Car: " + locMng.timeToCar());
         }
         double[] parkingCoord = locMng.getParkingCoord();
-//        String origin = parkingCoord[0] + ", " + parkingCoord[1];
-//        String destination = location.getLatitude() + ", " + location.getLongitude();
         com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0],parkingCoord[1]);
         com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(),location.getLongitude());
 
@@ -422,9 +421,8 @@ public class ParkedActivity extends FragmentActivity implements
     }
 
     private void addPolyline(DirectionsResult results, GoogleMap mMap) {
-        Log.i(TAG, "Length of results.routes:" + String.valueOf(results.routes.length));
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
-        mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
+        mMap.addPolyline(new PolylineOptions().color(Color.BLUE).addAll(decodedPath));
     }
     private String getEndLocationTitle(DirectionsResult results){
         return  "Time :"+ results.routes[overview].legs[overview].duration.humanReadable + " Distance :" + results.routes[overview].legs[overview].distance.humanReadable;
