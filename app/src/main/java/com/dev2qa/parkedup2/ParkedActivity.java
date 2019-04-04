@@ -359,14 +359,14 @@ public class ParkedActivity extends FragmentActivity implements
         com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(),location.getLongitude());
 
         DirectionsResult results = getDirectionsDetails(origin,destination);
-        if (results != null) {
+        if ((results != null) && (results.routes.length > 0)) {
             Log.i(TAG, "Results good.");
             addPolyline(results, mMap);
             Log.i(TAG, "addPoly good.");
-            positionCamera(results.routes[overview], mMap);
-            Log.i(TAG, "camera good.");
-            addMarkersToMap(results, mMap);
-            Log.i(TAG, "addmarker good.");
+//            positionCamera(results.routes[overview], mMap);
+//            Log.i(TAG, "camera good.");
+//            addMarkersToMap(results, mMap);
+//            Log.i(TAG, "addmarker good.");
         }
     }
     private void createNotificationChannel() {
@@ -411,10 +411,10 @@ public class ParkedActivity extends FragmentActivity implements
         GeoApiContext.Builder geoApiContext = new GeoApiContext.Builder();
         return geoApiContext.apiKey(getString(R.string.directionsApiKey)).build();
     }
-    private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].startLocation.lat,results.routes[overview].legs[overview].startLocation.lng)).title(results.routes[overview].legs[overview].startAddress));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].endLocation.lat,results.routes[overview].legs[overview].endLocation.lng)).title(results.routes[overview].legs[overview].startAddress).snippet(getEndLocationTitle(results)));
-    }
+//    private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].startLocation.lat,results.routes[overview].legs[overview].startLocation.lng)).title(results.routes[overview].legs[overview].startAddress));
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].endLocation.lat,results.routes[overview].legs[overview].endLocation.lng)).title(results.routes[overview].legs[overview].startAddress).snippet(getEndLocationTitle(results)));
+//    }
 
     private void positionCamera(DirectionsRoute route, GoogleMap mMap) {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(route.legs[overview].startLocation.lat, route.legs[overview].startLocation.lng), 12));
