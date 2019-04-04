@@ -92,6 +92,7 @@
         android:fontFamily="@font/comfortaa"
         android:gravity="center"
         android:text="ParkedUp"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/map"
