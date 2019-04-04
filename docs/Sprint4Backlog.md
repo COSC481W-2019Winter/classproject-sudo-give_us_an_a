@@ -49,6 +49,7 @@ We want the app icon to be clean cut and easily distinguishable so the user know
 small
 ## Acceptance Criteria
 * Change background to a pattern (android:background="@drawable/ic_launcher_background") in xml
+* Change text color to white
 ## Who is doing it
 Eleanor 
 ## User Story
