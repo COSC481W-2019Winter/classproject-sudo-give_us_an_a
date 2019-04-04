@@ -1,8 +1,11 @@
 # Sprint 3 Meeting 1 Minutes
 ## Brian
 ### What I did last time
+* Tried to implement newer Navigation API
 ### Problems
+* ResultsDirection still returns no routes.
 ### What I will do next
+*  Passing onto team mates for debugging. If all else fails, will start from scratch tonight.
 ## Drew
 ### What I did last time
 * Researched and added code pertaining to the our map fragment's activity lifecycle to ensure that the onRestart() method and not onDestroy() method is called when clicking the foreground notification button while the app is in the background.
