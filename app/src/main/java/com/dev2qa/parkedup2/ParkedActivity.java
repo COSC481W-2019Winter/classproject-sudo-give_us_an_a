@@ -348,21 +348,23 @@ public class ParkedActivity extends FragmentActivity implements
         //mMap.moveCamera(updateCam);//maybe better on battery life?
         mMap.animateCamera(updateCam);
 
-        if (location != null){
+        if (location != null) {
             locMng.setCurrCoord(location);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
             distance.setText("Distance: " + locMng.getDistance());
-            time.setText("Time to Car: " + locMng.timeToCar());
-        }
-        
-        //Directions
-        double[] parkingCoord = locMng.getParkingCoord();
-        com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0],parkingCoord[1]);
-        com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(),location.getLongitude());
 
-        DirectionsResult results = getDirectionsDetails(origin,destination);
-        if ((results != null) && (results.routes.length > 0)) {
-            addPolyline(results, mMap);
+
+            //Directions
+            double[] parkingCoord = locMng.getParkingCoord();
+            com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0], parkingCoord[1]);
+            com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(), location.getLongitude());
+
+            DirectionsResult results = getDirectionsDetails(origin, destination);
+            if ((results != null) && (results.routes.length > 0)) {
+                addPolyline(results, mMap);
+                time.setText("Time to Car: " + getTimeFromResults(results));
+            } else
+                time.setText("Time to Car: " + locMng.timeToCar());
         }
     }
     private void createNotificationChannel() {
@@ -412,6 +414,11 @@ public class ParkedActivity extends FragmentActivity implements
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
         mMap.addPolyline(new PolylineOptions().color(Color.BLUE).addAll(decodedPath));
     }
+
+    private String getTimeFromResults(DirectionsResult results){
+        return results.routes[overview].legs[overview].duration.humanReadable;
+    }
+
     @Override
     public void onConnectionSuspended(int i) {
 
