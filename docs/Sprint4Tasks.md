@@ -30,14 +30,14 @@
 ### In Progress
 | Task | Story 
 | ---- | --- |
-| Test the new icon appears correctly. | 6. App icon |
+| Test the new icon appears correctly. | 4. App icon |
 ### Completed
 | Task | Story |
 | ---- | --- |
-| Change Begin screen | 8. Background |
-| Change Parked screen | 8. Background |
-| Change About screen | 8. Background |
-| Change Menu screen | 8. Background |
-| Create new icon | 6. App icon |
-| Import the new icon | 6. App icon |
-| Test on screen | 8. Background |
+| Change Begin screen | 5. Background |
+| Change Parked screen | 5. Background |
+| Change About screen | 5. Background |
+| Change Menu screen | 5. Background |
+| Create new icon | 4. App icon |
+| Import the new icon | 4. App icon |
+| Test on screen | 5. Background |
