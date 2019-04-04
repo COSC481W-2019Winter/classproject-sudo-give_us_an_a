@@ -85,11 +85,16 @@ public class LocationManager {
         return formattedCoords(parkingCoord);
     }
 
-    public double getElevation() {
-        return elevation;
-    }
-    public void setParkElev(Location location) {
-        //Will set parkingElev
+    public double getElevation() { return elevation; }
+
+    public void setParkElev(float altitude) {
+        String units, smallUnit;
+        if(usUnits) {
+            elevation = altitude * 0.000621371; //meters to miles;
+        }
+        else {
+            elevation = altitude/1000;
+        }
     }
     public String getDistance() {
         distanceToCar();

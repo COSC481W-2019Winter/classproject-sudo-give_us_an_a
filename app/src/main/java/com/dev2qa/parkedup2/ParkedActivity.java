@@ -9,6 +9,7 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,6 +73,7 @@ public class ParkedActivity extends FragmentActivity implements
     private LocationRequest locationRequest;
     private Marker currentUserLocationMarker;
     private boolean locationChanged = false;
+    private SensorManager elevation;
 
     private LocationManager locMng = new LocationManager();
     private NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
@@ -295,6 +297,7 @@ public class ParkedActivity extends FragmentActivity implements
         locationFirst = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
         locMng.setParkCoord(locationFirst);
+        locMng.setParkElev(elevation.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, SensorManager.PRESSURE_STANDARD_ATMOSPHERE));
         parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
         //split up latitude/longitude into variables before creating LatLng object
