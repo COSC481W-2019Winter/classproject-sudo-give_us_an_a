@@ -1,19 +1,13 @@
-# 1. Walking Navigation
-Sprint 1
+# 1. Walking Navigation design
 ## Effort
-Medium
 ## Acceptance Criteria
-* on path 
 ## Who is doing it
-Brian/Lucas
+Brian
 ## User Story
-In order for the user to have an accurate time/distance to get to their car and the way to get there.
 ## Tasks
-* Implement walking directions
-* Test to ensure walking path is automatically updating upon movement
 
-# 4. Not Reloading Activites
-Sprint 3
+# 2. Not Reloading Activites
+Sprint 4
 ## Effort
 medium
 ## Acceptance Criteria
@@ -26,19 +20,17 @@ Drew
 * Alter ForegroundService code to make sure this works correctly
 * Test by clicking notification button and make sure the app reloads correctly in the last state
 
- _________
-# End Of Sprint 3 Tasks
- _________
-# 5. rename
+# 3. rename
 ## Effort
 small
 ## Acceptance Criteria
 * rename from parkedup2 to parked up
 ## Who is doing it
+Lucas
 ## User Story
 ## Tasks
 
-# 6. App icon
+# 4. App icon
 Sprint 4
 ## Effort
 small
@@ -52,7 +44,7 @@ We want the app icon to be clean cut and easily distinguishable so the user know
 * import the new icon
 * test the new icon appears correctly.
 
-# 8. Background
+# 5. Background
 ## Effort
 small
 ## Acceptance Criteria
@@ -68,16 +60,19 @@ Have the background of the app be muted but still eyecatching so the user thinks
 * Change Menu screen
 * Test on screen 
 
-# 5. Elevation
+# 6. Elevation
 ## Effort
 Large
 ## Acceptance Criteria
 * RESEARCH
 ## Who is doing it
-2 people
+Lucas
 ## User Story
 ## Tasks
 
+ _________
+# End Of Sprint 4 Tasks
+ _________
 
 # 7. Easy mode
 ## Effort
@@ -88,7 +83,7 @@ medium
 ## User Story
 ## Tasks
 
-# 9. Map View
+# 8. Map View
 ## Effort
 large
 ## Acceptance Criteria
