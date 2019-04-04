@@ -2,14 +2,12 @@
 
 ## Brian
 ### Not Started
-| Task | Story |
-| ---- | --- |
-| Test to ensure walking path is automatically updating upon movement | 1. Navigation |
 ### In Progress
+### Completed
 | Task | Story |
 | ---- | --- |
 | Implement walking directions | 1. Navigation |
-### Completed
+| Test to ensure walking path is automatically updating upon movement | 1. Navigation |
 
 ## Lucas
 ### Not Started
