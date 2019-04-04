@@ -24,5 +24,10 @@
 * Test on many devices to confirm the layout is correct
 ## Lucas
 ### What I did last time
+* Worked on updating api calls and refactored notification calls for ForegroundService.
 ### Problems
+* APIs out of date relative to android version for local code. Updated, but still having issues with API keys.
+* Still trying to get to help Brian fix ResultsDirection returning no routs.
 ### What I will do next
+* Debug API key issues
+* Help with debugging ResultsDirection and navigation issues.
