@@ -1,8 +1,9 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,8 +15,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -40,6 +39,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.DirectionsApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.android.PolyUtil;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.TravelMode;
+
+import java.io.IOException;
+import java.util.List;
+
 
 public class ParkedActivity extends FragmentActivity implements
         OnMapReadyCallback,
@@ -67,7 +78,8 @@ public class ParkedActivity extends FragmentActivity implements
     public static final String CHANNEL_ID = "name";
 
     private static final int Request_User_Location_Code = 99;
-    
+    private static final int overview = 0;
+
     Button button;
     Button button2;
     Button menuButton;
@@ -90,7 +102,7 @@ public class ParkedActivity extends FragmentActivity implements
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
-            distance = findViewById(R.id.distance);
+        distance = findViewById(R.id.distance);
         time = findViewById(R.id.timeToCar);
 
         parkedCoord.append(" \t");
@@ -101,7 +113,7 @@ public class ParkedActivity extends FragmentActivity implements
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-            builder.setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+            builder.setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle("ParkedUp!")
                     .setContentText("Your parking spot has been saved!")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -341,6 +353,22 @@ public class ParkedActivity extends FragmentActivity implements
             distance.setText("Distance: " + locMng.getDistance());
             time.setText("Time to Car: " + locMng.timeToCar());
         }
+        double[] parkingCoord = locMng.getParkingCoord();
+//        String origin = parkingCoord[0] + ", " + parkingCoord[1];
+//        String destination = location.getLatitude() + ", " + location.getLongitude();
+        com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0],parkingCoord[1]);
+        com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(),location.getLongitude());
+
+        DirectionsResult results = getDirectionsDetails(origin,destination);
+        if ((results != null) && (results.routes.length > 0)) {
+            Log.i(TAG, "Results good.");
+            addPolyline(results, mMap);
+            Log.i(TAG, "addPoly good.");
+//            positionCamera(results.routes[overview], mMap);
+//            Log.i(TAG, "camera good.");
+//            addMarkersToMap(results, mMap);
+//            Log.i(TAG, "addmarker good.");
+        }
     }
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -356,6 +384,50 @@ public class ParkedActivity extends FragmentActivity implements
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+    //private DirectionsResult getDirectionsDetails(String orig, String dest) {
+    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
+        try {
+            return DirectionsApi.newRequest(getGeoContext())
+                    .mode(TravelMode.WALKING)
+                    .origin(orig)
+                    .destination(dest)
+                    .departureTimeNow()
+                    .await();
+        } catch (ApiException e) {
+            Log.i(TAG,"ApiException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (InterruptedException e) {
+            Log.i(TAG,"InterruptedException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            Log.i(TAG,"IOException" + e.toString());
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private GeoApiContext getGeoContext() {
+        GeoApiContext.Builder geoApiContext = new GeoApiContext.Builder();
+        return geoApiContext.apiKey(getString(R.string.directionsApiKey)).build();
+    }
+//    private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].startLocation.lat,results.routes[overview].legs[overview].startLocation.lng)).title(results.routes[overview].legs[overview].startAddress));
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].endLocation.lat,results.routes[overview].legs[overview].endLocation.lng)).title(results.routes[overview].legs[overview].startAddress).snippet(getEndLocationTitle(results)));
+//    }
+
+    private void positionCamera(DirectionsRoute route, GoogleMap mMap) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(route.legs[overview].startLocation.lat, route.legs[overview].startLocation.lng), 12));
+    }
+
+    private void addPolyline(DirectionsResult results, GoogleMap mMap) {
+        Log.i(TAG, "Length of results.routes:" + String.valueOf(results.routes.length));
+        List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
+        mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
+    }
+    private String getEndLocationTitle(DirectionsResult results){
+        return  "Time :"+ results.routes[overview].legs[overview].duration.humanReadable + " Distance :" + results.routes[overview].legs[overview].distance.humanReadable;
     }
     @Override
     public void onConnectionSuspended(int i) {
@@ -374,7 +446,7 @@ public class ParkedActivity extends FragmentActivity implements
 
     @Override
     protected void onDestroy() {
-        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
         super.onDestroy();
         stopService();//deleting this will allow you to keep the app running in background, even after exiting
     }
