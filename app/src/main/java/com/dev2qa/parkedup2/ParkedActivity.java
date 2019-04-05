@@ -351,8 +351,6 @@ public class ParkedActivity extends FragmentActivity implements
         if (location != null) {
             locMng.setCurrCoord(location);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
-            distance.setText("Distance: " + locMng.getDistance());
-
 
             //Directions
             double[] parkingCoord = locMng.getParkingCoord();
@@ -362,9 +360,12 @@ public class ParkedActivity extends FragmentActivity implements
             DirectionsResult results = getDirectionsDetails(origin, destination);
             if ((results != null) && (results.routes.length > 0)) {
                 addPolyline(results, mMap);
+                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
                 time.setText("Time to Car: " + getTimeFromResults(results));
-            } else
+            } else {
                 time.setText("Time to Car: " + locMng.timeToCar());
+                distance.setText("Distance: " + locMng.getDistance());
+            }
         }
     }
     private void createNotificationChannel() {
@@ -417,6 +418,10 @@ public class ParkedActivity extends FragmentActivity implements
 
     private String getTimeFromResults(DirectionsResult results){
         return results.routes[overview].legs[overview].duration.humanReadable;
+    }
+
+    private long getDistanceFromResults(DirectionsResult results) {
+        return results.routes[overview].legs[overview].distance.inMeters;
     }
 
     @Override
