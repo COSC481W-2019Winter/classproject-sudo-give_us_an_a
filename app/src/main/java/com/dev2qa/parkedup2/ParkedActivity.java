@@ -36,13 +36,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Dash;
-import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
@@ -52,7 +49,6 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.TravelMode;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -131,7 +127,7 @@ public class ParkedActivity extends FragmentActivity implements
                 notificationManager.notify(1, builder.build());
             }
         //Find your views
-        button = (Button) findViewById(R.id.deleteButton);
+        button = findViewById(R.id.deleteButton);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +156,7 @@ public class ParkedActivity extends FragmentActivity implements
         });
 
         //Find your views
-        button2 = (Button) findViewById(R.id.exit);
+        button2 = findViewById(R.id.exit);
 
         //Assign a listener to your button
         button2.setOnClickListener(new View.OnClickListener() {
