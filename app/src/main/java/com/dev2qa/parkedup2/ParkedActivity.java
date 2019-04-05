@@ -127,7 +127,7 @@ public class ParkedActivity extends FragmentActivity implements
                 notificationManager.notify(1, builder.build());
             }
         //Find your views
-        button = (Button) findViewById(R.id.deleteButton);
+        button = findViewById(R.id.deleteButton);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +156,7 @@ public class ParkedActivity extends FragmentActivity implements
         });
 
         //Find your views
-        button2 = (Button) findViewById(R.id.exit);
+        button2 = findViewById(R.id.exit);
 
         //Assign a listener to your button
         button2.setOnClickListener(new View.OnClickListener() {

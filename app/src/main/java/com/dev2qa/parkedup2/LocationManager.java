@@ -96,21 +96,21 @@ public class LocationManager {
 
         double dist = distance;
         String units, smallUnit;
-        double threashold;
+        double threshold;
         int conversionFactor;
         if (usUnits) {
             units = "miles";
             smallUnit = "feet";
-            threashold = 0.19; //mi
+            threshold = 0.19; //mi
             conversionFactor = 5280; //miles to feet
         }
         else {
             units = "kilometers";
             smallUnit = "meters";
-            threashold = 1; //km
+            threshold = 1; //km
             conversionFactor = 1000; //km to m
         }
-        if (dist < threashold) {
+        if (dist < threshold) {
             dist *= conversionFactor;
             units = smallUnit;
         }
