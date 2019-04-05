@@ -86,9 +86,18 @@ public class LocationManager {
     }
 
     public double getElevation() { return elevation; }
+    public double getParkElevation() { return parkingElev; }
 
-    public void setParkElev(float altitude) {
-        String units, smallUnit;
+    public void setParkElevation(float altitude) {
+        if(usUnits) {
+            parkingElev = altitude * 0.000621371; //meters to miles;
+        }
+        else {
+            parkingElev = altitude/1000;
+        }
+    }
+
+    public void setElevation(float altitude) {
         if(usUnits) {
             elevation = altitude * 0.000621371; //meters to miles;
         }

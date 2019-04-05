@@ -73,7 +73,6 @@ public class ParkedActivity extends FragmentActivity implements
     private LocationRequest locationRequest;
     private Marker currentUserLocationMarker;
     private boolean locationChanged = false;
-    private SensorManager elevation;
 
     private LocationManager locMng = new LocationManager();
     private NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
@@ -82,6 +81,7 @@ public class ParkedActivity extends FragmentActivity implements
 
     private static final int Request_User_Location_Code = 99;
     private static final int overview = 0;
+    private float ATM = SensorManager.PRESSURE_STANDARD_ATMOSPHERE;
 
     Button button;
     Button button2;
@@ -297,7 +297,8 @@ public class ParkedActivity extends FragmentActivity implements
         locationFirst = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
         locMng.setParkCoord(locationFirst);
-        locMng.setParkElev(elevation.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, SensorManager.PRESSURE_STANDARD_ATMOSPHERE));
+        float elevation = SensorManager.getAltitude(ATM, ATM);
+        locMng.setParkElevation(elevation);
         parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
         //split up latitude/longitude into variables before creating LatLng object
@@ -353,6 +354,8 @@ public class ParkedActivity extends FragmentActivity implements
 
         if (location != null) {
             locMng.setCurrCoord(location);
+            float elevation = SensorManager.getAltitude(ATM, ATM);
+            locMng.setElevation(elevation);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
             distance.setText("Distance: " + locMng.getDistance());
 
