@@ -1,4 +1,4 @@
-# Sprint 3 Tasks
+# Sprint 4 Tasks
 
 ## Brian
 ### Not Started
@@ -7,7 +7,12 @@
 ### In Progress
 | Task | Story |
 | ---- | --- |
+| Change Line color and thickness | 1. Navigation Design |
 ### Completed
+| Task | Story |
+| ---- | --- |
+| Use time from results instead of fly-by-crow | 1. Navigation Design |
+| Use distance from results instead of fly-by-crow | 1. Navigation Design |
 
 ## Lucas
 ### Not Started

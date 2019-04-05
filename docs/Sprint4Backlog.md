@@ -1,15 +1,23 @@
-# 1. Walking Navigation design
+# 1. Walking Navigation Design
+Sprint 4
 ## Effort
+Small
 ## Acceptance Criteria
+* Walking path is easily visible
 ## Who is doing it
 Brian
 ## User Story
+The walking path should be very visible and easy to follow.
 ## Tasks
+* Change Line color and thickness
+* Use time from results instead of fly-by-crow
+* Use distance from results instead of fly-by-crow
+
 
 # 2. Not Reloading Activites
 Sprint 4
 ## Effort
-medium
+Medium
 ## Acceptance Criteria
 * not have activities reload when re entering the app
 ## Who is doing it
@@ -20,11 +28,11 @@ Drew
 * Alter ForegroundService code to make sure this works correctly
 * Test by clicking notification button and make sure the app reloads correctly in the last state
 
-# 3. rename
+# 3. App Rename
 ## Effort
-small
+Small
 ## Acceptance Criteria
-* rename from parkedup2 to parked up
+* Rename app from parkedup2 to parkedup
 ## Who is doing it
 Lucas
 ## User Story
@@ -33,20 +41,20 @@ Lucas
 # 4. App icon
 Sprint 4
 ## Effort
-small
+Small
 ## Acceptance Criteria
-* redo the icon to be better
+* Redo the icon to be better
 ## Who is doing it
 ## User Story
 We want the app icon to be clean cut and easily distinguishable so the user knows what app they are opening.
 ## Tasks
 * Create new icon
-* import the new icon
-* test the new icon appears correctly.
+* Import the new icon
+* Test the new icon appears correctly
 
 # 5. Background
 ## Effort
-small
+Small
 ## Acceptance Criteria
 * Change background to a pattern (android:background="@drawable/ic_launcher_background") in xml
 * Change text color to white
