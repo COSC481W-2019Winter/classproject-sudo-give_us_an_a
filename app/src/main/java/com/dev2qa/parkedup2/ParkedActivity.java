@@ -48,6 +48,8 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 
+import java.time.ZonedDateTime;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -92,9 +94,11 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_parked);
 
-        //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
         startService();
 
@@ -429,6 +433,7 @@ public class ParkedActivity extends FragmentActivity implements
     private String getEndLocationTitle(DirectionsResult results){
         return  "Time :"+ results.routes[overview].legs[overview].duration.humanReadable + " Distance :" + results.routes[overview].legs[overview].distance.humanReadable;
     }
+
     @Override
     public void onConnectionSuspended(int i) {
 
@@ -458,32 +463,32 @@ public class ParkedActivity extends FragmentActivity implements
 
 
 //    Test code to determine which part of the activity lifecycle your in
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onPause() {
-//        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
-//        super.onPause();
-//    }
-//    @Override
-//    protected void onStop() {
-//        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-//        super.onStop();
-//    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onPause() {
+        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+        super.onPause();
+    }
+    @Override
+    protected void onStop() {
+        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+        super.onStop();
+    }
 //    @Override
 //    protected void onDestroy() {
 //        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
