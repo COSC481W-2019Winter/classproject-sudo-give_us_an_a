@@ -15,8 +15,8 @@
 ### In Progress
 | Task | Story |
 | ---- | --- |
-| Refactor and rename app components from ParkedUp2 back to just ParkedUp | 3. App Rename |
-| Start research and find solutions for implementing elevation/altitude measurements for navigation | 6. Elevation |
+| Refactor from ParkedUp2 back to just ParkedUp | 3. App Rename |
+| Start research for elevation/altitude measurements | 6. Elevation |
 ### Completed
 
 ## Drew
