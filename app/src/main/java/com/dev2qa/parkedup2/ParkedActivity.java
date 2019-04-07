@@ -47,7 +47,6 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.android.PolyUtil;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
-import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 
 import java.io.IOException;
@@ -130,7 +129,7 @@ public class ParkedActivity extends FragmentActivity implements
                 notificationManager.notify(1, builder.build());
             }
         //Find your views
-        button = (Button) findViewById(R.id.deleteButton);
+        button = findViewById(R.id.deleteButton);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +158,7 @@ public class ParkedActivity extends FragmentActivity implements
         });
 
         //Find your views
-        button2 = (Button) findViewById(R.id.exit);
+        button2 = findViewById(R.id.exit);
 
         //Assign a listener to your button
         button2.setOnClickListener(new View.OnClickListener() {
@@ -359,8 +358,6 @@ public class ParkedActivity extends FragmentActivity implements
             Log.i(TAG,"Elevation" + elevation);
             locMng.setElevation(elevation);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
-            distance.setText("Distance: " + locMng.getDistance());
-
 
             //Directions
             double[] parkingCoord = locMng.getParkingCoord();
@@ -370,9 +367,12 @@ public class ParkedActivity extends FragmentActivity implements
             DirectionsResult results = getDirectionsDetails(origin, destination);
             if ((results != null) && (results.routes.length > 0)) {
                 addPolyline(results, mMap);
+                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
                 time.setText("Time to Car: " + getTimeFromResults(results));
-            } else
+            } else {
                 time.setText("Time to Car: " + locMng.timeToCar());
+                distance.setText("Distance: " + locMng.getDistance());
+            }
         }
     }
     private void createNotificationChannel() {
@@ -420,11 +420,15 @@ public class ParkedActivity extends FragmentActivity implements
 
     private void addPolyline(DirectionsResult results, GoogleMap mMap) {
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
-        mMap.addPolyline(new PolylineOptions().color(Color.BLUE).addAll(decodedPath));
+        mMap.addPolyline(new PolylineOptions().width(30).color(Color.BLUE).addAll(decodedPath));
     }
 
     private String getTimeFromResults(DirectionsResult results){
         return results.routes[overview].legs[overview].duration.humanReadable;
+    }
+
+    private long getDistanceFromResults(DirectionsResult results) {
+        return results.routes[overview].legs[overview].distance.inMeters;
     }
 
     @Override
