@@ -36,7 +36,9 @@ Small
 ## Who is doing it
 Lucas
 ## User Story
+* We want people to correctly identify the name of the app with the original veriosn
 ## Tasks
+* Refactor code to change naming from ParkedUp2 back to ParkedUp
 
 # 4. App icon
 Sprint 4
@@ -77,7 +79,7 @@ Large
 ## Who is doing it
 Lucas
 ## User Story
-To allow for the user to find their parkign location if they have parked in a parking structe we want to show the elevation to help them.
+To allow for the user to find their parking location if they have parked in a parking structure we want to show the elevation to help them.
 ## Tasks
 * Research how to do this and if it is possible to implement into our code.
 
