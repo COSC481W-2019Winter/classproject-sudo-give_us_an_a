@@ -1,8 +1,11 @@
 # Sprint 4 Meeting 1 Minutes
 ## Brian
 ### What I did last time
+* Completed the Navigation Design changes PBI
 ### Problems
+None
 ### What I will do next
+* Help Lucas research/implement the Elevation PBI 
 ## Drew
 ### What I did last time
 ### Problems
