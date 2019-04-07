@@ -23,7 +23,7 @@ Medium
 ## Who is doing it
 Drew
 ## User Story
-* We would like the user to be able to press the parked notification at any time, when Parked Up is in the background, and have it return to the correct screen with the Marker in the correct position still
+We would like the user to be able to press the parked notification at any time when ParkedUp is in the backgroun, and have it return to the correct screen with the Marker in the correct position still
 ## Tasks
 * Alter ForegroundService code to make sure this works correctly
 * Test by clicking notification button and make sure the app reloads correctly in the last state
@@ -36,7 +36,7 @@ Small
 ## Who is doing it
 Lucas
 ## User Story
-* We want people to correctly identify the name of the app with the original veriosn
+We want people to correctly identify the name of the app with the original version
 ## Tasks
 * Refactor code to change naming from ParkedUp2 back to ParkedUp
 
