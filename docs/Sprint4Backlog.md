@@ -77,7 +77,9 @@ Large
 ## Who is doing it
 Lucas
 ## User Story
+To allow for the user to find their parkign location if they have parked in a parking structe we want to show the elevation to help them.
 ## Tasks
+* Research how to do this and if it is possible to implement into our code.
 
  _________
 # End Of Sprint 4 Tasks
