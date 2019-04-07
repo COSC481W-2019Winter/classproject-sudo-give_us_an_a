@@ -81,7 +81,7 @@ public class ParkedActivity extends FragmentActivity implements
 
     private static final int Request_User_Location_Code = 99;
     private static final int overview = 0;
-    private float ATM = SensorManager.PRESSURE_STANDARD_ATMOSPHERE;
+    private static final float ATM = SensorManager.PRESSURE_STANDARD_ATMOSPHERE;
 
     Button button;
     Button button2;
@@ -298,6 +298,7 @@ public class ParkedActivity extends FragmentActivity implements
 
         locMng.setParkCoord(locationFirst);
         float elevation = SensorManager.getAltitude(ATM, ATM);
+        Log.i(TAG,"Elevation: " + elevation);
         locMng.setParkElevation(elevation);
         parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
@@ -355,6 +356,7 @@ public class ParkedActivity extends FragmentActivity implements
         if (location != null) {
             locMng.setCurrCoord(location);
             float elevation = SensorManager.getAltitude(ATM, ATM);
+            Log.i(TAG,"Elevation" + elevation);
             locMng.setElevation(elevation);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
             distance.setText("Distance: " + locMng.getDistance());
