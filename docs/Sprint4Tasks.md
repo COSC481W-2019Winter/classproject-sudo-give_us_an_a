@@ -31,7 +31,7 @@
 ### In Progress
 | Task | Story 
 | ---- | --- |
-| Test the new icon appears correctly. | 4. App icon |
+
 ### Completed
 | Task | Story |
 | ---- | --- |
@@ -42,3 +42,4 @@
 | Create new icon | 4. App icon |
 | Import the new icon | 4. App icon |
 | Test on screen | 5. Background |
+| Test the new icon appears correctly. | 4. App icon |
