@@ -15,9 +15,9 @@ None
 * I changed the backgrounds
 * I created and imported a new icon
 ### Problems
-* Not so much a probelm, but I want others opinions on the icon itself
+* Not so much a problem, but I want others opinions on the icon itself
 ### What I will do next
-* Test icon on differnt phones
+* Test icon on different phones
 ## Lucas
 ### What I did last time
 ### Problems
