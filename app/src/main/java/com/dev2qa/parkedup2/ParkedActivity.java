@@ -43,10 +43,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
+import com.google.maps.ElevationApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.android.PolyUtil;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.ElevationResult;
 import com.google.maps.model.TravelMode;
 
 import java.io.IOException;
@@ -296,9 +298,6 @@ public class ParkedActivity extends FragmentActivity implements
         locationFirst = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
         locMng.setParkCoord(locationFirst);
-        float elevation = SensorManager.getAltitude(ATM, ATM);
-        Log.i(TAG,"Elevation: " + elevation);
-        locMng.setParkElevation(elevation);
         parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
         //split up latitude/longitude into variables before creating LatLng object
@@ -311,6 +310,13 @@ public class ParkedActivity extends FragmentActivity implements
         }
 
         LatLng latLng = new LatLng(latitudeFirst, longitudeFirst);//instantiate lat/lng object
+
+        //Elevation
+        float elevation = SensorManager.getAltitude(ATM, ATM);
+        locMng.setParkElevation(elevation);
+        Log.i(TAG,"Initial Elevation: " + elevation);
+        ElevationResult result = getElevation(new com.google.maps.model.LatLng(latitudeFirst, longitudeFirst));
+        Log.i(TAG,"Google ElevationAPI: " + result.elevation);
 
         //changes things about the marker
         MarkerOptions markerOptions = new MarkerOptions();
@@ -399,15 +405,32 @@ public class ParkedActivity extends FragmentActivity implements
                     .departureTimeNow()
                     .await();
         } catch (ApiException e) {
-            Log.i(TAG,"ApiException" + e.toString());
+            Log.i(TAG,"Direction ApiException" + e.toString());
             e.printStackTrace();
             return null;
         } catch (InterruptedException e) {
-            Log.i(TAG,"InterruptedException" + e.toString());
+            Log.i(TAG,"Direction InterruptedException" + e.toString());
             e.printStackTrace();
             return null;
         } catch (IOException e) {
-            Log.i(TAG,"IOException" + e.toString());
+            Log.i(TAG,"Direction IOException" + e.toString());
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private ElevationResult getElevation(com.google.maps.model.LatLng latlng) {
+        try {
+            return ElevationApi.getByPoint(getGeoContext(), latlng).await();
+        } catch (ApiException e) {
+            Log.i(TAG,"Elevation ApiException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (InterruptedException e) {
+            Log.i(TAG,"Elevation InterruptedException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            Log.i(TAG,"Elevation IOException" + e.toString());
             e.printStackTrace();
             return null;
         }
