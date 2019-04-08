@@ -412,9 +412,26 @@ public class ParkedActivity extends FragmentActivity implements
 
     private void addPolyline(DirectionsResult results, GoogleMap mMap) {
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
+        Log.i(TAG,"LatLag List;");
+        for (LatLng l : decodedPath)
+            Log.i(TAG, "Lat: " + getLat(l) + " Lng: " + getLng(l));
         mMap.addPolyline(new PolylineOptions().width(30).color(Color.BLUE).addAll(decodedPath));
     }
 
+    private double getLat(LatLng l) {
+        String str = l.toString();
+        int latBegin = str.indexOf("(")+1;
+        int latEnd = str.indexOf(",");
+        return Double.valueOf(str.substring(latBegin,latEnd));
+    }
+
+    private double getLng(LatLng l) {
+        String str = l.toString();
+        int latBegin = str.indexOf(",")+1;
+        int latEnd = str.indexOf(")");
+        return Double.valueOf(str.substring(latBegin,latEnd));
+    }
+    
     private String getTimeFromResults(DirectionsResult results){
         return results.routes[overview].legs[overview].duration.humanReadable;
     }
