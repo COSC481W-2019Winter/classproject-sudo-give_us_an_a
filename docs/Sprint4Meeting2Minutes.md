@@ -1,8 +1,12 @@
 # Sprint 4 Meeting 1 Minutes
 ## Brian
 ### What I did last time
+* Added Google Elevation API in
+* Fixed ZoomBug Issue #31
 ### Problems
+* None
 ### What I will do next
+* Continue Elevation development
 ## Drew
 ### What I did last time
 ### Problems
