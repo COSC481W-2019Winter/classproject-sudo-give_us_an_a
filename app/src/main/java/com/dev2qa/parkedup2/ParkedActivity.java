@@ -78,6 +78,7 @@ public class ParkedActivity extends FragmentActivity implements
     public static final String CHANNEL_ID = "name";
 
     private static final int Request_User_Location_Code = 99;
+    private static final int paddingZoom = 70; // offset from edges of the map in pixels. value may need to be altered
     private static final int overview = 0;
 
     Button button;
@@ -346,13 +347,13 @@ public class ParkedActivity extends FragmentActivity implements
 
             DirectionsResult results = getDirectionsDetails(origin, destination);
             if ((results != null) && (results.routes.length > 0)) {
-                addPolyline(results, mMap);
+                addPolyline(results);
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
                 time.setText("Time to Car: " + getTimeFromResults(results));
             } else {
                 updateCamera(latLng);
-                time.setText("Time to Car: " + locMng.timeToCar());
                 distance.setText("Distance: " + locMng.getDistance());
+                time.setText("Time to Car: " + locMng.timeToCar());
             }
         }
     }
@@ -364,8 +365,7 @@ public class ParkedActivity extends FragmentActivity implements
         builder.include(latLng);//current location
         LatLngBounds bounds = builder.build();//set the bounds
 
-        int padding = 70; // offset from edges of the map in pixels. value may need to be altered
-        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, paddingZoom);
         //mMap.moveCamera(updateCam);//maybe better on battery life?
         mMap.animateCamera(updateCam);
     }
@@ -398,51 +398,18 @@ public class ParkedActivity extends FragmentActivity implements
         return geoApiContext.apiKey(getString(R.string.directionsApiKey)).build();
     }
 
-    private void addPolyline(DirectionsResult results, GoogleMap mMap) {
+    private void addPolyline(DirectionsResult results) {
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
-        //Log.i(TAG,"LatLag List;");
+        mMap.addPolyline(new PolylineOptions().width(30).color(Color.BLUE).addAll(decodedPath));
 
-//        //Finding the most Northeast and Southwest LatLng
-//        LatLng southwest;
-//        LatLng northeast;
-//        //Cardinal directions initialized to maximum
-//        //[-90,90]
-//        double north = 0.0;
-//        double south = -0.0;
-//        //[-180,180)
-//        double east = 0.0;
-//        double west = 0.0;
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (LatLng latLng : decodedPath)
+            builder.include(latLng);
+        LatLngBounds bounds = builder.build();
 
-
-        for (LatLng latLong : decodedPath) {
-//            if ((getLat(latLong) > north) && (getLng(latLong) > east))
-//                northeast = latLong;
-//            if ((getLat(latLong) > north) && (getLng(latLong) > east))
-//                northeast = latLong;
-            builder.include(latLong);
-            //Log.i(TAG, "Lat: " + getLat(latLong) + " Lng: " + getLng(latLong));
-        }
-        LatLngBounds bounds = builder.build();//set the bounds
-        int padding = 70; // offset from edges of the map in pixels. value may need to be altered
-        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, paddingZoom);
         //mMap.moveCamera(updateCam);//maybe better on battery life?
         mMap.animateCamera(updateCam);
-        mMap.addPolyline(new PolylineOptions().width(30).color(Color.BLUE).addAll(decodedPath));
-    }
-
-    private double getLat(LatLng latLong) {
-        String str = latLong.toString();
-        int latBegin = str.indexOf("(")+1;
-        int latEnd = str.indexOf(",");
-        return Double.valueOf(str.substring(latBegin,latEnd));
-    }
-
-    private double getLng(LatLng latLong) {
-        String str = latLong.toString();
-        int latBegin = str.indexOf(",")+1;
-        int latEnd = str.indexOf(")");
-        return Double.valueOf(str.substring(latBegin,latEnd));
     }
 
     private String getTimeFromResults(DirectionsResult results){
