@@ -12,7 +12,7 @@ None
 ### Problems
 * Just generally understanding the process of restoring a state
 ### What I will do next
-* Implement the correct usage of onSaveInstanceState() to restore marker position when user clicks the app's notification button
+* Implement the correct usage of onSaveInstanceState() to restore marker position when user clicks the app's notification button and test it by clicking the notification and seeing the results
 ## Eleanor
 ### What I did last time
 * I changed the backgrounds
