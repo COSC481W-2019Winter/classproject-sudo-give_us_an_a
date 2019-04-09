@@ -60,6 +60,7 @@ public class ParkedActivity extends FragmentActivity implements
 
     //latitude longitude of static parked position
     public double latitudeFirst, longitudeFirst;
+    private boolean storedInstanceState = false;
 
     private Location locationFirst;
 
@@ -100,52 +101,54 @@ public class ParkedActivity extends FragmentActivity implements
     }
 
     //no need to check for savedInstanceState == null with this
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        latitudeFirst = savedInstanceState.getDouble("latFirst");
+//        longitudeFirst = savedInstanceState.getDouble("longFirst");
+//        Log.i(TAG, "onRestoreInstanceState");
+//        Log.i(TAG, "onRestore latFirst: " + latitudeFirst);
+//        Log.i(TAG, "onRestore longFirst: " + longitudeFirst);
+//    }
+
+
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        latitudeFirst = savedInstanceState.getDouble("latFirst");
-        longitudeFirst = savedInstanceState.getDouble("longFirst");
-
-        Log.i(TAG, "onRestoreInstanceState");
-        Log.i(TAG, "onRestore latFirst: " + latitudeFirst);
-        Log.i(TAG, "onRestore longFirst: " + longitudeFirst);
+    public void finish() {
+        super.finish();
+        //perhaps save values to SharedPreferences or SQLlite database here
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
-
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
-        // kill this
         if(savedInstanceState != null){
+            Log.i(TAG, "\n ");
             Log.i(TAG, "savedInstanceState != null");
-//            Log.i(TAG, "IF = TRUE");
-//            Log.i(TAG, "latitudeFirst: " + latitudeFirst);
-//            Log.i(TAG, "longitudeFirst: " + longitudeFirst);
-//
-//            latitudeFirst = savedInstanceState.getDouble("latitudeFirst");
-//            longitudeFirst = savedInstanceState.getDouble("longitudeFirst");
-//            Log.i(TAG, "latitudeFirst: " + latitudeFirst);
-//            Log.i(TAG, "longitudeFirst: " + longitudeFirst);
+            Log.i(TAG, "IF = TRUE");
+            Log.i(TAG, "latFirst: " + latitudeFirst);
+            Log.i(TAG, "longFirst: " + longitudeFirst);
+            latitudeFirst = savedInstanceState.getDouble("latFirst");
+            longitudeFirst = savedInstanceState.getDouble("longFirst");
+            storedInstanceState = true;
+            Log.i(TAG, "latFirst: " + latitudeFirst);
+            Log.i(TAG, "longFirst: " + longitudeFirst);
+            Log.i(TAG, "\n ");
         } else {
+            storedInstanceState = false;
             Log.i(TAG, "savedInstanceState == null");
-//            Log.i(TAG, "ELSE = TRUE");
-//            Log.i(TAG, "latitudeFirst: " + latitudeFirst);
-//            Log.i(TAG, "longitudeFirst: " + longitudeFirst);
-//
-//            latitudeFirst = savedInstanceState.getDouble("latitudeFirst");
-//            longitudeFirst = savedInstanceState.getDouble("longitudeFirst");
-//            Log.i(TAG, "latitudeFirst: " + latitudeFirst);
-//            Log.i(TAG, "longitudeFirst: " + longitudeFirst);
+            Log.i(TAG, "ELSE = TRUE");
+
+            Log.i(TAG, "latFirst: " + latitudeFirst);
+            Log.i(TAG, "longFirst: " + longitudeFirst);
         }
 
 
         startService();
 
-        createNotificationChannel();
+        //createNotificationChannel();
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
@@ -343,9 +346,18 @@ public class ParkedActivity extends FragmentActivity implements
         locMng.setParkCoord(locationFirst);
         parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
-        //split up latitude/longitude into variables before creating LatLng object
-        latitudeFirst = locationFirst.getLatitude();
-        longitudeFirst = locationFirst.getLongitude();
+
+        //new code
+        if(storedInstanceState == false){
+            //split up latitude/longitude into variables before creating LatLng object
+            latitudeFirst = locationFirst.getLatitude();
+            longitudeFirst = locationFirst.getLongitude();
+            Log.i(TAG, "storedInstanceState == false");
+        } else {
+            Log.i(TAG, "storedInstanceState == true");
+        }
+
+
 
         //this makes sure only one marker is placed
         if(currentUserLocationMarker != null){
@@ -494,6 +506,7 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     protected void onDestroy() {
         //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        //Log.i(TAG, "onDestroy()");
         super.onDestroy();
         stopService();//deleting this will allow you to keep the app running in background, even after exiting
     }
@@ -509,30 +522,36 @@ public class ParkedActivity extends FragmentActivity implements
 //    @Override
 //    protected void onStart() {
 //        super.onStart();
-//        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
-//    }
+//        Log.i(TAG, "onStart()");
+//        //Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+//   }
 //    @Override
 //    protected void onResume() {
 //        super.onResume();
-//        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+//        Log.i(TAG, "onResume()");
+//        //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
 //    }
 //    @Override
 //    protected void onRestart() {
 //        super.onRestart();
-//        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+//        Log.i(TAG, "onRestart()");
+//        //Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
 //    }
 //    @Override
 //    protected void onPause() {
-//        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+//        Log.i(TAG, "onPause()");
+//        //Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
 //        super.onPause();
 //    }
 //    @Override
 //    protected void onStop() {
-//        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+//        Log.i(TAG, "onStop()");
+//        //Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
 //        super.onStop();
 //    }
 //    @Override
 //    protected void onDestroy() {
+//        Log.i(TAG, "onDestroy()");
 //        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
 //        super.onDestroy();
 //    }

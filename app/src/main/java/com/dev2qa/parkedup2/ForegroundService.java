@@ -24,6 +24,9 @@ public class ForegroundService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Intent notificationIntent = new Intent(this, ParkedActivity.class);
+        //Probably kill this
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
 
