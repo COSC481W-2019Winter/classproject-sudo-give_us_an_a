@@ -347,7 +347,7 @@ public class ParkedActivity extends FragmentActivity implements
 
             DirectionsResult results = getDirectionsDetails(origin, destination);
             if ((results != null) && (results.routes.length > 0)) {
-                addPolyline(results);
+                addPolyline(results, latLng);
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
                 time.setText("Time to Car: " + getTimeFromResults(results));
             } else {
@@ -398,11 +398,13 @@ public class ParkedActivity extends FragmentActivity implements
         return geoApiContext.apiKey(getString(R.string.directionsApiKey)).build();
     }
 
-    private void addPolyline(DirectionsResult results) {
+    private void addPolyline(DirectionsResult results, LatLng currentPosition) {
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
         mMap.addPolyline(new PolylineOptions().width(30).color(Color.BLUE).addAll(decodedPath));
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(currentUserLocationMarker.getPosition());
+        builder.include(currentPosition);
         for (LatLng latLng : decodedPath)
             builder.include(latLng);
         LatLngBounds bounds = builder.build();
