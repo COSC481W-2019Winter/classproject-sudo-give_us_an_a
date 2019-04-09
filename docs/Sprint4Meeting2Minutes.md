@@ -21,5 +21,9 @@
 * Work on starting brainstorming for the flyer statement.
 ## Lucas
 ### What I did last time
+* Worked on refactoring all code from parkedUp2 to parkedUp
+* Began working on implementing elevation code
 ### Problems
+* Altitude from sensor manager doesn't work yet and needs some researh to figure out why.
 ### What I will do next
+* Work towards making sensor manager get altitude data to use with elevation code.
