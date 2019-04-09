@@ -8,8 +8,11 @@ None
 * Help Lucas research/implement the Elevation PBI 
 ## Drew
 ### What I did last time
+* Researched the correct usage of onSaveInstanceState() to correctly restore activity variables
 ### Problems
+* Just generally understanding the process of restoring a state
 ### What I will do next
+* Implement the correct usage of onSaveInstanceState() to restore marker position when user clicks the app's notification button
 ## Eleanor
 ### What I did last time
 * I changed the backgrounds
