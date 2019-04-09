@@ -78,6 +78,7 @@ public class ParkedActivity extends FragmentActivity implements
     public static final String CHANNEL_ID = "name";
 
     private static final int Request_User_Location_Code = 99;
+    private static final int paddingZoom = 70; // offset from edges of the map in pixels. value may need to be altered
     private static final int overview = 0;
 
     Button button;
@@ -335,18 +336,6 @@ public class ParkedActivity extends FragmentActivity implements
             locationChanged = true;
         }
 
-        //moves camera to bounds of marker and current position
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-        builder.include(currentUserLocationMarker.getPosition());//original marker position
-        builder.include(latLng);//current location
-        LatLngBounds bounds = builder.build();//set the bounds
-
-        int padding = 70; // offset from edges of the map in pixels. value may need to be altered
-        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        //mMap.moveCamera(updateCam);//maybe better on battery life?
-        mMap.animateCamera(updateCam);
-
         if (location != null) {
             locMng.setCurrCoord(location);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
@@ -358,30 +347,29 @@ public class ParkedActivity extends FragmentActivity implements
 
             DirectionsResult results = getDirectionsDetails(origin, destination);
             if ((results != null) && (results.routes.length > 0)) {
-                addPolyline(results, mMap);
+                addPolyline(results);
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
                 time.setText("Time to Car: " + getTimeFromResults(results));
             } else {
-                time.setText("Time to Car: " + locMng.timeToCar());
+                updateCamera(latLng);
                 distance.setText("Distance: " + locMng.getDistance());
+                time.setText("Time to Car: " + locMng.timeToCar());
             }
         }
     }
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel("1", name, importance);
-            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
-            channel.setDescription("1");
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+    private void updateCamera(LatLng latLng) {
+        //moves camera to bounds of marker and current position
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        builder.include(currentUserLocationMarker.getPosition());//original marker position
+        builder.include(latLng);//current location
+        LatLngBounds bounds = builder.build();//set the bounds
+
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, paddingZoom);
+        //mMap.moveCamera(updateCam);//maybe better on battery life?
+        mMap.animateCamera(updateCam);
     }
+
     private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
         try {
             return DirectionsApi.newRequest(getGeoContext())
@@ -410,9 +398,18 @@ public class ParkedActivity extends FragmentActivity implements
         return geoApiContext.apiKey(getString(R.string.directionsApiKey)).build();
     }
 
-    private void addPolyline(DirectionsResult results, GoogleMap mMap) {
+    private void addPolyline(DirectionsResult results) {
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
         mMap.addPolyline(new PolylineOptions().width(30).color(Color.BLUE).addAll(decodedPath));
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (LatLng latLng : decodedPath)
+            builder.include(latLng);
+        LatLngBounds bounds = builder.build();
+
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, paddingZoom);
+        //mMap.moveCamera(updateCam);//maybe better on battery life?
+        mMap.animateCamera(updateCam);
     }
 
     private String getTimeFromResults(DirectionsResult results){
@@ -421,6 +418,22 @@ public class ParkedActivity extends FragmentActivity implements
 
     private long getDistanceFromResults(DirectionsResult results) {
         return results.routes[overview].legs[overview].distance.inMeters;
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+//            NotificationChannel channel = new NotificationChannel("1", name, importance);
+            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
+            channel.setDescription("1");
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     @Override
