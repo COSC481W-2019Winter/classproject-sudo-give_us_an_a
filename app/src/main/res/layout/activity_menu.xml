@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light"><![CDATA[
+    android:background="@drawable/ic_launcher_background"><![CDATA[
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -35,10 +35,10 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="64dp"
-        android:background="@android:color/holo_blue_light"
         android:fontFamily="@font/comfortaa"
         android:gravity="center"
         android:text="ParkedUp"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/notify"
@@ -55,6 +55,7 @@
         android:layout_marginEnd="27dp"
         android:fontFamily="@font/comfortaa"
         android:text="Turn Notifications "
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/notify"
@@ -70,6 +71,7 @@
         android:layout_marginStart="32dp"
         android:fontFamily="@font/comfortaa"
         android:text="Miles or Kilometers"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

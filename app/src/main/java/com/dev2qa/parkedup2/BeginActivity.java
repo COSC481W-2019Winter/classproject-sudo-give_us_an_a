@@ -72,9 +72,9 @@ public class BeginActivity extends FragmentActivity implements
         }
 
         //Find your views
-        button = (Button) findViewById(R.id.parkButton);
-        button2 = (Button) findViewById(R.id.exit);
-        buttonMenu = (Button) findViewById(R.id.menubutton);
+        button = findViewById(R.id.parkButton);
+        button2 = findViewById(R.id.exit);
+        buttonMenu = findViewById(R.id.menubutton);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +89,7 @@ public class BeginActivity extends FragmentActivity implements
         }
 
         //Find your views
-        button2 = (Button) findViewById(R.id.exit);
+        button2 = findViewById(R.id.exit);
 
         //Assign a listener to your button
         button2.setOnClickListener(new View.OnClickListener() {

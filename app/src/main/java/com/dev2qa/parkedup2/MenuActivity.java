@@ -1,17 +1,14 @@
 package com.dev2qa.parkedup2;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.ToggleButton;
 
 public class MenuActivity extends FragmentActivity {
@@ -44,35 +41,25 @@ public class MenuActivity extends FragmentActivity {
 
 
         //https://stackoverflow.com/questions/43166650/save-state-of-togglebutton-android
-        MIKI = (ToggleButton) findViewById(R.id.MIKItoggle);
+        MIKI = findViewById(R.id.MIKItoggle);
         MIKI.setChecked(readState());
         MIKI.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Miles = true;
-                    //locMng.toggleUnits(false);
-                } else {
-                    Miles = false;
-                   // locMng.toggleUnits(true);
-                }
+                Miles = isChecked;
                 saveState(isChecked);
             }
         });
 
-        Notify = (ToggleButton) findViewById(R.id.notify);
+        Notify = findViewById(R.id.notify);
         Notify.setChecked(readState());
         Notify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    notify = true;
-                } else {
-                    notify = false;
-                }
+                notify = isChecked;
                 saveState(isChecked);
             }
         });
 
-        homeButton = (Button) findViewById(R.id.home);
+        homeButton = findViewById(R.id.home);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +84,7 @@ public class MenuActivity extends FragmentActivity {
                 }
             }
         });
-        Button aboutButton = (Button) findViewById(R.id.aboutButton);
+        Button aboutButton = findViewById(R.id.aboutButton);
         aboutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

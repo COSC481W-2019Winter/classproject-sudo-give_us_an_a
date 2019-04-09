@@ -16,12 +16,15 @@ public class LocationManager {
         coordinates = null;
         distance = 0;
         elevation = 0;
-        parkingCoord = new double[]{};
+        parkingCoord = null;
         parkingElev = 0;
 		speed = 0;
     }
     public double[] getCoordinates(){
         return coordinates;
+    }
+    public double[] getParkingCoord() {
+        return parkingCoord;
     }
     public void setSpeed(Location location) {
         speed = (double) location.getSpeed();
@@ -34,7 +37,8 @@ public class LocationManager {
     public void setCurrCoord(Location location) {
         coordinates = new double[]{location.getLatitude(),location.getLongitude()};
     }
-    private String formattedCoords(double[] coords) {
+    private String formattedCoords(double[] array) {
+        double[] coords = new double[]{array[0],array[1]};
         //Default coordinate is positive
         String lat = "N";
         String lng = "E";
@@ -92,6 +96,30 @@ public class LocationManager {
 
         double dist = distance;
         String units, smallUnit;
+        double threshold;
+        int conversionFactor;
+        if (usUnits) {
+            units = "miles";
+            smallUnit = "feet";
+            threshold = 0.19; //mi
+            conversionFactor = 5280; //miles to feet
+        }
+        else {
+            units = "kilometers";
+            smallUnit = "meters";
+            threshold = 1; //km
+            conversionFactor = 1000; //km to m
+        }
+        if (dist < threshold) {
+            dist *= conversionFactor;
+            units = smallUnit;
+        }
+        
+        return String.format("%.3f",dist) + " " + units;
+    }
+    public String getDistance(long meters) {
+        double dist = meters;
+        String units, smallUnit;
         double threashold;
         int conversionFactor;
         if (usUnits) {
@@ -99,18 +127,20 @@ public class LocationManager {
             smallUnit = "feet";
             threashold = 0.19; //mi
             conversionFactor = 5280; //miles to feet
+            dist *= 0.000621371; // meters to miles
         }
         else {
             units = "kilometers";
             smallUnit = "meters";
             threashold = 1; //km
             conversionFactor = 1000; //km to m
+            dist /= 1000; //meters to km
         }
         if (dist < threashold) {
             dist *= conversionFactor;
             units = smallUnit;
         }
-        
+
         return String.format("%.3f",dist) + " " + units;
     }
     private double degToRad(double deg) {

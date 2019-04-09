@@ -1,14 +1,16 @@
 package com.dev2qa.parkedup2;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,8 +19,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -44,8 +44,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.DirectionsApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.android.PolyUtil;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.TravelMode;
 
-import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 
 public class ParkedActivity extends FragmentActivity implements
         OnMapReadyCallback,
@@ -73,7 +82,9 @@ public class ParkedActivity extends FragmentActivity implements
     public static final String CHANNEL_ID = "name";
 
     private static final int Request_User_Location_Code = 99;
-    
+    private static final int paddingZoom = 70; // offset from edges of the map in pixels. value may need to be altered
+    private static final int overview = 0;
+
     Button button;
     Button button2;
     Button menuButton;
@@ -96,7 +107,7 @@ public class ParkedActivity extends FragmentActivity implements
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
-            distance = findViewById(R.id.distance);
+        distance = findViewById(R.id.distance);
         time = findViewById(R.id.timeToCar);
 
         parkedCoord.append(" \t");
@@ -122,7 +133,7 @@ public class ParkedActivity extends FragmentActivity implements
                 notificationManager.notify(1, builder.build());
             }
         //Find your views
-        button = (Button) findViewById(R.id.deleteButton);
+        button = findViewById(R.id.deleteButton);
 
         //Assign a listener to your button
         button.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +162,7 @@ public class ParkedActivity extends FragmentActivity implements
         });
 
         //Find your views
-        button2 = (Button) findViewById(R.id.exit);
+        button2 = findViewById(R.id.exit);
 
         //Assign a listener to your button
         button2.setOnClickListener(new View.OnClickListener() {
@@ -330,6 +341,28 @@ public class ParkedActivity extends FragmentActivity implements
             locationChanged = true;
         }
 
+        if (location != null) {
+            locMng.setCurrCoord(location);
+            currCoord.setText("\t\t\t " + locMng.displayCoord());
+
+            //Directions
+            double[] parkingCoord = locMng.getParkingCoord();
+            com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0], parkingCoord[1]);
+            com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(), location.getLongitude());
+
+            DirectionsResult results = getDirectionsDetails(origin, destination);
+            if ((results != null) && (results.routes.length > 0)) {
+                addPolyline(results);
+                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
+                time.setText("Time to Car: " + getTimeFromResults(results));
+            } else {
+                updateCamera(latLng);
+                distance.setText("Distance: " + locMng.getDistance());
+                time.setText("Time to Car: " + locMng.timeToCar());
+            }
+        }
+    }
+    private void updateCamera(LatLng latLng) {
         //moves camera to bounds of marker and current position
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
@@ -337,18 +370,61 @@ public class ParkedActivity extends FragmentActivity implements
         builder.include(latLng);//current location
         LatLngBounds bounds = builder.build();//set the bounds
 
-        int padding = 70; // offset from edges of the map in pixels. value may need to be altered
-        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, paddingZoom);
         //mMap.moveCamera(updateCam);//maybe better on battery life?
         mMap.animateCamera(updateCam);
+    }
 
-        if (location != null){
-            locMng.setCurrCoord(location);
-            currCoord.setText("\t\t\t " + locMng.displayCoord());
-            distance.setText("Distance: " + locMng.getDistance());
-            time.setText("Time to Car: " + locMng.timeToCar());
+    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
+        try {
+            return DirectionsApi.newRequest(getGeoContext())
+                    .mode(TravelMode.WALKING)
+                    .origin(orig)
+                    .destination(dest)
+                    .departureTimeNow()
+                    .await();
+        } catch (ApiException e) {
+            Log.i(TAG,"ApiException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (InterruptedException e) {
+            Log.i(TAG,"InterruptedException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            Log.i(TAG,"IOException" + e.toString());
+            e.printStackTrace();
+            return null;
         }
     }
+
+    private GeoApiContext getGeoContext() {
+        GeoApiContext.Builder geoApiContext = new GeoApiContext.Builder();
+        return geoApiContext.apiKey(getString(R.string.directionsApiKey)).build();
+    }
+
+    private void addPolyline(DirectionsResult results) {
+        List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
+        mMap.addPolyline(new PolylineOptions().width(30).color(Color.BLUE).addAll(decodedPath));
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (LatLng latLng : decodedPath)
+            builder.include(latLng);
+        LatLngBounds bounds = builder.build();
+
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, paddingZoom);
+        //mMap.moveCamera(updateCam);//maybe better on battery life?
+        mMap.animateCamera(updateCam);
+    }
+
+    private String getTimeFromResults(DirectionsResult results){
+        return results.routes[overview].legs[overview].duration.humanReadable;
+    }
+
+    private long getDistanceFromResults(DirectionsResult results) {
+        return results.routes[overview].legs[overview].distance.inMeters;
+    }
+
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -364,6 +440,7 @@ public class ParkedActivity extends FragmentActivity implements
             notificationManager.createNotificationChannel(channel);
         }
     }
+
     @Override
     public void onConnectionSuspended(int i) {
 
@@ -381,7 +458,7 @@ public class ParkedActivity extends FragmentActivity implements
 
     @Override
     protected void onDestroy() {
-        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
         super.onDestroy();
         stopService();//deleting this will allow you to keep the app running in background, even after exiting
     }
