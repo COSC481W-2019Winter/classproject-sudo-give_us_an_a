@@ -335,18 +335,6 @@ public class ParkedActivity extends FragmentActivity implements
             locationChanged = true;
         }
 
-        //moves camera to bounds of marker and current position
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-        builder.include(currentUserLocationMarker.getPosition());//original marker position
-        builder.include(latLng);//current location
-        LatLngBounds bounds = builder.build();//set the bounds
-
-        int padding = 70; // offset from edges of the map in pixels. value may need to be altered
-        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        //mMap.moveCamera(updateCam);//maybe better on battery life?
-        mMap.animateCamera(updateCam);
-
         if (location != null) {
             locMng.setCurrCoord(location);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
@@ -362,26 +350,26 @@ public class ParkedActivity extends FragmentActivity implements
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
                 time.setText("Time to Car: " + getTimeFromResults(results));
             } else {
+                updateCamera(latLng);
                 time.setText("Time to Car: " + locMng.timeToCar());
                 distance.setText("Distance: " + locMng.getDistance());
             }
         }
     }
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel("1", name, importance);
-            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
-            channel.setDescription("1");
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+    private void updateCamera(LatLng latLng) {
+        //moves camera to bounds of marker and current position
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        builder.include(currentUserLocationMarker.getPosition());//original marker position
+        builder.include(latLng);//current location
+        LatLngBounds bounds = builder.build();//set the bounds
+
+        int padding = 70; // offset from edges of the map in pixels. value may need to be altered
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        //mMap.moveCamera(updateCam);//maybe better on battery life?
+        mMap.animateCamera(updateCam);
     }
+
     private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
         try {
             return DirectionsApi.newRequest(getGeoContext())
@@ -412,32 +400,73 @@ public class ParkedActivity extends FragmentActivity implements
 
     private void addPolyline(DirectionsResult results, GoogleMap mMap) {
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
-        Log.i(TAG,"LatLag List;");
-        for (LatLng l : decodedPath)
-            Log.i(TAG, "Lat: " + getLat(l) + " Lng: " + getLng(l));
+        //Log.i(TAG,"LatLag List;");
+
+//        //Finding the most Northeast and Southwest LatLng
+//        LatLng southwest;
+//        LatLng northeast;
+//        //Cardinal directions initialized to maximum
+//        //[-90,90]
+//        double north = 0.0;
+//        double south = -0.0;
+//        //[-180,180)
+//        double east = 0.0;
+//        double west = 0.0;
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+
+        for (LatLng latLong : decodedPath) {
+//            if ((getLat(latLong) > north) && (getLng(latLong) > east))
+//                northeast = latLong;
+//            if ((getLat(latLong) > north) && (getLng(latLong) > east))
+//                northeast = latLong;
+            builder.include(latLong);
+            //Log.i(TAG, "Lat: " + getLat(latLong) + " Lng: " + getLng(latLong));
+        }
+        LatLngBounds bounds = builder.build();//set the bounds
+        int padding = 70; // offset from edges of the map in pixels. value may need to be altered
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        //mMap.moveCamera(updateCam);//maybe better on battery life?
+        mMap.animateCamera(updateCam);
         mMap.addPolyline(new PolylineOptions().width(30).color(Color.BLUE).addAll(decodedPath));
     }
 
-    private double getLat(LatLng l) {
-        String str = l.toString();
+    private double getLat(LatLng latLong) {
+        String str = latLong.toString();
         int latBegin = str.indexOf("(")+1;
         int latEnd = str.indexOf(",");
         return Double.valueOf(str.substring(latBegin,latEnd));
     }
 
-    private double getLng(LatLng l) {
-        String str = l.toString();
+    private double getLng(LatLng latLong) {
+        String str = latLong.toString();
         int latBegin = str.indexOf(",")+1;
         int latEnd = str.indexOf(")");
         return Double.valueOf(str.substring(latBegin,latEnd));
     }
-    
+
     private String getTimeFromResults(DirectionsResult results){
         return results.routes[overview].legs[overview].duration.humanReadable;
     }
 
     private long getDistanceFromResults(DirectionsResult results) {
         return results.routes[overview].legs[overview].distance.inMeters;
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+//            NotificationChannel channel = new NotificationChannel("1", name, importance);
+            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
+            channel.setDescription("1");
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     @Override
