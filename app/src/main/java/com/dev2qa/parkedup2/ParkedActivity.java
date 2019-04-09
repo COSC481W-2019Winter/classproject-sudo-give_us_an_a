@@ -90,11 +90,26 @@ public class ParkedActivity extends FragmentActivity implements
 
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
 
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+
+        if(savedInstanceState != null){
+            Log.i(TAG, "savedInstanceState != null");
+
+        } else {
+            Log.i(TAG, "savedInstanceState == null");
+
+        }
+
 
         startService();
 
@@ -121,7 +136,7 @@ public class ParkedActivity extends FragmentActivity implements
                     .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
+            //Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
             if(MenuActivity.getNotify()) {
                 // notificationId is a unique int for each notification that you must define
                 notificationManager.notify(1, builder.build());
@@ -282,7 +297,7 @@ public class ParkedActivity extends FragmentActivity implements
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(1000);//1000ms = 1sec
-        locationRequest.setFastestInterval(900);
+        locationRequest.setFastestInterval(1000);//seems to be minimum for older devices to load map smoothly
         //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         //essential check before next lines of code are allowed
@@ -356,15 +371,18 @@ public class ParkedActivity extends FragmentActivity implements
             com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0], parkingCoord[1]);
             com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(), location.getLongitude());
 
-            DirectionsResult results = getDirectionsDetails(origin, destination);
-            if ((results != null) && (results.routes.length > 0)) {
-                addPolyline(results, mMap);
-                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
-                time.setText("Time to Car: " + getTimeFromResults(results));
-            } else {
-                time.setText("Time to Car: " + locMng.timeToCar());
-                distance.setText("Distance: " + locMng.getDistance());
-            }
+
+            // Commented out for debugging
+
+//            DirectionsResult results = getDirectionsDetails(origin, destination);
+//            if ((results != null) && (results.routes.length > 0)) {
+//                addPolyline(results, mMap);
+//                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
+//                time.setText("Time to Car: " + getTimeFromResults(results));
+//            } else {
+//                time.setText("Time to Car: " + locMng.timeToCar());
+//                distance.setText("Distance: " + locMng.getDistance());
+//            }
         }
     }
     private void createNotificationChannel() {
@@ -382,28 +400,31 @@ public class ParkedActivity extends FragmentActivity implements
             notificationManager.createNotificationChannel(channel);
         }
     }
-    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
-        try {
-            return DirectionsApi.newRequest(getGeoContext())
-                    .mode(TravelMode.WALKING)
-                    .origin(orig)
-                    .destination(dest)
-                    .departureTimeNow()
-                    .await();
-        } catch (ApiException e) {
-            Log.i(TAG,"ApiException" + e.toString());
-            e.printStackTrace();
-            return null;
-        } catch (InterruptedException e) {
-            Log.i(TAG,"InterruptedException" + e.toString());
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            Log.i(TAG,"IOException" + e.toString());
-            e.printStackTrace();
-            return null;
-        }
-    }
+
+    // Commented out for debugging
+
+//    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
+//        try {
+//            return DirectionsApi.newRequest(getGeoContext())
+//                    .mode(TravelMode.WALKING)
+//                    .origin(orig)
+//                    .destination(dest)
+//                    .departureTimeNow()
+//                    .await();
+//        } catch (ApiException e) {
+//            Log.i(TAG,"ApiException" + e.toString());
+//            e.printStackTrace();
+//            return null;
+//        } catch (InterruptedException e) {
+//            Log.i(TAG,"InterruptedException" + e.toString());
+//            e.printStackTrace();
+//            return null;
+//        } catch (IOException e) {
+//            Log.i(TAG,"IOException" + e.toString());
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     private GeoApiContext getGeoContext() {
         GeoApiContext.Builder geoApiContext = new GeoApiContext.Builder();
