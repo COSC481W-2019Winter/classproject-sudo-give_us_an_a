@@ -90,10 +90,27 @@ public class ParkedActivity extends FragmentActivity implements
 
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-
-        super.onSaveInstanceState(savedInstanceState);
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSaveInstanceState");
+        outState.putDouble("latFirst", latitudeFirst);
+        outState.putDouble("longFirst", longitudeFirst);
+        Log.i(TAG, "latFirst: " + latitudeFirst);
+        Log.i(TAG, "longFirst: " + longitudeFirst);
     }
+
+    //no need to check for savedInstanceState == null with this
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        latitudeFirst = savedInstanceState.getDouble("latFirst");
+        longitudeFirst = savedInstanceState.getDouble("longFirst");
+
+        Log.i(TAG, "onRestoreInstanceState");
+        Log.i(TAG, "onRestore latFirst: " + latitudeFirst);
+        Log.i(TAG, "onRestore longFirst: " + longitudeFirst);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,12 +119,27 @@ public class ParkedActivity extends FragmentActivity implements
 
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
+        // kill this
         if(savedInstanceState != null){
             Log.i(TAG, "savedInstanceState != null");
-
+//            Log.i(TAG, "IF = TRUE");
+//            Log.i(TAG, "latitudeFirst: " + latitudeFirst);
+//            Log.i(TAG, "longitudeFirst: " + longitudeFirst);
+//
+//            latitudeFirst = savedInstanceState.getDouble("latitudeFirst");
+//            longitudeFirst = savedInstanceState.getDouble("longitudeFirst");
+//            Log.i(TAG, "latitudeFirst: " + latitudeFirst);
+//            Log.i(TAG, "longitudeFirst: " + longitudeFirst);
         } else {
             Log.i(TAG, "savedInstanceState == null");
-
+//            Log.i(TAG, "ELSE = TRUE");
+//            Log.i(TAG, "latitudeFirst: " + latitudeFirst);
+//            Log.i(TAG, "longitudeFirst: " + longitudeFirst);
+//
+//            latitudeFirst = savedInstanceState.getDouble("latitudeFirst");
+//            longitudeFirst = savedInstanceState.getDouble("longitudeFirst");
+//            Log.i(TAG, "latitudeFirst: " + latitudeFirst);
+//            Log.i(TAG, "longitudeFirst: " + longitudeFirst);
         }
 
 
