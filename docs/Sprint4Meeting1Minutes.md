@@ -23,5 +23,8 @@ None
 * Test icon on different phones
 ## Lucas
 ### What I did last time
+* Researched how to refactor code to change the name of the app to Parked Up
 ### Problems
+* No problems
 ### What I will do next
+* Implement the code to refactor the name
