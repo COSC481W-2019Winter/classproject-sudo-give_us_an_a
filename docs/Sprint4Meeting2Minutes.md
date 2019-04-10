@@ -9,8 +9,11 @@
 * Continue Elevation development
 ## Drew
 ### What I did last time
+* Attempted to use onSaveInstanceState to resolve problems with restoring activities variables on clicking the notification button
 ### Problems
+* onSaveInstanceState does not seem to save variables when the notification button is pressed
 ### What I will do next
+* attempt to use SharedPreferences or SQLlite to store variables instead
 ## Eleanor
 ### What I did last time
 * I tested the app icons
