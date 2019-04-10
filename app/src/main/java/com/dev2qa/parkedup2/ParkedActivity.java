@@ -103,7 +103,7 @@ public class ParkedActivity extends FragmentActivity implements
 
         startService();
 
-        createNotificationChannel();
+        //createNotificationChannel();
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
@@ -350,16 +350,16 @@ public class ParkedActivity extends FragmentActivity implements
             com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0], parkingCoord[1]);
             com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(), location.getLongitude());
 
-            DirectionsResult results = getDirectionsDetails(origin, destination);
-            if ((results != null) && (results.routes.length > 0)) {
-                addPolyline(results);
-                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
-                time.setText("Time to Car: " + getTimeFromResults(results));
-            } else {
-                updateCamera(latLng);
-                distance.setText("Distance: " + locMng.getDistance());
-                time.setText("Time to Car: " + locMng.timeToCar());
-            }
+//            DirectionsResult results = getDirectionsDetails(origin, destination);
+//            if ((results != null) && (results.routes.length > 0)) {
+//                addPolyline(results);
+//                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
+//                time.setText("Time to Car: " + getTimeFromResults(results));
+//            } else {
+//                updateCamera(latLng);
+//                distance.setText("Distance: " + locMng.getDistance());
+//                time.setText("Time to Car: " + locMng.timeToCar());
+//            }
         }
     }
     private void updateCamera(LatLng latLng) {
@@ -375,28 +375,28 @@ public class ParkedActivity extends FragmentActivity implements
         mMap.animateCamera(updateCam);
     }
 
-    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
-        try {
-            return DirectionsApi.newRequest(getGeoContext())
-                    .mode(TravelMode.WALKING)
-                    .origin(orig)
-                    .destination(dest)
-                    .departureTimeNow()
-                    .await();
-        } catch (ApiException e) {
-            Log.i(TAG,"ApiException" + e.toString());
-            e.printStackTrace();
-            return null;
-        } catch (InterruptedException e) {
-            Log.i(TAG,"InterruptedException" + e.toString());
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            Log.i(TAG,"IOException" + e.toString());
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
+//        try {
+//            return DirectionsApi.newRequest(getGeoContext())
+//                    .mode(TravelMode.WALKING)
+//                    .origin(orig)
+//                    .destination(dest)
+//                    .departureTimeNow()
+//                    .await();
+//        } catch (ApiException e) {
+//            Log.i(TAG,"ApiException" + e.toString());
+//            e.printStackTrace();
+//            return null;
+//        } catch (InterruptedException e) {
+//            Log.i(TAG,"InterruptedException" + e.toString());
+//            e.printStackTrace();
+//            return null;
+//        } catch (IOException e) {
+//            Log.i(TAG,"IOException" + e.toString());
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     private GeoApiContext getGeoContext() {
         GeoApiContext.Builder geoApiContext = new GeoApiContext.Builder();
@@ -425,21 +425,24 @@ public class ParkedActivity extends FragmentActivity implements
         return results.routes[overview].legs[overview].distance.inMeters;
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel("1", name, importance);
-            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
-            channel.setDescription("1");
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
+
+
+
+//    private void createNotificationChannel() {
+//        // Create the NotificationChannel, but only on API 26+ because
+//        // the NotificationChannel class is new and not in the support library
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+////            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+////            NotificationChannel channel = new NotificationChannel("1", name, importance);
+//            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
+//            channel.setDescription("1");
+//            // Register the channel with the system; you can't change the importance
+//            // or other notification behaviors after this
+//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+//            notificationManager.createNotificationChannel(channel);
+//        }
+//    }
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -447,13 +450,21 @@ public class ParkedActivity extends FragmentActivity implements
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {//called when connection is severed
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {//called when connection is severedExample Service Channel
 
     }
 
     public void startService() {
         Intent serviceIntent = new Intent(this, ForegroundService.class);
         ContextCompat.startForegroundService(this, serviceIntent);
+
+        //kill?
+        //startService(serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
     }
 
     @Override
@@ -462,12 +473,6 @@ public class ParkedActivity extends FragmentActivity implements
         super.onDestroy();
         stopService();//deleting this will allow you to keep the app running in background, even after exiting
     }
-
-    public void stopService() {
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        stopService(serviceIntent);
-    }
-
 
 //    Test code to determine which part of the activity lifecycle your in
 //

@@ -34,7 +34,7 @@ public class ForegroundService extends Service {
 //              .setSmallIcon(R.drawable.common_google_signin_btn_icon_light)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent)
-                .setChannelId("2")
+//                .setChannelId("2")
                 .build();
 
         startForeground(1, notification);
@@ -74,4 +74,5 @@ public class ForegroundService extends Service {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
 }
