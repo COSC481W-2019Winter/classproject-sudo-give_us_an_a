@@ -1,4 +1,4 @@
-# Sprint 4 Meeting 1 Minutes
+# Sprint 4 Meeting 2 Minutes
 ## Brian
 ### What I did last time
 * Added Google Elevation API in
