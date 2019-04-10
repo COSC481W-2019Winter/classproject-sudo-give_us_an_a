@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -81,6 +82,20 @@ public class ParkedActivity extends FragmentActivity implements
     private static final int Request_User_Location_Code = 99;
     private static final int overview = 0;
 
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "text";
+    public static final String SWITCH1 = "switch1";
+
+    public static final long LAT = 0;
+    public static final long LONG = 0;
+
+    public static final Long LATITUDE_FIRST = null;
+    public static final Long LONGITUDE_FIRST = null;
+
+    private long longLat;
+    private long longLong;
+
+
     Button button;
     Button button2;
     Button menuButton;
@@ -88,6 +103,31 @@ public class ParkedActivity extends FragmentActivity implements
     TextView currCoord;
     TextView distance;
     TextView time;
+
+
+
+
+    public void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putLong(TEXT, (long) latitudeFirst);
+        editor.putLong(TEXT, (long) longitudeFirst);
+
+        editor.apply();
+
+        Toast.makeText(this, "Data Saved", Toast.LENGTH_SHORT).show();
+    }
+
+    public void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        longLat = sharedPreferences.getLong(TEXT, 0);
+        longLat = sharedPreferences.getLong(TEXT, 0);
+    }
+
+    public void updateViews(){
+        // TO-DO
+    }
 
 
     @Override
@@ -256,6 +296,12 @@ public class ParkedActivity extends FragmentActivity implements
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
+
+
+        //new kill
+        loadData();
+        updateViews();
+
     }
 
     @Override
