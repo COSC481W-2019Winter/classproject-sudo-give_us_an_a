@@ -350,16 +350,16 @@ public class ParkedActivity extends FragmentActivity implements
             com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0], parkingCoord[1]);
             com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(), location.getLongitude());
 
-//            DirectionsResult results = getDirectionsDetails(origin, destination);
-//            if ((results != null) && (results.routes.length > 0)) {
-//                addPolyline(results);
-//                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
-//                time.setText("Time to Car: " + getTimeFromResults(results));
-//            } else {
-//                updateCamera(latLng);
-//                distance.setText("Distance: " + locMng.getDistance());
-//                time.setText("Time to Car: " + locMng.timeToCar());
-//            }
+            DirectionsResult results = getDirectionsDetails(origin, destination);
+            if ((results != null) && (results.routes.length > 0)) {
+                addPolyline(results);
+                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
+                time.setText("Time to Car: " + getTimeFromResults(results));
+            } else {
+                updateCamera(latLng);
+                distance.setText("Distance: " + locMng.getDistance());
+                time.setText("Time to Car: " + locMng.timeToCar());
+            }
         }
     }
     private void updateCamera(LatLng latLng) {
@@ -375,28 +375,28 @@ public class ParkedActivity extends FragmentActivity implements
         mMap.animateCamera(updateCam);
     }
 
-//    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
-//        try {
-//            return DirectionsApi.newRequest(getGeoContext())
-//                    .mode(TravelMode.WALKING)
-//                    .origin(orig)
-//                    .destination(dest)
-//                    .departureTimeNow()
-//                    .await();
-//        } catch (ApiException e) {
-//            Log.i(TAG,"ApiException" + e.toString());
-//            e.printStackTrace();
-//            return null;
-//        } catch (InterruptedException e) {
-//            Log.i(TAG,"InterruptedException" + e.toString());
-//            e.printStackTrace();
-//            return null;
-//        } catch (IOException e) {
-//            Log.i(TAG,"IOException" + e.toString());
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
+        try {
+            return DirectionsApi.newRequest(getGeoContext())
+                    .mode(TravelMode.WALKING)
+                    .origin(orig)
+                    .destination(dest)
+                    .departureTimeNow()
+                    .await();
+        } catch (ApiException e) {
+            Log.i(TAG,"ApiException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (InterruptedException e) {
+            Log.i(TAG,"InterruptedException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            Log.i(TAG,"IOException" + e.toString());
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     private GeoApiContext getGeoContext() {
         GeoApiContext.Builder geoApiContext = new GeoApiContext.Builder();
