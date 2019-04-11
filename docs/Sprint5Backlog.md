@@ -13,16 +13,14 @@ To allow for the user to find their parking location if they have parked in a pa
  _________
 # End Of Sprint 5 Tasks
  _________
- 
-# 2. Notification exit
+ # 2. Code cleanup/ refactor
 ## Effort
 small
 ## Acceptance Criteria
-* Have the notification automatically exit once parking spot is deleted.
 ## Who is doing it
 ## User Story
 ## Tasks
-
+ 
 # 3. App depolyment
 ## Effort
 small
@@ -39,15 +37,7 @@ small
 ## User Story
 ## Tasks
 
-# 5. Code cleanup/ refactor
-## Effort
-small
-## Acceptance Criteria
-## Who is doing it
-## User Story
-## Tasks
-
-# 6. Easy mode
+# 5. Easy mode
 ## Effort
 medium
 ## Acceptance Criteria
@@ -56,7 +46,7 @@ medium
 ## User Story
 ## Tasks
 
-# 7. Map View
+# 6. Map View
 ## Effort
 large
 ## Acceptance Criteria
