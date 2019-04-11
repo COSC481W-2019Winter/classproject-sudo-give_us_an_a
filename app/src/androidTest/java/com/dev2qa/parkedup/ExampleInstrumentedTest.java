@@ -1,4 +1,4 @@
-package com.dev2qa.parkedup2;
+package com.dev2qa.parkedup;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.dev2qa.parkedup2", appContext.getPackageName());
+        assertEquals("com.dev2qa.parkedup", appContext.getPackageName());
     }
 }

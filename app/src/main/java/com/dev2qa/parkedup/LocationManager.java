@@ -1,4 +1,4 @@
-package com.dev2qa.parkedup2;
+package com.dev2qa.parkedup;
 
 import android.location.Location;
 
@@ -16,7 +16,7 @@ public class LocationManager {
         coordinates = null;
         distance = 0;
         elevation = 0;
-        parkingCoord = new double[]{};
+        parkingCoord = null;
         parkingElev = 0;
 		speed = 0;
     }
@@ -96,6 +96,30 @@ public class LocationManager {
 
         double dist = distance;
         String units, smallUnit;
+        double threshold;
+        int conversionFactor;
+        if (usUnits) {
+            units = "miles";
+            smallUnit = "feet";
+            threshold = 0.19; //mi
+            conversionFactor = 5280; //miles to feet
+        }
+        else {
+            units = "kilometers";
+            smallUnit = "meters";
+            threshold = 1; //km
+            conversionFactor = 1000; //km to m
+        }
+        if (dist < threshold) {
+            dist *= conversionFactor;
+            units = smallUnit;
+        }
+        
+        return String.format("%.3f",dist) + " " + units;
+    }
+    public String getDistance(long meters) {
+        double dist = meters;
+        String units, smallUnit;
         double threashold;
         int conversionFactor;
         if (usUnits) {
@@ -103,18 +127,20 @@ public class LocationManager {
             smallUnit = "feet";
             threashold = 0.19; //mi
             conversionFactor = 5280; //miles to feet
+            dist *= 0.000621371; // meters to miles
         }
         else {
             units = "kilometers";
             smallUnit = "meters";
             threashold = 1; //km
             conversionFactor = 1000; //km to m
+            dist /= 1000; //meters to km
         }
         if (dist < threashold) {
             dist *= conversionFactor;
             units = smallUnit;
         }
-        
+
         return String.format("%.3f",dist) + " " + units;
     }
     private double degToRad(double deg) {
