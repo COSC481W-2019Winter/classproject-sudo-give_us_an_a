@@ -486,6 +486,7 @@ public class ParkedActivity extends FragmentActivity implements
 //                time.setText("Time to Car: " + locMng.timeToCar());
 //                distance.setText("Distance: " + locMng.getDistance());
 //            }
+
         }
     }
     private void createNotificationChannel() {
