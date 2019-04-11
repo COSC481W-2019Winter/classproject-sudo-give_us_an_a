@@ -102,7 +102,7 @@ public class ParkedActivity extends FragmentActivity implements
 
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
-        startService();
+        //startService();
 
         //createNotificationChannel();
         // set strings with updated data
@@ -463,22 +463,22 @@ public class ParkedActivity extends FragmentActivity implements
 
     }
 
-    public void startService() {
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        ContextCompat.startForegroundService(this, serviceIntent);
-        startService(serviceIntent);
-    }
-
-    public void stopService() {
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        stopService(serviceIntent);
-    }
+//    public void startService() {
+//        Intent serviceIntent = new Intent(this, ForegroundService.class);
+//        ContextCompat.startForegroundService(this, serviceIntent);
+//        startService(serviceIntent);
+//    }
+//
+//    public void stopService() {
+//        Intent serviceIntent = new Intent(this, ForegroundService.class);
+//        stopService(serviceIntent);
+//    }
 
     @Override
     protected void onDestroy() {
         //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
         super.onDestroy();
-        stopService();//deleting this will allow you to keep the app running in background, even after exiting
+ //       stopService();//deleting this will allow you to keep the app running in background, even after exiting
     }
 
 //    Test code to determine which part of the activity lifecycle your in
