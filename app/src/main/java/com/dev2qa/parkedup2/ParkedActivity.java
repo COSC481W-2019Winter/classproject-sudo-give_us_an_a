@@ -129,11 +129,6 @@ public class ParkedActivity extends FragmentActivity implements
         Log.i(TAG, "floatLong: " + floatLong);
     }
 
-    public void updateViews(){
-        // TO-DO
-    }
-
-
     @Override
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
@@ -181,7 +176,6 @@ public class ParkedActivity extends FragmentActivity implements
         if(savedInstanceState != null){
 //            Log.i(TAG, "\n ");
 //            Log.i(TAG, "savedInstanceState != null");
-////            Log.i(TAG, "IF = TRUE");
 //            Log.i(TAG, "latFirst: " + latitudeFirst);
 //            Log.i(TAG, "longFirst: " + longitudeFirst);
             latitudeFirst = savedInstanceState.getDouble("latFirst");
@@ -193,12 +187,9 @@ public class ParkedActivity extends FragmentActivity implements
         } else {
             storedInstanceState = false;
 //            Log.i(TAG, "savedInstanceState == null");
-//            Log.i(TAG, "ELSE = TRUE");
-//
 //            Log.i(TAG, "latFirst: " + latitudeFirst);
 //            Log.i(TAG, "longFirst: " + longitudeFirst);
         }
-
 
         startService();
 
@@ -278,6 +269,9 @@ public class ParkedActivity extends FragmentActivity implements
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("EXIT", true);
                                 startActivity(intent);
+
+
+
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
@@ -310,12 +304,6 @@ public class ParkedActivity extends FragmentActivity implements
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
-
-
-        //new kill
-        //loadData();
-        //updateViews();
-
     }
 
     @Override
@@ -407,31 +395,22 @@ public class ParkedActivity extends FragmentActivity implements
         parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
 
-        Log.i(TAG, ".....latitudeFirst: " + latitudeFirst);
-        Log.i(TAG, ".....longitudeFirst: " + longitudeFirst);
+
 
         //new code
-        //if(storedInstanceState == false){
-//        if(latitudeFirst == 0.0){
-
-//        loadData();
-        if(floatLat != 0.0F){
+        if(floatLat == 0.0F){
             //split up latitude/longitude into variables before creating LatLng object
             latitudeFirst = locationFirst.getLatitude();
             longitudeFirst = locationFirst.getLongitude();
-            //Log.i(TAG, "storedInstanceState == false");
             Log.i(TAG, "StoredPreferences == false");
             //should is send latitudeFirst & longitudeFirst as parameters to saveData()?
             saveData();
         } else {
-            //Log.i(TAG, "storedInstanceState == true");
             Log.i(TAG, "StoredPreferences == true");
-//            loadData();
             latitudeFirst = floatLat;
             longitudeFirst = floatLong;
             Log.i(TAG, "................latitudeFirst: " + latitudeFirst);
             Log.i(TAG, "................longitudeFirst: " + longitudeFirst);
-
         }
 
 
