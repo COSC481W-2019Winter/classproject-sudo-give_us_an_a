@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dev2qa.parkedup2">
+    package="com.dev2qa.parkedup">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -11,6 +11,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+
+
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,21 +21,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ParkedActivity"
+            android:name="com.dev2qa.parkedup.ParkedActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MenuActivity"
+            android:name="com.dev2qa.parkedup.MenuActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BeginActivity"
+            android:name="com.dev2qa.parkedup.BeginActivity"
             android:screenOrientation="portrait">
+            <!--android:alwaysRetainTaskState="true"-->
+            <!--^testing memory persistancy over longer periods in above line of code-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutActivity" /> <!-- make sure to add this so it works on newer devices -->
+        <activity android:name="com.dev2qa.parkedup.AboutActivity" /> <!-- make sure to add this so it works on newer devices -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -47,8 +52,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        
-        <service android:name=".ForegroundService" />
 
     </application>
 

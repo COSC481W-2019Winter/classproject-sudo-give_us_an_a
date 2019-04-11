@@ -1,14 +1,16 @@
-package com.dev2qa.parkedup2;
+package com.dev2qa.parkedup;
 
 import android.Manifest;
-import android.graphics.Color;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Build;
@@ -63,6 +65,7 @@ public class ParkedActivity extends FragmentActivity implements
 
     //latitude longitude of static parked position
     public double latitudeFirst, longitudeFirst;
+    private boolean storedInstanceState = false;
 
     private Location locationFirst;
 
@@ -81,8 +84,21 @@ public class ParkedActivity extends FragmentActivity implements
     public static final String CHANNEL_ID = "name";
 
     private static final int Request_User_Location_Code = 99;
+    private static final int paddingZoom = 70; // offset from edges of the map in pixels. value may need to be altered
     private static final int overview = 0;
     private static final float ATM = SensorManager.PRESSURE_STANDARD_ATMOSPHERE;
+
+    //string names of shared preferences
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String LATITUDE_FLOAT = "latitudeFloat";
+    public static final String LONGITUDE_FLOAT = "longitudeFloat";
+
+    private float floatLat;
+    private float floatLong;
+
+
+    private Boolean freshStartFlag;
+
 
     Button button;
     Button button2;
@@ -93,16 +109,89 @@ public class ParkedActivity extends FragmentActivity implements
     TextView time;
 
 
+    public void saveData(boolean saveData) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        //if (freshStartFlag == true) {
+            if (saveData == true) {
+                //save preference values to these variables
+                editor.putFloat(LATITUDE_FLOAT, (float) latitudeFirst);
+                editor.putFloat(LONGITUDE_FLOAT, (float) longitudeFirst);
+                editor.apply();
+
+                Log.i(TAG, " ");
+                Log.i(TAG, "saveData() write = save");
+                Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
+                Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
+
+                //Toast.makeText(this, "Data Saved", Toast.LENGTH_SHORT).show();
+            } else {
+
+                editor.clear();
+                editor.apply();
+
+                Log.i(TAG, " ");
+                Log.i(TAG, "saveData() write = delete");
+                Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
+                Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
+                //Toast.makeText(this, "Data Deleted A", Toast.LENGTH_SHORT).show();
+            }
+//        } else {
+//            editor.clear();
+//            editor.apply();
+//            //Toast.makeText(this, "Data Deleted B", Toast.LENGTH_SHORT).show();
+//        }
+    }
+
+    public void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
+        floatLat = sharedPreferences.getFloat(LATITUDE_FLOAT, 0.0F);
+        floatLong = sharedPreferences.getFloat(LONGITUDE_FLOAT, 0.0F);
+
+        Log.i(TAG, "loadData()");
+        Log.i(TAG, "floatLat: " + floatLat);
+        Log.i(TAG, "floatLong: " + floatLong);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        Log.i(TAG, "finish()");
+        //stopService();//deleting this will allow you to keep the app running in background, even after exiting
+        saveData(false);
+        //perhaps save values to SharedPreferences or SQLlite database here
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
-
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
-        startService();
+        Intent intentAborted = getIntent();
+        freshStartFlag = intentAborted.getBooleanExtra("FRESH_START", false);
 
-        createNotificationChannel();
+        Log.i(TAG, "");
+        Log.i(TAG, "FRESH_START freshStartFlag: " + freshStartFlag);
+        Log.i(TAG, "");
+
+
+        //Log.i(TAG, "NEW public static void appAborted(boolean aborted) = " + isAborted);
+
+        Log.i(TAG, "");
+        Log.i(TAG, "onCreate() before loadData()");
+        Log.i(TAG, "floatLat: " + floatLat);
+        Log.i(TAG, "floatLong: " + floatLong);
+        loadData();
+        Log.i(TAG, "onCreate() after loadData()");
+        Log.i(TAG, "floatLat: " + floatLat);
+        Log.i(TAG, "floatLong: " + floatLong);
+        Log.i(TAG, "");
+
+
+        //createNotificationChannel();
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
@@ -117,14 +206,15 @@ public class ParkedActivity extends FragmentActivity implements
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-            builder.setSmallIcon(R.mipmap.ic_launcher)
+        builder.setSmallIcon(R.mipmap.ic_launcher_foreground)
+                    .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.mipmap.ic_launcher_foreground))
                     .setContentTitle("ParkedUp!")
                     .setContentText("Your parking spot has been saved!")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
-                    .setAutoCancel(true);
+                    .setOngoing(true);
 
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
             if(MenuActivity.getNotify()) {
                 // notificationId is a unique int for each notification that you must define
@@ -145,6 +235,11 @@ public class ParkedActivity extends FragmentActivity implements
                             case DialogInterface.BUTTON_POSITIVE:
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
+                                notificationManager.cancelAll();
+                                //delete button
+                                //clear saved parking position
+                                saveData(false);
+
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
@@ -172,6 +267,11 @@ public class ParkedActivity extends FragmentActivity implements
                     public void onClick(DialogInterface dialog, int choice) {
                         switch (choice) {
                             case DialogInterface.BUTTON_POSITIVE:
+
+                                //exit button
+                                //clear saved parked position
+                                saveData(false);
+
                                 finish();
                                 finish();
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
@@ -286,7 +386,7 @@ public class ParkedActivity extends FragmentActivity implements
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(1000);//1000ms = 1sec
-        locationRequest.setFastestInterval(900);
+        locationRequest.setFastestInterval(1000);//seems to be minimum for older devices to load map smoothly
         //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         //essential check before next lines of code are allowed
@@ -300,9 +400,26 @@ public class ParkedActivity extends FragmentActivity implements
         locMng.setParkCoord(locationFirst);
         parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
-        //split up latitude/longitude into variables before creating LatLng object
-        latitudeFirst = locationFirst.getLatitude();
-        longitudeFirst = locationFirst.getLongitude();
+
+
+
+        //new code
+        if(floatLat == 0.0F){
+            //split up latitude/longitude into variables before creating LatLng object
+            latitudeFirst = locationFirst.getLatitude();
+            longitudeFirst = locationFirst.getLongitude();
+            Log.i(TAG, "StoredPreferences == false");
+            //should is send latitudeFirst & longitudeFirst as parameters to saveData()?
+            saveData(true);
+        } else {
+            Log.i(TAG, "StoredPreferences == true");
+            latitudeFirst = floatLat;
+            longitudeFirst = floatLong;
+            Log.i(TAG, "................latitudeFirst: " + latitudeFirst);
+            Log.i(TAG, "................longitudeFirst: " + longitudeFirst);
+        }
+
+
 
         //this makes sure only one marker is placed
         if(currentUserLocationMarker != null){
@@ -346,18 +463,6 @@ public class ParkedActivity extends FragmentActivity implements
             locationChanged = true;
         }
 
-        //moves camera to bounds of marker and current position
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-        builder.include(currentUserLocationMarker.getPosition());//original marker position
-        builder.include(latLng);//current location
-        LatLngBounds bounds = builder.build();//set the bounds
-
-        int padding = 70; // offset from edges of the map in pixels. value may need to be altered
-        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        //mMap.moveCamera(updateCam);//maybe better on battery life?
-        mMap.animateCamera(updateCam);
-
         if (location != null) {
             locMng.setCurrCoord(location);
             float elevation = SensorManager.getAltitude(ATM, ATM);
@@ -370,32 +475,35 @@ public class ParkedActivity extends FragmentActivity implements
             com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0], parkingCoord[1]);
             com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(), location.getLongitude());
 
-            DirectionsResult results = getDirectionsDetails(origin, destination);
+            DirectionsResult results;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                results = getDirectionsDetails(origin, destination);
+            else
+                results = null;
             if ((results != null) && (results.routes.length > 0)) {
-                addPolyline(results, mMap);
+                addPolyline(results, latLng);
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
                 time.setText("Time to Car: " + getTimeFromResults(results));
             } else {
-                time.setText("Time to Car: " + locMng.timeToCar());
+                updateCamera(latLng);
                 distance.setText("Distance: " + locMng.getDistance());
+                time.setText("Time to Car: " + locMng.timeToCar());
             }
         }
     }
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel("1", name, importance);
-            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
-            channel.setDescription("1");
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+    private void updateCamera(LatLng latLng) {
+        //moves camera to bounds of marker and current position
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        builder.include(currentUserLocationMarker.getPosition());//original marker position
+        builder.include(latLng);//current location
+        LatLngBounds bounds = builder.build();//set the bounds
+
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, paddingZoom);
+        //mMap.moveCamera(updateCam);//maybe better on battery life?
+        mMap.animateCamera(updateCam);
     }
+
     private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
         try {
             return DirectionsApi.newRequest(getGeoContext())
@@ -441,9 +549,20 @@ public class ParkedActivity extends FragmentActivity implements
         return geoApiContext.apiKey(getString(R.string.directionsApiKey)).build();
     }
 
-    private void addPolyline(DirectionsResult results, GoogleMap mMap) {
+    private void addPolyline(DirectionsResult results, LatLng currentPosition) {
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
         mMap.addPolyline(new PolylineOptions().width(30).color(Color.BLUE).addAll(decodedPath));
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(currentUserLocationMarker.getPosition());
+        builder.include(currentPosition);
+        for (LatLng latLng : decodedPath)
+            builder.include(latLng);
+        LatLngBounds bounds = builder.build();
+
+        CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, paddingZoom);
+        //mMap.moveCamera(updateCam);//maybe better on battery life?
+        mMap.animateCamera(updateCam);
     }
 
     private String getTimeFromResults(DirectionsResult results){
@@ -454,63 +573,90 @@ public class ParkedActivity extends FragmentActivity implements
         return results.routes[overview].legs[overview].distance.inMeters;
     }
 
+
+
+
+//    private void createNotificationChannel() {
+//        // Create the NotificationChannel, but only on API 26+ because
+//        // the NotificationChannel class is new and not in the support library
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+////            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+////            NotificationChannel channel = new NotificationChannel("1", name, importance);
+//            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
+//            channel.setDescription("1");
+//            // Register the channel with the system; you can't change the importance
+//            // or other notification behaviors after this
+//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+//            notificationManager.createNotificationChannel(channel);
+//        }
+//    }
+
     @Override
     public void onConnectionSuspended(int i) {
 
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {//called when connection is severed
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {//called when connection is severedExample Service Channel
 
     }
 
-    public void startService() {
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        ContextCompat.startForegroundService(this, serviceIntent);
-    }
+//    public void startService() {
+//        Intent serviceIntent = new Intent(this, ForegroundService.class);
+//        ContextCompat.startForegroundService(this, serviceIntent);
+//        startService(serviceIntent);
+//    }
+//
+//    public void stopService() {
+//        Intent serviceIntent = new Intent(this, ForegroundService.class);
+//        stopService(serviceIntent);
+//    }
 
     @Override
     protected void onDestroy() {
         //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onDestroy()");
         super.onDestroy();
-        stopService();//deleting this will allow you to keep the app running in background, even after exiting
-    }
-
-    public void stopService() {
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        stopService(serviceIntent);
+        //saveData(false);
     }
 
 
 //    Test code to determine which part of the activity lifecycle your in
 //
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onPause() {
-//        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
-//        super.onPause();
-//    }
-//    @Override
-//    protected void onStop() {
-//        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-//        super.onStop();
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart()");
+        //Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+   }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume()");
+        //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onRestart()");
+        //Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onPause() {
+        Log.i(TAG, "onPause()");
+        //Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+        super.onPause();
+    }
+    @Override
+    protected void onStop() {
+        Log.i(TAG, "onStop()");
+        //Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+        super.onStop();
+    }
 //    @Override
 //    protected void onDestroy() {
+//        Log.i(TAG, "onDestroy()");
 //        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
 //        super.onDestroy();
 //    }
