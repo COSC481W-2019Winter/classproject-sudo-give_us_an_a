@@ -406,8 +406,10 @@ public class ParkedActivity extends FragmentActivity implements
             latitudeFirst = locationFirst.getLatitude();
             longitudeFirst = locationFirst.getLongitude();
             Log.i(TAG, "storedInstanceState == false");
+            saveData();
         } else {
             Log.i(TAG, "storedInstanceState == true");
+            loadData();
         }
 
 
