@@ -26,9 +26,11 @@
 ### In Progress
 | Task | Story |
 | ---- | --- |
+### Completed
+| Task | Story |
+| ---- | --- |
 | Implement the correct usage of onSaveInstanceState() to restore marker position when user clicks the app's notification button and test it by clicking the notification and seeing the results | 4. Not Reloading Activites |
 | Test by clicking the notification button and looking for desired results | 4. Not Reloading Activites |
-### Completed
 
 ## Eleanor
 ### Not Started
