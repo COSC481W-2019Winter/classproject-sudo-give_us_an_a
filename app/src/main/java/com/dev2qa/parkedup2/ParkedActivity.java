@@ -2,6 +2,8 @@ package com.dev2qa.parkedup2;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,10 +42,14 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.android.PolyUtil;
+import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.TravelMode;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -113,7 +119,7 @@ public class ParkedActivity extends FragmentActivity implements
                 Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
                 Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
 
-                Toast.makeText(this, "Data Saved", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Data Saved", Toast.LENGTH_SHORT).show();
             } else {
 
                 editor.clear();
@@ -156,7 +162,7 @@ public class ParkedActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
-        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
         Intent intentAborted = getIntent();
         freshStartFlag = intentAborted.getBooleanExtra("FRESH_START", false);
@@ -469,58 +475,58 @@ public class ParkedActivity extends FragmentActivity implements
 
             // Commented out for debugging
 
-//            DirectionsResult results = getDirectionsDetails(origin, destination);
-//            if ((results != null) && (results.routes.length > 0)) {
-//                addPolyline(results, mMap);
-//                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
-//                time.setText("Time to Car: " + getTimeFromResults(results));
-//            } else {
-//                time.setText("Time to Car: " + locMng.timeToCar());
-//                distance.setText("Distance: " + locMng.getDistance());
-//            }
+            DirectionsResult results = getDirectionsDetails(origin, destination);
+            if ((results != null) && (results.routes.length > 0)) {
+                addPolyline(results, mMap);
+                distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
+                time.setText("Time to Car: " + getTimeFromResults(results));
+            } else {
+                time.setText("Time to Car: " + locMng.timeToCar());
+                distance.setText("Distance: " + locMng.getDistance());
+            }
 
         }
     }
-//    private void createNotificationChannel() {
-//        // Create the NotificationChannel, but only on API 26+ because
-//        // the NotificationChannel class is new and not in the support library
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
-//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-////            NotificationChannel channel = new NotificationChannel("1", name, importance);
-//            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
-//            channel.setDescription("1");
-//            // Register the channel with the system; you can't change the importance
-//            // or other notification behaviors after this
-//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//    }
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+//            NotificationChannel channel = new NotificationChannel("1", name, importance);
+            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
+            channel.setDescription("1");
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
     // Commented out for debugging
 
-//    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
-//        try {
-//            return DirectionsApi.newRequest(getGeoContext())
-//                    .mode(TravelMode.WALKING)
-//                    .origin(orig)
-//                    .destination(dest)
-//                    .departureTimeNow()
-//                    .await();
-//        } catch (ApiException e) {
-//            Log.i(TAG,"ApiException" + e.toString());
-//            e.printStackTrace();
-//            return null;
-//        } catch (InterruptedException e) {
-//            Log.i(TAG,"InterruptedException" + e.toString());
-//            e.printStackTrace();
-//            return null;
-//        } catch (IOException e) {
-//            Log.i(TAG,"IOException" + e.toString());
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+    private DirectionsResult getDirectionsDetails(com.google.maps.model.LatLng orig, com.google.maps.model.LatLng dest) {
+        try {
+            return DirectionsApi.newRequest(getGeoContext())
+                    .mode(TravelMode.WALKING)
+                    .origin(orig)
+                    .destination(dest)
+                    .departureTimeNow()
+                    .await();
+        } catch (ApiException e) {
+            Log.i(TAG,"ApiException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (InterruptedException e) {
+            Log.i(TAG,"InterruptedException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            Log.i(TAG,"IOException" + e.toString());
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     private GeoApiContext getGeoContext() {
         GeoApiContext.Builder geoApiContext = new GeoApiContext.Builder();
