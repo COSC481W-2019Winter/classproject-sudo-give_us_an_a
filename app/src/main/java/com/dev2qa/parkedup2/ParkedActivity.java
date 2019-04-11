@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -65,6 +66,7 @@ public class ParkedActivity extends FragmentActivity implements
 
     //latitude longitude of static parked position
     public double latitudeFirst, longitudeFirst;
+    private boolean storedInstanceState = false;
 
     private Location locationFirst;
 
@@ -86,6 +88,18 @@ public class ParkedActivity extends FragmentActivity implements
     private static final int paddingZoom = 70; // offset from edges of the map in pixels. value may need to be altered
     private static final int overview = 0;
 
+    //string names of shared preferences
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String LATITUDE_FLOAT = "latitudeFloat";
+    public static final String LONGITUDE_FLOAT = "longitudeFloat";
+
+    private float floatLat;
+    private float floatLong;
+
+
+    private Boolean freshStartFlag;
+
+
     Button button;
     Button button2;
     Button menuButton;
@@ -95,14 +109,89 @@ public class ParkedActivity extends FragmentActivity implements
     TextView time;
 
 
+    public void saveData(boolean saveData) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        //if (freshStartFlag == true) {
+            if (saveData == true) {
+                //save preference values to these variables
+                editor.putFloat(LATITUDE_FLOAT, (float) latitudeFirst);
+                editor.putFloat(LONGITUDE_FLOAT, (float) longitudeFirst);
+                editor.apply();
+
+                Log.i(TAG, " ");
+                Log.i(TAG, "saveData() write = save");
+                Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
+                Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
+
+                //Toast.makeText(this, "Data Saved", Toast.LENGTH_SHORT).show();
+            } else {
+
+                editor.clear();
+                editor.apply();
+
+                Log.i(TAG, " ");
+                Log.i(TAG, "saveData() write = delete");
+                Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
+                Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
+                //Toast.makeText(this, "Data Deleted A", Toast.LENGTH_SHORT).show();
+            }
+//        } else {
+//            editor.clear();
+//            editor.apply();
+//            //Toast.makeText(this, "Data Deleted B", Toast.LENGTH_SHORT).show();
+//        }
+    }
+
+    public void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
+        floatLat = sharedPreferences.getFloat(LATITUDE_FLOAT, 0.0F);
+        floatLong = sharedPreferences.getFloat(LONGITUDE_FLOAT, 0.0F);
+
+        Log.i(TAG, "loadData()");
+        Log.i(TAG, "floatLat: " + floatLat);
+        Log.i(TAG, "floatLong: " + floatLong);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        Log.i(TAG, "finish()");
+        //stopService();//deleting this will allow you to keep the app running in background, even after exiting
+        saveData(false);
+        //perhaps save values to SharedPreferences or SQLlite database here
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
-
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
-        //startService();
+        Intent intentAborted = getIntent();
+        freshStartFlag = intentAborted.getBooleanExtra("FRESH_START", false);
+
+        Log.i(TAG, "");
+        Log.i(TAG, "FRESH_START freshStartFlag: " + freshStartFlag);
+        Log.i(TAG, "");
+
+
+        //Log.i(TAG, "NEW public static void appAborted(boolean aborted) = " + isAborted);
+
+        Log.i(TAG, "");
+        Log.i(TAG, "onCreate() before loadData()");
+        Log.i(TAG, "floatLat: " + floatLat);
+        Log.i(TAG, "floatLong: " + floatLong);
+        loadData();
+        Log.i(TAG, "onCreate() after loadData()");
+        Log.i(TAG, "floatLat: " + floatLat);
+        Log.i(TAG, "floatLong: " + floatLong);
+        Log.i(TAG, "");
+
+
+        startService();
 
         //createNotificationChannel();
         // set strings with updated data
@@ -149,6 +238,9 @@ public class ParkedActivity extends FragmentActivity implements
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
                                 notificationManager.cancelAll();
+                                //delete button
+                                //clear saved parking position
+                                saveData(false);
 
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -177,6 +269,11 @@ public class ParkedActivity extends FragmentActivity implements
                     public void onClick(DialogInterface dialog, int choice) {
                         switch (choice) {
                             case DialogInterface.BUTTON_POSITIVE:
+
+                                //exit button
+                                //clear saved parked position
+                                saveData(false);
+
                                 finish();
                                 finish();
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
@@ -291,7 +388,7 @@ public class ParkedActivity extends FragmentActivity implements
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(1000);//1000ms = 1sec
-        locationRequest.setFastestInterval(900);
+        locationRequest.setFastestInterval(1000);//seems to be minimum for older devices to load map smoothly
         //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         //essential check before next lines of code are allowed
@@ -305,9 +402,26 @@ public class ParkedActivity extends FragmentActivity implements
         locMng.setParkCoord(locationFirst);
         parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
-        //split up latitude/longitude into variables before creating LatLng object
-        latitudeFirst = locationFirst.getLatitude();
-        longitudeFirst = locationFirst.getLongitude();
+
+
+
+        //new code
+        if(floatLat == 0.0F){
+            //split up latitude/longitude into variables before creating LatLng object
+            latitudeFirst = locationFirst.getLatitude();
+            longitudeFirst = locationFirst.getLongitude();
+            Log.i(TAG, "StoredPreferences == false");
+            //should is send latitudeFirst & longitudeFirst as parameters to saveData()?
+            saveData(true);
+        } else {
+            Log.i(TAG, "StoredPreferences == true");
+            latitudeFirst = floatLat;
+            longitudeFirst = floatLong;
+            Log.i(TAG, "................latitudeFirst: " + latitudeFirst);
+            Log.i(TAG, "................longitudeFirst: " + longitudeFirst);
+        }
+
+
 
         //this makes sure only one marker is placed
         if(currentUserLocationMarker != null){
@@ -477,39 +591,48 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     protected void onDestroy() {
         //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onDestroy()");
         super.onDestroy();
- //       stopService();//deleting this will allow you to keep the app running in background, even after exiting
+        stopService();//deleting this will allow you to keep the app running in background, even after exiting
+        //saveData(false);
     }
+
 
 //    Test code to determine which part of the activity lifecycle your in
 //
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onPause() {
-//        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
-//        super.onPause();
-//    }
-//    @Override
-//    protected void onStop() {
-//        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-//        super.onStop();
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart()");
+        //Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+   }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume()");
+        //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onRestart()");
+        //Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onPause() {
+        Log.i(TAG, "onPause()");
+        //Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+        super.onPause();
+    }
+    @Override
+    protected void onStop() {
+        Log.i(TAG, "onStop()");
+        //Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+        super.onStop();
+    }
 //    @Override
 //    protected void onDestroy() {
+//        Log.i(TAG, "onDestroy()");
 //        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
 //        super.onDestroy();
 //    }

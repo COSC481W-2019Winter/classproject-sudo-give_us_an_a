@@ -29,6 +29,8 @@
         <activity
             android:name=".BeginActivity"
             android:screenOrientation="portrait">
+            <!--android:alwaysRetainTaskState="true"-->
+            <!--^testing memory persistancy over longer periods in above line of code-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
