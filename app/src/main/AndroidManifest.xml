@@ -18,15 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ParkedActivity" />
-            <!--android:screenOrientation="portrait" />-->
+            android:name=".ParkedActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MenuActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".BeginActivity"
-            android:alwaysRetainTaskState="true"
             android:screenOrientation="portrait">
+            <!--android:alwaysRetainTaskState="true"-->
             <!--^testing memory persistancy over longer periods in above line of code-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

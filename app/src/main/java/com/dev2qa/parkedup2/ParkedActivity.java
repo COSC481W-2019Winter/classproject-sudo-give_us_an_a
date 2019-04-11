@@ -2,8 +2,6 @@ package com.dev2qa.parkedup2;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,14 +40,10 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.android.PolyUtil;
-import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
-import com.google.maps.model.TravelMode;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -91,6 +85,9 @@ public class ParkedActivity extends FragmentActivity implements
     private float floatLong;
 
 
+    private Boolean freshStartFlag;
+
+
     Button button;
     Button button2;
     Button menuButton;
@@ -100,22 +97,39 @@ public class ParkedActivity extends FragmentActivity implements
     TextView time;
 
 
-
-
-    public void saveData(){
+    public void saveData(boolean saveData) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        //save preference values to these variables
-        editor.putFloat(LATITUDE_FLOAT, (float) latitudeFirst);
-        editor.putFloat(LONGITUDE_FLOAT, (float) longitudeFirst);
-        editor.apply();
 
-        Log.i(TAG, " ");
-        Log.i(TAG, "saveData()");
-        Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
-        Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
+        //if (freshStartFlag == true) {
+            if (saveData == true) {
+                //save preference values to these variables
+                editor.putFloat(LATITUDE_FLOAT, (float) latitudeFirst);
+                editor.putFloat(LONGITUDE_FLOAT, (float) longitudeFirst);
+                editor.apply();
 
-        Toast.makeText(this, "Data Saved", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, " ");
+                Log.i(TAG, "saveData() write = save");
+                Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
+                Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
+
+                Toast.makeText(this, "Data Saved", Toast.LENGTH_SHORT).show();
+            } else {
+
+                editor.clear();
+                editor.apply();
+
+                Log.i(TAG, " ");
+                Log.i(TAG, "saveData() write = delete");
+                Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
+                Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
+                //Toast.makeText(this, "Data Deleted A", Toast.LENGTH_SHORT).show();
+            }
+//        } else {
+//            editor.clear();
+//            editor.apply();
+//            //Toast.makeText(this, "Data Deleted B", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     public void loadData(){
@@ -130,30 +144,11 @@ public class ParkedActivity extends FragmentActivity implements
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
-//        Log.i(TAG, "onSaveInstanceState");
-        outState.putDouble("latFirst", latitudeFirst);
-        outState.putDouble("longFirst", longitudeFirst);
-//        Log.i(TAG, "latFirst: " + latitudeFirst);
-//        Log.i(TAG, "longFirst: " + longitudeFirst);
-    }
-
-    //no need to check for savedInstanceState == null with this
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        latitudeFirst = savedInstanceState.getDouble("latFirst");
-//        longitudeFirst = savedInstanceState.getDouble("longFirst");
-//        Log.i(TAG, "onRestoreInstanceState");
-//        Log.i(TAG, "onRestore latFirst: " + latitudeFirst);
-//        Log.i(TAG, "onRestore longFirst: " + longitudeFirst);
-//    }
-
-
-    @Override
     public void finish() {
         super.finish();
+        Log.i(TAG, "finish()");
+        //stopService();//deleting this will allow you to keep the app running in background, even after exiting
+        saveData(false);
         //perhaps save values to SharedPreferences or SQLlite database here
     }
 
@@ -161,7 +156,17 @@ public class ParkedActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
-        //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+
+        Intent intentAborted = getIntent();
+        freshStartFlag = intentAborted.getBooleanExtra("FRESH_START", false);
+
+        Log.i(TAG, "");
+        Log.i(TAG, "FRESH_START freshStartFlag: " + freshStartFlag);
+        Log.i(TAG, "");
+
+
+        //Log.i(TAG, "NEW public static void appAborted(boolean aborted) = " + isAborted);
 
         Log.i(TAG, "");
         Log.i(TAG, "onCreate() before loadData()");
@@ -173,23 +178,6 @@ public class ParkedActivity extends FragmentActivity implements
         Log.i(TAG, "floatLong: " + floatLong);
         Log.i(TAG, "");
 
-        if(savedInstanceState != null){
-//            Log.i(TAG, "\n ");
-//            Log.i(TAG, "savedInstanceState != null");
-//            Log.i(TAG, "latFirst: " + latitudeFirst);
-//            Log.i(TAG, "longFirst: " + longitudeFirst);
-            latitudeFirst = savedInstanceState.getDouble("latFirst");
-            longitudeFirst = savedInstanceState.getDouble("longFirst");
-            storedInstanceState = true;
-//            Log.i(TAG, "latFirst: " + latitudeFirst);
-//            Log.i(TAG, "longFirst: " + longitudeFirst);
-//            Log.i(TAG, "\n ");
-        } else {
-            storedInstanceState = false;
-//            Log.i(TAG, "savedInstanceState == null");
-//            Log.i(TAG, "latFirst: " + latitudeFirst);
-//            Log.i(TAG, "longFirst: " + longitudeFirst);
-        }
 
         startService();
 
@@ -237,7 +225,9 @@ public class ParkedActivity extends FragmentActivity implements
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
 
-                                //delete here
+                                //delete button
+                                //clear saved parking position
+                                saveData(false);
 
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -266,15 +256,17 @@ public class ParkedActivity extends FragmentActivity implements
                     public void onClick(DialogInterface dialog, int choice) {
                         switch (choice) {
                             case DialogInterface.BUTTON_POSITIVE:
+
+                                //exit button
+                                //clear saved parked position
+                                saveData(false);
+
                                 finish();
                                 finish();
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("EXIT", true);
                                 startActivity(intent);
-
-                                //exit here
-
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
@@ -407,7 +399,7 @@ public class ParkedActivity extends FragmentActivity implements
             longitudeFirst = locationFirst.getLongitude();
             Log.i(TAG, "StoredPreferences == false");
             //should is send latitudeFirst & longitudeFirst as parameters to saveData()?
-            saveData();
+            saveData(true);
         } else {
             Log.i(TAG, "StoredPreferences == true");
             latitudeFirst = floatLat;
@@ -489,21 +481,21 @@ public class ParkedActivity extends FragmentActivity implements
 
         }
     }
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel("1", name, importance);
-            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
-            channel.setDescription("1");
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
+//    private void createNotificationChannel() {
+//        // Create the NotificationChannel, but only on API 26+ because
+//        // the NotificationChannel class is new and not in the support library
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+////            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+////            NotificationChannel channel = new NotificationChannel("1", name, importance);
+//            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
+//            channel.setDescription("1");
+//            // Register the channel with the system; you can't change the importance
+//            // or other notification behaviors after this
+//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+//            notificationManager.createNotificationChannel(channel);
+//        }
+//    }
 
     // Commented out for debugging
 
@@ -566,9 +558,10 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     protected void onDestroy() {
         //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
-        //Log.i(TAG, "onDestroy()");
+        Log.i(TAG, "onDestroy()");
         super.onDestroy();
         stopService();//deleting this will allow you to keep the app running in background, even after exiting
+        //saveData(false);
     }
 
     public void stopService() {
@@ -579,36 +572,36 @@ public class ParkedActivity extends FragmentActivity implements
 
 //    Test code to determine which part of the activity lifecycle your in
 //
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        Log.i(TAG, "onStart()");
-//        //Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
-//   }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        Log.i(TAG, "onResume()");
-//        //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        Log.i(TAG, "onRestart()");
-//        //Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
-//    }
-//    @Override
-//    protected void onPause() {
-//        Log.i(TAG, "onPause()");
-//        //Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
-//        super.onPause();
-//    }
-//    @Override
-//    protected void onStop() {
-//        Log.i(TAG, "onStop()");
-//        //Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-//        super.onStop();
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart()");
+        //Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+   }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume()");
+        //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onRestart()");
+        //Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onPause() {
+        Log.i(TAG, "onPause()");
+        //Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+        super.onPause();
+    }
+    @Override
+    protected void onStop() {
+        Log.i(TAG, "onStop()");
+        //Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+        super.onStop();
+    }
 //    @Override
 //    protected void onDestroy() {
 //        Log.i(TAG, "onDestroy()");

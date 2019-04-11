@@ -81,6 +81,9 @@ public class BeginActivity extends FragmentActivity implements
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BeginActivity.this, ParkedActivity.class);
+
+                //new intent for telling ParkedActivity if app has been fully aborted/restarted
+                intent.putExtra("FRESH_START", true);
                 startActivity(intent);
             }
         });
