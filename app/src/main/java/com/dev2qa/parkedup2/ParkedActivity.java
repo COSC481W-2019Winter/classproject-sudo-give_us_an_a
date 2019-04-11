@@ -111,6 +111,12 @@ public class ParkedActivity extends FragmentActivity implements
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        //not long
+        //long is just a long integer
+        //int = 3001;
+        //long = 3000000000000000000000001L;
+        //float = 2.5F;
+        //double = float with more values
         editor.putLong(TEXT, (long) latitudeFirst);
         editor.putLong(TEXT, (long) longitudeFirst);
 
@@ -123,6 +129,7 @@ public class ParkedActivity extends FragmentActivity implements
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         longLat = sharedPreferences.getLong(TEXT, 0);
         longLat = sharedPreferences.getLong(TEXT, 0);
+
     }
 
     public void updateViews(){
