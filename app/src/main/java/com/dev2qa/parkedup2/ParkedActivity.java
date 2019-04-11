@@ -415,7 +415,10 @@ public class ParkedActivity extends FragmentActivity implements
     }
 
     private String getTimeFromResults(DirectionsResult results){
-        return results.routes[overview].legs[overview].duration.humanReadable;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            return results.routes[overview].legs[overview].duration.humanReadable;
+        else
+            return locMng.timeToCar();
     }
 
     private long getDistanceFromResults(DirectionsResult results) {
