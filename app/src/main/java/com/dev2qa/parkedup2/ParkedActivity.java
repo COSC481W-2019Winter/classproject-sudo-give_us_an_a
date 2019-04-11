@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -122,9 +123,9 @@ public class ParkedActivity extends FragmentActivity implements
                     .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.mipmap.ic_launcher_foreground))
                     .setContentTitle("ParkedUp!")
                     .setContentText("Your parking spot has been saved!")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    //.setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
-                    .setAutoCancel(true);
+                    .setAutoCancel(false);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
@@ -457,9 +458,7 @@ public class ParkedActivity extends FragmentActivity implements
     public void startService() {
         Intent serviceIntent = new Intent(this, ForegroundService.class);
         ContextCompat.startForegroundService(this, serviceIntent);
-
-        //kill?
-        //startService(serviceIntent);
+        startService(serviceIntent);
     }
 
     public void stopService() {

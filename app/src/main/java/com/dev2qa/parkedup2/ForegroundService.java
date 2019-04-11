@@ -6,6 +6,7 @@ import android.app.Service;import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -28,17 +29,17 @@ public class ForegroundService extends Service {
                 0, notificationIntent, 0);
 
         createNotificationChannel();
-
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Parked Up Running")
-//              .setSmallIcon(R.drawable.common_google_signin_btn_icon_light)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentIntent(pendingIntent)
-//                .setChannelId("2")
-                .build();
-
-        startForeground(1, notification);
-
+        if(MenuActivity.getNotify()) {
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle("ParkedUp!")
+                    .setContentText("Your parking spot has been saved!")
+                    .setSmallIcon(R.mipmap.ic_launcher_foreground)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_foreground))
+                    .setContentIntent(pendingIntent)
+                    .setChannelId("2")
+                    .build();
+            startForeground(1, notification);
+        }
         //do heavy work on a background thread
         //stopSelf();
 
