@@ -345,7 +345,11 @@ public class ParkedActivity extends FragmentActivity implements
             com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0], parkingCoord[1]);
             com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(location.getLatitude(), location.getLongitude());
 
-            DirectionsResult results = getDirectionsDetails(origin, destination);
+            DirectionsResult results;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                results = getDirectionsDetails(origin, destination);
+            else
+                results = null;
             if ((results != null) && (results.routes.length > 0)) {
                 addPolyline(results, latLng);
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
@@ -415,10 +419,7 @@ public class ParkedActivity extends FragmentActivity implements
     }
 
     private String getTimeFromResults(DirectionsResult results){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            return results.routes[overview].legs[overview].duration.humanReadable;
-        else
-            return locMng.timeToCar();
+        return results.routes[overview].legs[overview].duration.humanReadable;
     }
 
     private long getDistanceFromResults(DirectionsResult results) {
