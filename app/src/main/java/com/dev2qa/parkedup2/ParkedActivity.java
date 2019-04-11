@@ -236,6 +236,9 @@ public class ParkedActivity extends FragmentActivity implements
                             case DialogInterface.BUTTON_POSITIVE:
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
+
+                                //delete here
+
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
@@ -270,7 +273,7 @@ public class ParkedActivity extends FragmentActivity implements
                                 intent.putExtra("EXIT", true);
                                 startActivity(intent);
 
-
+                                //exit here
 
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
