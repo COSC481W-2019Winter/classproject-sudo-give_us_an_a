@@ -123,11 +123,11 @@ public class ParkedActivity extends FragmentActivity implements
                     .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.mipmap.ic_launcher_foreground))
                     .setContentTitle("ParkedUp!")
                     .setContentText("Your parking spot has been saved!")
-                    //.setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
-                    .setAutoCancel(false);
+                    .setOngoing(true);
 
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
             if(MenuActivity.getNotify()) {
                 // notificationId is a unique int for each notification that you must define
@@ -148,6 +148,8 @@ public class ParkedActivity extends FragmentActivity implements
                             case DialogInterface.BUTTON_POSITIVE:
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
+                                notificationManager.cancelAll();
+
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
