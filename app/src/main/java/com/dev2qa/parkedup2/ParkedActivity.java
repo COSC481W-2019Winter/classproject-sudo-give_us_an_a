@@ -191,8 +191,6 @@ public class ParkedActivity extends FragmentActivity implements
         Log.i(TAG, "");
 
 
-        startService();
-
         //createNotificationChannel();
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
@@ -593,7 +591,6 @@ public class ParkedActivity extends FragmentActivity implements
         //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onDestroy()");
         super.onDestroy();
-        stopService();//deleting this will allow you to keep the app running in background, even after exiting
         //saveData(false);
     }
 
