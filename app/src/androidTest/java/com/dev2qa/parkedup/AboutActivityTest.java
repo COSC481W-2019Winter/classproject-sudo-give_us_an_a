@@ -1,6 +1,5 @@
-package com.dev2qa.parkedup2;
+package com.dev2qa.parkedup;
 
-import android.app.Activity;
 import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Rule;

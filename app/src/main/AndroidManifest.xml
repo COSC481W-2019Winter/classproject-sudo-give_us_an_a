@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dev2qa.parkedup2">
+    package="com.dev2qa.parkedup">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -21,13 +21,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ParkedActivity"
+            android:name="com.dev2qa.parkedup.ParkedActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MenuActivity"
+            android:name="com.dev2qa.parkedup.MenuActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BeginActivity"
+            android:name="com.dev2qa.parkedup.BeginActivity"
             android:screenOrientation="portrait">
             <!--android:alwaysRetainTaskState="true"-->
             <!--^testing memory persistancy over longer periods in above line of code-->
@@ -37,7 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutActivity" /> <!-- make sure to add this so it works on newer devices -->
+        <activity android:name="com.dev2qa.parkedup.AboutActivity" /> <!-- make sure to add this so it works on newer devices -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
