@@ -1,4 +1,4 @@
-package com.dev2qa.parkedup2;
+package com.dev2qa.parkedup;
 
 import org.junit.Test;
 
