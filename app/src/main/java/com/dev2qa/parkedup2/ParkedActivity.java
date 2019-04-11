@@ -82,18 +82,13 @@ public class ParkedActivity extends FragmentActivity implements
     private static final int Request_User_Location_Code = 99;
     private static final int overview = 0;
 
+    //string names of shared preferences
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
-    public static final String SWITCH1 = "switch1";
+    public static final String LATITUDE_FLOAT = "latitudeFloat";
+    public static final String LONGITUDE_FLOAT = "longitudeFloat";
 
-    public static final long LAT = 0;
-    public static final long LONG = 0;
-
-    public static final Long LATITUDE_FIRST = null;
-    public static final Long LONGITUDE_FIRST = null;
-
-    private long longLat;
-    private long longLong;
+    private float floatLat;
+    private float floatLong;
 
 
     Button button;
@@ -117,19 +112,28 @@ public class ParkedActivity extends FragmentActivity implements
         //long = 3000000000000000000000001L;
         //float = 2.5F;
         //double = float with more values
-        editor.putLong(TEXT, (long) latitudeFirst);
-        editor.putLong(TEXT, (long) longitudeFirst);
+
+        //save preference values to these variables
+        editor.putFloat(LATITUDE_FLOAT, (float) latitudeFirst);
+        editor.putFloat(LONGITUDE_FLOAT, (float) longitudeFirst);
 
         editor.apply();
+
+        Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
+        Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
 
         Toast.makeText(this, "Data Saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        longLat = sharedPreferences.getLong(TEXT, 0);
-        longLat = sharedPreferences.getLong(TEXT, 0);
+//        longLat = sharedPreferences.getFloat(TEXT, 0);
+//        longLat = sharedPreferences.getFloat(TEXT, 0);
+        floatLat = sharedPreferences.getFloat(LATITUDE_FLOAT, 0);
+        floatLong = sharedPreferences.getFloat(LONGITUDE_FLOAT, 0);
 
+        Log.i(TAG, "floatLat: " + floatLat);
+        Log.i(TAG, "floatLong: " + floatLong);
     }
 
     public void updateViews(){
@@ -174,22 +178,22 @@ public class ParkedActivity extends FragmentActivity implements
         if(savedInstanceState != null){
             Log.i(TAG, "\n ");
             Log.i(TAG, "savedInstanceState != null");
-            Log.i(TAG, "IF = TRUE");
+//            Log.i(TAG, "IF = TRUE");
             Log.i(TAG, "latFirst: " + latitudeFirst);
             Log.i(TAG, "longFirst: " + longitudeFirst);
             latitudeFirst = savedInstanceState.getDouble("latFirst");
             longitudeFirst = savedInstanceState.getDouble("longFirst");
             storedInstanceState = true;
-            Log.i(TAG, "latFirst: " + latitudeFirst);
-            Log.i(TAG, "longFirst: " + longitudeFirst);
-            Log.i(TAG, "\n ");
+//            Log.i(TAG, "latFirst: " + latitudeFirst);
+//            Log.i(TAG, "longFirst: " + longitudeFirst);
+//            Log.i(TAG, "\n ");
         } else {
             storedInstanceState = false;
             Log.i(TAG, "savedInstanceState == null");
-            Log.i(TAG, "ELSE = TRUE");
-
-            Log.i(TAG, "latFirst: " + latitudeFirst);
-            Log.i(TAG, "longFirst: " + longitudeFirst);
+//            Log.i(TAG, "ELSE = TRUE");
+//
+//            Log.i(TAG, "latFirst: " + latitudeFirst);
+//            Log.i(TAG, "longFirst: " + longitudeFirst);
         }
 
 
@@ -400,16 +404,25 @@ public class ParkedActivity extends FragmentActivity implements
         parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
 
 
+
+
         //new code
-        if(storedInstanceState == false){
+        //if(storedInstanceState == false){
+        if(latitudeFirst < 1){
             //split up latitude/longitude into variables before creating LatLng object
             latitudeFirst = locationFirst.getLatitude();
             longitudeFirst = locationFirst.getLongitude();
-            Log.i(TAG, "storedInstanceState == false");
+            //Log.i(TAG, "storedInstanceState == false");
+            Log.i(TAG, "StoredPreferences == false");
+            //should is send latitudeFirst & longitudeFirst as parameters to saveData()?
             saveData();
         } else {
-            Log.i(TAG, "storedInstanceState == true");
+            //Log.i(TAG, "storedInstanceState == true");
+            Log.i(TAG, "StoredPreferences == true");
             loadData();
+            latitudeFirst = floatLat;
+            longitudeFirst = floatLong;
+
         }
 
 
