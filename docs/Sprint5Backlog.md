@@ -44,19 +44,25 @@ For future development we want clean code
 ## Effort
 small
 ## Acceptance Criteria
+* RESEARCH & possible deploy app to Google Play Store
 ## Who is doing it
 Drew
 ## User Story
+* Would like user to be able to download the app
 ## Tasks
+* Look into what it takes to deploy app to the app store
 
 # 4. Ads
 ## Effort
 small
 ## Acceptance Criteria
+* RESEARCH & possible add ads to app
 ## Who is doing it
 Drew
 ## User Story
+* If in the app store would like the app to generate income to pay for user Google Maps requests
 ## Tasks
+* Look into how to use Admob to put ads in the app
 
  _________
 # End Of Sprint 5 Tasks
