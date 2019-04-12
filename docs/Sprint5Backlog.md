@@ -12,7 +12,7 @@ To allow for the user to find their parking location if they have parked in a pa
  
 # 2. Fix notification after merge
 ## Effort
-medium
+Medium
 ## Acceptance Criteria
 * make notificatins appear
 ## Who is doing it
@@ -22,11 +22,11 @@ We broke notifications during sprint 4 mereges and they need to work again.
 ## Tasks
 * fix notifications
  
-# 2. Code cleanup/ refactor
+# 2. Code Cleanup/Refactor
 ## Effort
-small
+Small
 ## Acceptance Criteria
-* remove dead and commented unnessiary code
+* Remove dead and commented unnessiary code
 ## Who is doing it
 Eleanor
 ## User Story
@@ -40,9 +40,9 @@ For future development we want clean code
 * ForgroundService?
 * NotificationChan
  
-# 3. App depolyment
+# 3. App Deployment
 ## Effort
-small
+Medium
 ## Acceptance Criteria
 * RESEARCH & possible deploy app to Google Play Store
 ## Who is doing it
@@ -54,7 +54,7 @@ Drew
 
 # 4. Ads
 ## Effort
-small
+Medium
 ## Acceptance Criteria
 * RESEARCH & possible add ads to app
 ## Who is doing it
