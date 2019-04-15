@@ -37,19 +37,19 @@
 ### Not Started
 | Task | Story |
 | ---- | --- |
-| ParkedActivity | 3. Code Cleanup/Refactor |
-| BeginActivity | 3. Code Cleanup/Refactor |
-| MenuActivty | 3. Code Cleanup/Refactor |
-| AboutActivity | 3. Code Cleanup/Refactor |
-| LocationManager | 3. Code Cleanup/Refactor |
 | ForgroundService? | 3. Code Cleanup/Refactor |
 | NotificationChan? | 3. Code Cleanup/Refactor |
-| fix notifications | 2. Fix notification after merge |
 
 ### In Progress
 | Task | Story 
 | ---- | --- |
+| fix notifications | 2. Fix notification after merge |
 
 ### Completed
 | Task | Story |
 | ---- | --- |
+| ParkedActivity | 3. Code Cleanup/Refactor |
+| BeginActivity | 3. Code Cleanup/Refactor |
+| AboutActivity | 3. Code Cleanup/Refactor |
+| MenuActivty | 3. Code Cleanup/Refactor |
+| LocationManager | 3. Code Cleanup/Refactor |
