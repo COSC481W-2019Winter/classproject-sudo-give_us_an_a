@@ -16,5 +16,8 @@
 * Continue to figure out why the notifications won't work
 ## Lucas
 ### What I did last time
+* Continued research and discussion about implementing elevation into the app.
 ### Problems
+* Still looks like there is a challenge in getting data for altitude and barometric pressure for users.
 ### What I will do next
+* Will look into implementing a file input for pressure constants above sea level and see if we can use that with sensor manager to give the user's altitude.
