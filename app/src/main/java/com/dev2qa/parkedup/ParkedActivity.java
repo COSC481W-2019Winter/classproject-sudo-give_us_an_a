@@ -429,7 +429,7 @@ public class ParkedActivity extends FragmentActivity implements
         LatLng latLng = new LatLng(latitudeFirst, longitudeFirst);//instantiate lat/lng object
 
         //Elevation
-        float elevation = SensorManager.getAltitude(ATM, ATM);
+        float elevation = SensorManager.getAltitude(ATM, altitudeToPressure(latLng)); //broken; needs work
         locMng.setParkElevation(elevation);
         Log.i(TAG,"Initial Elevation: " + elevation);
         ElevationResult result = getElevation(new com.google.maps.model.LatLng(latitudeFirst, longitudeFirst));
@@ -525,6 +525,13 @@ public class ParkedActivity extends FragmentActivity implements
             e.printStackTrace();
             return null;
         }
+    }
+    private float altitudeToPressure(LatLng latlng) {
+        // Code needed to find closest latlng to airport .dat file.
+        double altitude = 0; // Above code will produce closest airport's altitude
+        // https://www.engineeringtoolbox.com/air-altitude-pressure-d_462.html
+        double pressure = 1013.25 * (1 - 2.25577 * Math.pow(10.0,-5.0) * altitude) * 5.25588;
+        return (float) pressure;
     }
     private ElevationResult getElevation(com.google.maps.model.LatLng latlng) {
         try {
