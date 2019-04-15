@@ -22,7 +22,7 @@ We broke notifications during sprint 4 mereges and they need to work again.
 ## Tasks
 * fix notifications
  
-# 2. Code Cleanup/Refactor
+# 3. Code Cleanup/Refactor
 ## Effort
 Small
 ## Acceptance Criteria
@@ -40,7 +40,7 @@ For future development we want clean code
 * ForgroundService?
 * NotificationChan
  
-# 3. App Deployment
+# 4. App Deployment
 ## Effort
 Medium
 ## Acceptance Criteria
@@ -52,7 +52,7 @@ Drew
 ## Tasks
 * Look into what it takes to deploy app to the app store
 
-# 4. Ads
+# 5. Ads
 ## Effort
 Medium
 ## Acceptance Criteria
@@ -68,7 +68,7 @@ Drew
 # End Of Sprint 5 Tasks
  _________
 
-# 5. Easy mode
+# 6. Easy mode
 ## Effort
 medium
 ## Acceptance Criteria
@@ -77,7 +77,7 @@ medium
 ## User Story
 ## Tasks
 
-# 6. Map View
+# 7. Map View
 ## Effort
 large
 ## Acceptance Criteria
