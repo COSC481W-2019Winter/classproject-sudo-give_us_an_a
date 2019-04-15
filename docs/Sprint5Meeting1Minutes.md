@@ -1,8 +1,11 @@
 # Sprint 5 Meeting 1 Minutes
 ## Brian
 ### What I did last time
+* Researched Elevation
 ### Problems
+* The `SensorManager` needs the pressure at nearest airport. Need to calculate pressure based on altitude given in `.dat` file.
 ### What I will do next
+* Implement pressure to altitude conversion
 ## Drew
 ### What I did last time
 ### Problems
