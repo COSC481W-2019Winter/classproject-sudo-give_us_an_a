@@ -7,6 +7,7 @@
 ### In Progress
 | Task | Story |
 | ---- | --- |
+| Researching for elevation/altitude measurements | 1. Elevation |
 ### Completed
 | Task | Story |
 | ---- | --- |
