@@ -209,6 +209,7 @@ public class ParkedActivity extends FragmentActivity implements
                     .setOngoing(true);
 
             final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+       //     final NotificationCompat notificationManagerForeground = NotificationCompat.
             Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
             if(MenuActivity.getNotify()) {
                 // notificationId is a unique int for each notification that you must define
@@ -230,6 +231,7 @@ public class ParkedActivity extends FragmentActivity implements
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
                                 notificationManager.cancelAll();
+                                stopService();
                                 //delete button
                                 //clear saved parking position
                                 saveData(false);
@@ -265,13 +267,14 @@ public class ParkedActivity extends FragmentActivity implements
                                 //exit button
                                 //clear saved parked position
                                 saveData(false);
-
+                                stopService();
                                 finish();
                                 finish();
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("EXIT", true);
                                 startActivity(intent);
+
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
