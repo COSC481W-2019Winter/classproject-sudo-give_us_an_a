@@ -38,13 +38,12 @@
 ### Not Started
 | Task | Story |
 | ---- | --- |
-| ForgroundService? | 3. Code Cleanup/Refactor |
-| NotificationChan? | 3. Code Cleanup/Refactor |
+
 
 ### In Progress
 | Task | Story 
 | ---- | --- |
-| fix notifications | 2. Fix notification after merge |
+
 
 ### Completed
 | Task | Story |
@@ -54,3 +53,6 @@
 | AboutActivity | 3. Code Cleanup/Refactor |
 | MenuActivty | 3. Code Cleanup/Refactor |
 | LocationManager | 3. Code Cleanup/Refactor |
+| fix notifications | 2. Fix notification after merge |
+| ForgroundService | 3. Code Cleanup/Refactor |
+| NotificationChan | 3. Code Cleanup/Refactor |
