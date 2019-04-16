@@ -184,7 +184,7 @@ public class ParkedActivity extends FragmentActivity implements
         Log.i(TAG, "floatLong: " + floatLong);
         Log.i(TAG, "");
 
-
+        startService();
         //createNotificationChannel();
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
@@ -380,7 +380,7 @@ public class ParkedActivity extends FragmentActivity implements
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(1000);//1000ms = 1sec
-        locationRequest.setFastestInterval(1000);//seems to be minimum for older devices to load map smoothly
+        locationRequest.setFastestInterval(900);//seems to be minimum for older devices to load map smoothly
         //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         //essential check before next lines of code are allowed
@@ -569,16 +569,16 @@ public class ParkedActivity extends FragmentActivity implements
 
     }
 
-//    public void startService() {
-//        Intent serviceIntent = new Intent(this, ForegroundService.class);
-//        ContextCompat.startForegroundService(this, serviceIntent);
-//        startService(serviceIntent);
-//    }
-//
-//    public void stopService() {
-//        Intent serviceIntent = new Intent(this, ForegroundService.class);
-//        stopService(serviceIntent);
-//    }
+    public void startService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
+        startService(serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
+    }
 
     @Override
     protected void onDestroy() {

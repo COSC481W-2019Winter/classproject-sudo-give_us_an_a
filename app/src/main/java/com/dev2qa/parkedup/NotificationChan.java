@@ -1,4 +1,4 @@
-package com.dev2qa.parkedup2;
+package com.dev2qa.parkedup;
 
 import android.app.Application;
 import android.app.NotificationChannel;

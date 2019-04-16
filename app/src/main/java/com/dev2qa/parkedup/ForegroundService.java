@@ -1,4 +1,4 @@
-package com.dev2qa.parkedup2;
+package com.dev2qa.parkedup;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,7 +12,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
-import static com.dev2qa.parkedup2.ParkedActivity.CHANNEL_ID;
+import static com.dev2qa.parkedup.ParkedActivity.CHANNEL_ID;
 
 public class ForegroundService extends Service {
 
