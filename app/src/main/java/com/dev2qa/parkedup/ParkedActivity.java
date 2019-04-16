@@ -139,6 +139,8 @@ public class ParkedActivity extends FragmentActivity implements
         Intent intentAborted = getIntent();
         freshStartFlag = intentAborted.getBooleanExtra("FRESH_START", false);
 
+        startService();
+
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
@@ -154,10 +156,10 @@ public class ParkedActivity extends FragmentActivity implements
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         //Find your views
-        button = findViewById(R.id.deleteButton);
+        deleteSpotButton = findViewById(R.id.deleteButton);
 
         //Assign a listener to your button
-        button.setOnClickListener(new View.OnClickListener() {
+        deleteSpotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
