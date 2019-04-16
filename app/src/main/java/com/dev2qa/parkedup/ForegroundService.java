@@ -40,12 +40,6 @@ public class ForegroundService extends Service {
                     .build();
             startForeground(1, notification);
         }
-        //do heavy work on a background thread
-        //stopSelf();
-
-        //Experiment with these three options if not working correctly
-        //return START_NOT_STICKY
-        //return START_REDELIVER_INTENT
         return START_STICKY;
     }
 
@@ -61,19 +55,12 @@ public class ForegroundService extends Service {
     }
 
     private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel("1", name, importance);
             NotificationChannel channel = new NotificationChannel("2", CHANNEL_ID, importance);
             channel.setDescription("1");
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }
-
 }
