@@ -8,8 +8,11 @@
 * Implement pressure to altitude conversion
 ## Drew
 ### What I did last time
+* Researched the correct steps to take to deploy app and insert adds
 ### Problems
+* Using Admob for the adds, must make sure to use the sample add and not a real one so that I am not kicked off of the service
 ### What I will do next
+* Further research into this topic into it's plausibility
 ## Eleanor
 ### What I did last time
 * I have done all refactoring and clean up of code except for classes that may be deleted in the process of fixing notification.
