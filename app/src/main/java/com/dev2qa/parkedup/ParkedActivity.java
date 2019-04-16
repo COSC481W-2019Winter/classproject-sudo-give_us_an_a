@@ -73,7 +73,6 @@ public class ParkedActivity extends FragmentActivity implements
     private boolean locationChanged = false;
 
     private LocationManager locMng = new LocationManager();
-    private NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
 
     public static final String CHANNEL_ID = "name";
 
@@ -154,22 +153,11 @@ public class ParkedActivity extends FragmentActivity implements
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        builder.setSmallIcon(R.mipmap.ic_launcher_foreground)
-                    .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.mipmap.ic_launcher_foreground))
-                    .setContentTitle("ParkedUp!")
-                    .setContentText("Your parking spot has been saved!")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setOngoing(true);
+        //Find your views
+        button = findViewById(R.id.deleteButton);
 
-            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
-            if(MenuActivity.getNotify()) {
-                // notificationId is a unique int for each notification that you must define
-                notificationManager.notify(1, builder.build());
-            }
-        deleteSpotButton = findViewById(R.id.deleteButton);
-        deleteSpotButton.setOnClickListener(new View.OnClickListener() {
+        //Assign a listener to your button
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -179,7 +167,7 @@ public class ParkedActivity extends FragmentActivity implements
                             case DialogInterface.BUTTON_POSITIVE:
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
-                                notificationManager.cancelAll();
+                                stopService();
                                 saveData(false);
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -204,6 +192,7 @@ public class ParkedActivity extends FragmentActivity implements
                         switch (choice) {
                             case DialogInterface.BUTTON_POSITIVE:
                                 saveData(false);
+  								stopService();
                                 finishAffinity();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -313,7 +302,8 @@ public class ParkedActivity extends FragmentActivity implements
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(1000);//1000ms = 1sec
-        locationRequest.setFastestInterval(1000);
+        locationRequest.setFastestInterval(900);//seems to be minimum for older devices to load map smoothly
+        //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         //essential check before next lines of code are allowed
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
@@ -460,8 +450,20 @@ public class ParkedActivity extends FragmentActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {//called when connection is severedExample Service Channel
     }
 
+    public void startService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
+        startService(serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        stopService();
     }
 }
