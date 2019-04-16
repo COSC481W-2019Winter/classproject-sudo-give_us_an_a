@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class AboutActivity extends FragmentActivity {
-    private static final String TAG = "MyLog";
     Button backButton;
     double[] coords;
     @Override
@@ -19,7 +18,6 @@ public class AboutActivity extends FragmentActivity {
         Bundle extras = getIntent().getExtras();
         try {
             coords = (double[]) extras.get("Parked Coords");
-            Log.i(TAG, "About coords are " + coords);
         } catch(Exception NullPointerException){
 
         }

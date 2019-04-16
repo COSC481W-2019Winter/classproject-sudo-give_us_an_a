@@ -20,12 +20,15 @@ public class LocationManager {
         parkingElev = 0;
 		speed = 0;
     }
+
     public double[] getCoordinates(){
         return coordinates;
     }
+
     public double[] getParkingCoord() {
         return parkingCoord;
     }
+
     public void setSpeed(Location location) {
         speed = (double) location.getSpeed();
     }
@@ -37,6 +40,7 @@ public class LocationManager {
     public void setCurrCoord(Location location) {
         coordinates = new double[]{location.getLatitude(),location.getLongitude()};
     }
+
     private String formattedCoords(double[] array) {
         double[] coords = new double[]{array[0],array[1]};
         //Default coordinate is positive
@@ -77,6 +81,7 @@ public class LocationManager {
         return str.toString();
 
     }
+
     public String displayCoord(){
         return formattedCoords(coordinates);
     }
@@ -88,9 +93,11 @@ public class LocationManager {
     public double getElevation() {
         return elevation;
     }
+
     public void setParkElev(Location location) {
         //Will set parkingElev
     }
+
     public String getDistance() {
         distanceToCar();
 
@@ -98,6 +105,7 @@ public class LocationManager {
         String units, smallUnit;
         double threshold;
         int conversionFactor;
+
         if (usUnits) {
             units = "miles";
             smallUnit = "feet";
@@ -117,35 +125,38 @@ public class LocationManager {
         
         return String.format("%.3f",dist) + " " + units;
     }
+
     public String getDistance(long meters) {
         double dist = meters;
         String units, smallUnit;
-        double threashold;
+        double threshold;
         int conversionFactor;
         if (usUnits) {
             units = "miles";
             smallUnit = "feet";
-            threashold = 0.19; //mi
+            threshold = 0.19; //mi
             conversionFactor = 5280; //miles to feet
             dist *= 0.000621371; // meters to miles
         }
         else {
             units = "kilometers";
             smallUnit = "meters";
-            threashold = 1; //km
+            threshold = 1; //km
             conversionFactor = 1000; //km to m
             dist /= 1000; //meters to km
         }
-        if (dist < threashold) {
+        if (dist < threshold) {
             dist *= conversionFactor;
             units = smallUnit;
         }
 
         return String.format("%.3f",dist) + " " + units;
     }
+
     private double degToRad(double deg) {
         return deg * Math.PI / 180;
     }
+
     private void distanceToCar() {
         int earthRadius;
         if (usUnits)
@@ -221,10 +232,10 @@ public class LocationManager {
                 else
                     str.append(String.format("%.0f mins",  Math.floor(time)));
             }
-
         }
         else
             time *= 60;
+
         //Seconds
         if (time > 1) {
             if (str.length() > 0) {
@@ -261,6 +272,7 @@ public class LocationManager {
     public String timeToCar() {
         double convertedSpeed;
         double averageWalkingPace;
+
         if (usUnits) {
             convertedSpeed = speed * 2.237; //m/s to mph
             averageWalkingPace = 2; //mph
@@ -279,5 +291,4 @@ public class LocationManager {
 
         return timeFormatted(time);
     }
-
 }
