@@ -74,7 +74,6 @@ public class ParkedActivity extends FragmentActivity implements
     private boolean locationChanged = false;
 
     private LocationManager locMng = new LocationManager();
-    private NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
 
     public static final String CHANNEL_ID = "name";
 
@@ -200,21 +199,6 @@ public class ParkedActivity extends FragmentActivity implements
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        builder.setSmallIcon(R.mipmap.ic_launcher_foreground)
-                    .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.mipmap.ic_launcher_foreground))
-                    .setContentTitle("ParkedUp!")
-                    .setContentText("Your parking spot has been saved!")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setOngoing(true);
-
-            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-       //     final NotificationCompat notificationManagerForeground = NotificationCompat.
-            Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
-            if(MenuActivity.getNotify()) {
-                // notificationId is a unique int for each notification that you must define
-                notificationManager.notify(1, builder.build());
-            }
         //Find your views
         button = findViewById(R.id.deleteButton);
 
@@ -230,7 +214,7 @@ public class ParkedActivity extends FragmentActivity implements
                             case DialogInterface.BUTTON_POSITIVE:
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
-                                notificationManager.cancelAll();
+                                //notificationManager.cancelAll();
                                 stopService();
                                 //delete button
                                 //clear saved parking position
@@ -588,6 +572,7 @@ public class ParkedActivity extends FragmentActivity implements
         //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onDestroy()");
         super.onDestroy();
+        stopService();
         //saveData(false);
     }
 
