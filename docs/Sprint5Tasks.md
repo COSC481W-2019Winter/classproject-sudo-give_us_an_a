@@ -33,6 +33,8 @@
 ### Completed
 | Task | Story |
 | ---- | --- |
+| Look into what it takes to deploy app to the app store | 4. App Deployment |
+| Look into how to use Admob to put ads in the app | 5. Ads |
 
 ## Eleanor
 ### Not Started
