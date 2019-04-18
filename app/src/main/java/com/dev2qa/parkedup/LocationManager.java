@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup;
 
 import android.location.Location;
+import android.support.v4.app.NotificationCompat;
 
 public class LocationManager {
     private double[] coordinates;
@@ -20,15 +21,12 @@ public class LocationManager {
         parkingElev = 0;
 		speed = 0;
     }
-
     public double[] getCoordinates(){
         return coordinates;
     }
-
     public double[] getParkingCoord() {
         return parkingCoord;
     }
-
     public void setSpeed(Location location) {
         speed = (double) location.getSpeed();
     }
@@ -40,7 +38,6 @@ public class LocationManager {
     public void setCurrCoord(Location location) {
         coordinates = new double[]{location.getLatitude(),location.getLongitude()};
     }
-
     private String formattedCoords(double[] array) {
         double[] coords = new double[]{array[0],array[1]};
         //Default coordinate is positive
@@ -81,7 +78,6 @@ public class LocationManager {
         return str.toString();
 
     }
-
     public String displayCoord(){
         return formattedCoords(coordinates);
     }
@@ -90,22 +86,30 @@ public class LocationManager {
         return formattedCoords(parkingCoord);
     }
 
-    public double getElevation() {
-        return elevation;
+    public double getElevation() { return elevation; }
+    public double getParkElevation() { return parkingElev; }
+
+    public void setParkElevation(float altitude) {
+        if(usUnits)
+            parkingElev = altitude * 0.000621371; //meters to miles;
+        else
+            parkingElev = altitude/1000;
     }
 
-    public void setParkElev(Location location) {
-        //Will set parkingElev
+    public void setElevation(float altitude) {
+        if(usUnits)
+            elevation = altitude * 0.000621371; //meters to miles;
+        else
+            elevation = altitude/1000;
     }
-
     public String getDistance() {
         distanceToCar();
 
-        double dist = distance;
+        double absElevation = Math.abs(elevation-parkingElev);
+        double dist = distance + absElevation;
         String units, smallUnit;
         double threshold;
         int conversionFactor;
-
         if (usUnits) {
             units = "miles";
             smallUnit = "feet";
@@ -125,9 +129,9 @@ public class LocationManager {
         
         return String.format("%.3f",dist) + " " + units;
     }
-
     public String getDistance(long meters) {
-        double dist = meters;
+        double absElevation = Math.abs(elevation-parkingElev);
+        double dist = meters + absElevation;
         String units, smallUnit;
         double threshold;
         int conversionFactor;
@@ -152,11 +156,9 @@ public class LocationManager {
 
         return String.format("%.3f",dist) + " " + units;
     }
-
     private double degToRad(double deg) {
         return deg * Math.PI / 180;
     }
-
     private void distanceToCar() {
         int earthRadius;
         if (usUnits)
@@ -232,10 +234,10 @@ public class LocationManager {
                 else
                     str.append(String.format("%.0f mins",  Math.floor(time)));
             }
+
         }
         else
             time *= 60;
-
         //Seconds
         if (time > 1) {
             if (str.length() > 0) {
@@ -272,7 +274,6 @@ public class LocationManager {
     public String timeToCar() {
         double convertedSpeed;
         double averageWalkingPace;
-
         if (usUnits) {
             convertedSpeed = speed * 2.237; //m/s to mph
             averageWalkingPace = 2; //mph
@@ -283,12 +284,14 @@ public class LocationManager {
         }
 
         double time;
+        double absElevation = Math.abs(elevation-parkingElev);
         //if walking slower than half averageWalkingPace, assume stationary
         if (convertedSpeed < averageWalkingPace/2)
-            time = distance/averageWalkingPace;
+            time = (distance + absElevation) / averageWalkingPace;
         else
-            time = distance/convertedSpeed;
+            time = (distance + absElevation) / convertedSpeed;
 
         return timeFormatted(time);
     }
+
 }
