@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup;
 
 import android.location.Location;
+import android.support.v4.app.NotificationCompat;
 
 public class LocationManager {
     private double[] coordinates;
@@ -85,16 +86,27 @@ public class LocationManager {
         return formattedCoords(parkingCoord);
     }
 
-    public double getElevation() {
-        return elevation;
+    public double getElevation() { return elevation; }
+    public double getParkElevation() { return parkingElev; }
+
+    public void setParkElevation(float altitude) {
+        if(usUnits)
+            parkingElev = altitude * 0.000621371; //meters to miles;
+        else
+            parkingElev = altitude/1000;
     }
-    public void setParkElev(Location location) {
-        //Will set parkingElev
+
+    public void setElevation(float altitude) {
+        if(usUnits)
+            elevation = altitude * 0.000621371; //meters to miles;
+        else
+            elevation = altitude/1000;
     }
     public String getDistance() {
         distanceToCar();
 
-        double dist = distance;
+        double absElevation = Math.abs(elevation-parkingElev);
+        double dist = distance + absElevation;
         String units, smallUnit;
         double threshold;
         int conversionFactor;
@@ -118,25 +130,26 @@ public class LocationManager {
         return String.format("%.3f",dist) + " " + units;
     }
     public String getDistance(long meters) {
-        double dist = meters;
+        double absElevation = Math.abs(elevation-parkingElev);
+        double dist = meters + absElevation;
         String units, smallUnit;
-        double threashold;
+        double threshold;
         int conversionFactor;
         if (usUnits) {
             units = "miles";
             smallUnit = "feet";
-            threashold = 0.19; //mi
+            threshold = 0.19; //mi
             conversionFactor = 5280; //miles to feet
             dist *= 0.000621371; // meters to miles
         }
         else {
             units = "kilometers";
             smallUnit = "meters";
-            threashold = 1; //km
+            threshold = 1; //km
             conversionFactor = 1000; //km to m
             dist /= 1000; //meters to km
         }
-        if (dist < threashold) {
+        if (dist < threshold) {
             dist *= conversionFactor;
             units = smallUnit;
         }
@@ -271,11 +284,12 @@ public class LocationManager {
         }
 
         double time;
+        double absElevation = Math.abs(elevation-parkingElev);
         //if walking slower than half averageWalkingPace, assume stationary
         if (convertedSpeed < averageWalkingPace/2)
-            time = distance/averageWalkingPace;
+            time = (distance + absElevation) / averageWalkingPace;
         else
-            time = distance/convertedSpeed;
+            time = (distance + absElevation) / convertedSpeed;
 
         return timeFormatted(time);
     }

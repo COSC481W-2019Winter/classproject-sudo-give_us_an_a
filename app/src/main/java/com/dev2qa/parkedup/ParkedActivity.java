@@ -2,13 +2,20 @@ package com.dev2qa.parkedup;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,10 +49,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
+import com.google.maps.ElevationApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.android.PolyUtil;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.ElevationResult;
 import com.google.maps.model.TravelMode;
 
 import java.io.IOException;
@@ -60,7 +69,6 @@ public class ParkedActivity extends FragmentActivity implements
 
     //latitude longitude of static parked position
     public double latitudeFirst, longitudeFirst;
-    private boolean storedInstanceState = false;
 
     private Location locationFirst;
 
@@ -74,13 +82,15 @@ public class ParkedActivity extends FragmentActivity implements
     private boolean locationChanged = false;
 
     private LocationManager locMng = new LocationManager();
-    private NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
+    private SensorManager mSensorManager = null;
 
     public static final String CHANNEL_ID = "name";
 
     private static final int Request_User_Location_Code = 99;
     private static final int paddingZoom = 70; // offset from edges of the map in pixels. value may need to be altered
     private static final int overview = 0;
+    private static final float ATM = SensorManager.PRESSURE_STANDARD_ATMOSPHERE;
+    private static float P = 0;
 
     //string names of shared preferences
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -94,8 +104,8 @@ public class ParkedActivity extends FragmentActivity implements
     private Boolean freshStartFlag;
 
 
-    Button button;
-    Button button2;
+    Button deleteSpotButton;
+    Button exitButton;
     Button menuButton;
     TextView parkedCoord;
     TextView currCoord;
@@ -107,35 +117,15 @@ public class ParkedActivity extends FragmentActivity implements
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        //if (freshStartFlag == true) {
-            if (saveData == true) {
+            if (saveData) {
                 //save preference values to these variables
                 editor.putFloat(LATITUDE_FLOAT, (float) latitudeFirst);
                 editor.putFloat(LONGITUDE_FLOAT, (float) longitudeFirst);
                 editor.apply();
-
-                Log.i(TAG, " ");
-                Log.i(TAG, "saveData() write = save");
-                Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
-                Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
-
-                //Toast.makeText(this, "Data Saved", Toast.LENGTH_SHORT).show();
             } else {
-
                 editor.clear();
                 editor.apply();
-
-                Log.i(TAG, " ");
-                Log.i(TAG, "saveData() write = delete");
-                Log.i(TAG, "LATITUDE_FLOAT: " + (float) latitudeFirst);
-                Log.i(TAG, "LONGITUDE_FLOAT: " + (float) longitudeFirst);
-                //Toast.makeText(this, "Data Deleted A", Toast.LENGTH_SHORT).show();
             }
-//        } else {
-//            editor.clear();
-//            editor.apply();
-//            //Toast.makeText(this, "Data Deleted B", Toast.LENGTH_SHORT).show();
-//        }
     }
 
     public void loadData(){
@@ -143,16 +133,11 @@ public class ParkedActivity extends FragmentActivity implements
 
         floatLat = sharedPreferences.getFloat(LATITUDE_FLOAT, 0.0F);
         floatLong = sharedPreferences.getFloat(LONGITUDE_FLOAT, 0.0F);
-
-        Log.i(TAG, "loadData()");
-        Log.i(TAG, "floatLat: " + floatLat);
-        Log.i(TAG, "floatLong: " + floatLong);
     }
 
     @Override
     public void finish() {
         super.finish();
-        Log.i(TAG, "finish()");
         //stopService();//deleting this will allow you to keep the app running in background, even after exiting
         saveData(false);
         //perhaps save values to SharedPreferences or SQLlite database here
@@ -162,30 +147,12 @@ public class ParkedActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
-        //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
-
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Intent intentAborted = getIntent();
         freshStartFlag = intentAborted.getBooleanExtra("FRESH_START", false);
 
-        Log.i(TAG, "");
-        Log.i(TAG, "FRESH_START freshStartFlag: " + freshStartFlag);
-        Log.i(TAG, "");
+        startService();
 
-
-        //Log.i(TAG, "NEW public static void appAborted(boolean aborted) = " + isAborted);
-
-        Log.i(TAG, "");
-        Log.i(TAG, "onCreate() before loadData()");
-        Log.i(TAG, "floatLat: " + floatLat);
-        Log.i(TAG, "floatLong: " + floatLong);
-        loadData();
-        Log.i(TAG, "onCreate() after loadData()");
-        Log.i(TAG, "floatLat: " + floatLat);
-        Log.i(TAG, "floatLong: " + floatLong);
-        Log.i(TAG, "");
-
-
-        //createNotificationChannel();
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
@@ -200,28 +167,13 @@ public class ParkedActivity extends FragmentActivity implements
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        builder.setSmallIcon(R.mipmap.ic_launcher_foreground)
-                    .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.mipmap.ic_launcher_foreground))
-                    .setContentTitle("ParkedUp!")
-                    .setContentText("Your parking spot has been saved!")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setOngoing(true);
-
-            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            Log.i(TAG, "Nofity is  "+ MenuActivity.getNotify());
-            if(MenuActivity.getNotify()) {
-                // notificationId is a unique int for each notification that you must define
-                notificationManager.notify(1, builder.build());
-            }
         //Find your views
-        button = findViewById(R.id.deleteButton);
+        deleteSpotButton = findViewById(R.id.deleteButton);
 
         //Assign a listener to your button
-        button.setOnClickListener(new View.OnClickListener() {
+        deleteSpotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int choice) {
@@ -229,18 +181,14 @@ public class ParkedActivity extends FragmentActivity implements
                             case DialogInterface.BUTTON_POSITIVE:
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
-                                notificationManager.cancelAll();
-                                //delete button
-                                //clear saved parking position
+                                stopService();
                                 saveData(false);
-
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
                         }
                     }
                 };
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(ParkedActivity.this);
                 builder.setMessage("Are you sure you want to delete? (This will be permanent)")
                         .setPositiveButton("Yes", dialogClickListener)
@@ -248,30 +196,18 @@ public class ParkedActivity extends FragmentActivity implements
             }
         });
 
-        //Find your views
-        button2 = findViewById(R.id.exit);
-
-        //Assign a listener to your button
-        button2.setOnClickListener(new View.OnClickListener() {
+        exitButton = findViewById(R.id.exit);
+        exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // pop up for complete exit out off program
                 DialogInterface.OnClickListener dialogClickListener2 = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int choice) {
                         switch (choice) {
                             case DialogInterface.BUTTON_POSITIVE:
-
-                                //exit button
-                                //clear saved parked position
                                 saveData(false);
-
-                                finish();
-                                finish();
-                                Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.putExtra("EXIT", true);
-                                startActivity(intent);
+  								stopService();
+                                finishAffinity();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
@@ -325,7 +261,7 @@ public class ParkedActivity extends FragmentActivity implements
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
-        } else {//new else statement. take out if buggy
+        } else {
             checkUserLocationPermission();
         }
     }
@@ -380,7 +316,7 @@ public class ParkedActivity extends FragmentActivity implements
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(1000);//1000ms = 1sec
-        locationRequest.setFastestInterval(1000);//seems to be minimum for older devices to load map smoothly
+        locationRequest.setFastestInterval(900);//seems to be minimum for older devices to load map smoothly
         //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         //essential check before next lines of code are allowed
@@ -388,32 +324,21 @@ public class ParkedActivity extends FragmentActivity implements
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         }
 
-        // permissions ok, we get last location. new initial condition
         locationFirst = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
         locMng.setParkCoord(locationFirst);
         parkedCoord.setText("\t\t\t " + locMng.displayParkCoord());
-
-
-
 
         //new code
         if(floatLat == 0.0F){
             //split up latitude/longitude into variables before creating LatLng object
             latitudeFirst = locationFirst.getLatitude();
             longitudeFirst = locationFirst.getLongitude();
-            Log.i(TAG, "StoredPreferences == false");
-            //should is send latitudeFirst & longitudeFirst as parameters to saveData()?
             saveData(true);
         } else {
-            Log.i(TAG, "StoredPreferences == true");
             latitudeFirst = floatLat;
             longitudeFirst = floatLong;
-            Log.i(TAG, "................latitudeFirst: " + latitudeFirst);
-            Log.i(TAG, "................longitudeFirst: " + longitudeFirst);
         }
-
-
 
         //this makes sure only one marker is placed
         if(currentUserLocationMarker != null){
@@ -421,6 +346,11 @@ public class ParkedActivity extends FragmentActivity implements
         }
 
         LatLng latLng = new LatLng(latitudeFirst, longitudeFirst);//instantiate lat/lng object
+
+        //Elevation
+
+        //ElevationResult result = getElevation(new com.google.maps.model.LatLng(latitudeFirst, longitudeFirst));
+        //Log.i(TAG,"Google ElevationAPI: " + result.elevation);
 
         //changes things about the marker
         MarkerOptions markerOptions = new MarkerOptions();
@@ -432,12 +362,9 @@ public class ParkedActivity extends FragmentActivity implements
         currentUserLocationMarker = mMap.addMarker(markerOptions);
     }
 
-    //new implemented methods for establishing our current location
     @Override
     public void onLocationChanged(Location location) {//called when location is changed
-
         locMng.setSpeed(location);
-
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         //do this only the first time for initial location
@@ -445,13 +372,14 @@ public class ParkedActivity extends FragmentActivity implements
             CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
             CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 19);//2.0 to 21.0 -higher double = more zoom
             mMap.moveCamera(center);//centers camera right above before zooming
-            //mMap.animateCamera(zoom);//animated zoom in
             mMap.moveCamera(zoom);//non-animated zoom in
             locationChanged = true;
         }
 
         if (location != null) {
             locMng.setCurrCoord(location);
+            float elevation = P;
+            Log.i(TAG,"Elevation" + elevation);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
 
             //Directions
@@ -475,6 +403,7 @@ public class ParkedActivity extends FragmentActivity implements
             }
         }
     }
+
     private void updateCamera(LatLng latLng) {
         //moves camera to bounds of marker and current position
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
@@ -484,7 +413,6 @@ public class ParkedActivity extends FragmentActivity implements
         LatLngBounds bounds = builder.build();//set the bounds
 
         CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, paddingZoom);
-        //mMap.moveCamera(updateCam);//maybe better on battery life?
         mMap.animateCamera(updateCam);
     }
 
@@ -497,15 +425,15 @@ public class ParkedActivity extends FragmentActivity implements
                     .departureTimeNow()
                     .await();
         } catch (ApiException e) {
-            Log.i(TAG,"ApiException" + e.toString());
+            Log.i(TAG,"Direction ApiException" + e.toString());
             e.printStackTrace();
             return null;
         } catch (InterruptedException e) {
-            Log.i(TAG,"InterruptedException" + e.toString());
+            Log.i(TAG,"Direction InterruptedException" + e.toString());
             e.printStackTrace();
             return null;
         } catch (IOException e) {
-            Log.i(TAG,"IOException" + e.toString());
+            Log.i(TAG,"Direction IOException" + e.toString());
             e.printStackTrace();
             return null;
         }
@@ -528,7 +456,6 @@ public class ParkedActivity extends FragmentActivity implements
         LatLngBounds bounds = builder.build();
 
         CameraUpdate updateCam = CameraUpdateFactory.newLatLngBounds(bounds, paddingZoom);
-        //mMap.moveCamera(updateCam);//maybe better on battery life?
         mMap.animateCamera(updateCam);
     }
 
@@ -540,94 +467,61 @@ public class ParkedActivity extends FragmentActivity implements
         return results.routes[overview].legs[overview].distance.inMeters;
     }
 
-
-
-
-//    private void createNotificationChannel() {
-//        // Create the NotificationChannel, but only on API 26+ because
-//        // the NotificationChannel class is new and not in the support library
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
-//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-////            NotificationChannel channel = new NotificationChannel("1", name, importance);
-//            NotificationChannel channel = new NotificationChannel("1", CHANNEL_ID, importance);
-//            channel.setDescription("1");
-//            // Register the channel with the system; you can't change the importance
-//            // or other notification behaviors after this
-//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//    }
-
     @Override
-    public void onConnectionSuspended(int i) {
-
-    }
+    public void onConnectionSuspended(int i) {    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {//called when connection is severedExample Service Channel
-
     }
 
-//    public void startService() {
-//        Intent serviceIntent = new Intent(this, ForegroundService.class);
-//        ContextCompat.startForegroundService(this, serviceIntent);
-//        startService(serviceIntent);
-//    }
-//
-//    public void stopService() {
-//        Intent serviceIntent = new Intent(this, ForegroundService.class);
-//        stopService(serviceIntent);
-//    }
+    public void startService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
+        startService(serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
+    }
 
     @Override
     protected void onDestroy() {
-        //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "onDestroy()");
         super.onDestroy();
-        //saveData(false);
+		stopService();
     }
-
-
-//    Test code to determine which part of the activity lifecycle your in
-//
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(TAG, "onStart()");
-        //Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
-   }
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume()");
-        //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i(TAG, "onRestart()");
-        //Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+        mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE), SensorManager.SENSOR_DELAY_NORMAL);
     }
     @Override
     protected void onPause() {
-        Log.i(TAG, "onPause()");
-        //Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+        mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
     }
-    @Override
-    protected void onStop() {
-        Log.i(TAG, "onStop()");
-        //Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-        super.onStop();
-    }
-//    @Override
-//    protected void onDestroy() {
-//        Log.i(TAG, "onDestroy()");
-//        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
-//        super.onDestroy();
-//    }
 
+    private SensorEventListener mSensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float pressure_value = 0.0f;
 
+            if ( Sensor.TYPE_PRESSURE == event.sensor.getType()){
+                pressure_value = event.values[0];
+                P = SensorManager.getAltitude(ATM, pressure_value);
+                if(P == 0) {
+                    locMng.setParkElevation(P);
+                }else{
+                    locMng.setElevation(P);
+                }
+                Log.i(TAG,"Elevation: " + P);
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
 
 }
