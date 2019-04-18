@@ -1,8 +1,11 @@
 # Sprint 5 Meeting 2 Minutes
 ## Brian
 ### What I did last time
+* Looked into Weather App API for local barometric pressure
 ### Problems
+* Connection doesn't seem to be working right from the phone. Perhaps something with permissions or the http request.
 ### What I will do next
+* Debug Weather API as a way to get the pressure to `SensorManager`.
 ## Drew
 ### What I did last time
 * Looked into what to do to prepare for store listing (how it's presented in the Google Play store), AdMob, and other minor things involved with putting app in the store. 
