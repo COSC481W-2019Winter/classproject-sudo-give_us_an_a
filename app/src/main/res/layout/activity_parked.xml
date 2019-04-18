@@ -9,9 +9,10 @@
     <TextView
         android:id="@+id/elevationDiff"
         android:layout_width="match_parent"
-        android:layout_height="19dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:fontFamily="@font/comfortaa"
         android:inputType="textPersonName"
@@ -23,7 +24,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.861" />
+        app:layout_constraintVertical_bias="0.849" />
 
     <fragment
         android:id="@+id/map"
@@ -99,7 +100,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.898" />
+        app:layout_constraintVertical_bias="0.872" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -153,7 +154,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.68" />
+        app:layout_constraintVertical_bias="0.656" />
 
     <TextView
         android:id="@+id/parkedCoord"
@@ -171,7 +172,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.717" />
+        app:layout_constraintVertical_bias="0.692" />
 
     <TextView
         android:id="@+id/currCoord"
@@ -190,7 +191,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.795" />
+        app:layout_constraintVertical_bias="0.77" />
 
     <TextView
         android:id="@+id/header2"
@@ -203,14 +204,14 @@
         android:fontFamily="@font/comfortaa"
         android:inputType="textPersonName"
         android:text="Current Location:"
-        android:textSize="24sp"
         android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.767" />
+        app:layout_constraintVertical_bias="0.742" />
 
     <TextView
         android:id="@+id/distance"
@@ -229,6 +230,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.828" />
+        app:layout_constraintVertical_bias="0.802" />
 
 </android.support.constraint.ConstraintLayout>
