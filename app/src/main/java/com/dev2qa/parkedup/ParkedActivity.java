@@ -372,8 +372,8 @@ public class ParkedActivity extends FragmentActivity implements
 
         if (location != null) {
             locMng.setCurrCoord(location);
-            float elevation = P;
-            Log.i(TAG,"Elevation" + elevation);
+            float elev = P;
+            Log.i(TAG,"Elevation" + elev);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
 
             //Directions
@@ -389,10 +389,12 @@ public class ParkedActivity extends FragmentActivity implements
             if ((results != null) && (results.routes.length > 0)) {
                 addPolyline(results, latLng);
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
+                elevation.setText("Elevation Change: " + locMng.getElevationChange());
                 time.setText("Time to Car: " + getTimeFromResults(results));
             } else {
                 updateCamera(latLng);
                 distance.setText("Distance: " + locMng.getDistance());
+                elevation.setText("Elevation Change: " + locMng.getElevationChange());
                 time.setText("Time to Car: " + locMng.timeToCar());
             }
         }

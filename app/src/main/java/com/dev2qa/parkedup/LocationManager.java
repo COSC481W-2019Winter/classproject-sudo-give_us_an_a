@@ -86,8 +86,13 @@ public class LocationManager {
         return formattedCoords(parkingCoord);
     }
 
-    public double getElevation() { return elevation; }
-    public double getParkElevation() { return parkingElev; }
+    public String getElevationChange() {
+        if (elevation > parkingElev)
+            return String.format("+%.3f",elevation-parkingElev);
+        else
+            return String.format("-%.3f",parkingElev-elevation);
+    }
+
 
     public void setParkElevation(float altitude) {
         if(usUnits)
