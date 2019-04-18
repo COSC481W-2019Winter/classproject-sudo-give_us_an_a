@@ -22,5 +22,9 @@
 * Contiune to refactor code.
 ## Lucas
 ### What I did last time
+* Looked at potential solutions to implement elevation into the app using an external api or another service.
+* Created a new branch to attemp getting the phones altitude from the phone using the sensorManager.
 ### Problems
+* Using an api is still recomended for getting the pressure of the air at sea level to compare with the phone's sensor, but no attempt has fully worked yet.
 ### What I will do next
+* See if I can improve the accuracy of the current elevation code to better represent the user's location over time.
