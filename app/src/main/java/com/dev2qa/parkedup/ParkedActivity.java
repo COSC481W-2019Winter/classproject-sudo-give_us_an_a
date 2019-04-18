@@ -469,9 +469,8 @@ public class ParkedActivity extends FragmentActivity implements
 
         if (location != null) {
             locMng.setCurrCoord(location);
-            float elevation = SensorManager.getAltitude(ATM, ATM);
+            float elevation = P;
             Log.i(TAG,"Elevation" + elevation);
-            locMng.setElevation(elevation);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
 
             //Directions
@@ -683,7 +682,6 @@ public class ParkedActivity extends FragmentActivity implements
             if ( Sensor.TYPE_PRESSURE == event.sensor.getType()){
                 pressure_value = event.values[0];
                 P = SensorManager.getAltitude(ATM, pressure_value);
-                locMng.getSeaLevelPressure(ATM, SensorManager.PRESSURE_STANDARD_ATMOSPHERE);
                 if(P == 0) {
                     locMng.setParkElevation(P);
                 }else{
