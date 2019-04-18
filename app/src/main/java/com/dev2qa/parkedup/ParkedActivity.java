@@ -118,7 +118,6 @@ public class ParkedActivity extends FragmentActivity implements
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
             if (saveData) {
-                //save preference values to these variables
                 editor.putFloat(LATITUDE_FLOAT, (float) latitudeFirst);
                 editor.putFloat(LONGITUDE_FLOAT, (float) longitudeFirst);
                 editor.apply();
@@ -138,9 +137,7 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     public void finish() {
         super.finish();
-        //stopService();//deleting this will allow you to keep the app running in background, even after exiting
         saveData(false);
-        //perhaps save values to SharedPreferences or SQLlite database here
     }
 
     @Override
@@ -347,11 +344,6 @@ public class ParkedActivity extends FragmentActivity implements
 
         LatLng latLng = new LatLng(latitudeFirst, longitudeFirst);//instantiate lat/lng object
 
-        //Elevation
-
-        //ElevationResult result = getElevation(new com.google.maps.model.LatLng(latitudeFirst, longitudeFirst));
-        //Log.i(TAG,"Google ElevationAPI: " + result.elevation);
-
         //changes things about the marker
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -425,15 +417,12 @@ public class ParkedActivity extends FragmentActivity implements
                     .departureTimeNow()
                     .await();
         } catch (ApiException e) {
-            Log.i(TAG,"Direction ApiException" + e.toString());
             e.printStackTrace();
             return null;
         } catch (InterruptedException e) {
-            Log.i(TAG,"Direction InterruptedException" + e.toString());
             e.printStackTrace();
             return null;
         } catch (IOException e) {
-            Log.i(TAG,"Direction IOException" + e.toString());
             e.printStackTrace();
             return null;
         }
@@ -514,7 +503,6 @@ public class ParkedActivity extends FragmentActivity implements
                 }else{
                     locMng.setElevation(P);
                 }
-                Log.i(TAG,"Elevation: " + P);
             }
         }
 
