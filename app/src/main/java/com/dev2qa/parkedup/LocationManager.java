@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup;
 
 import android.location.Location;
+import android.support.v4.app.NotificationCompat;
 
 public class LocationManager {
     private double[] coordinates;

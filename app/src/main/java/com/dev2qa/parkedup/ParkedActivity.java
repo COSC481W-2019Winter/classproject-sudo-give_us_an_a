@@ -5,12 +5,16 @@ import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Build;
@@ -80,6 +84,7 @@ public class ParkedActivity extends FragmentActivity implements
 
     private LocationManager locMng = new LocationManager();
     private NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
+    private SensorManager mSensorManager = null;
 
     public static final String CHANNEL_ID = "name";
 
@@ -87,6 +92,7 @@ public class ParkedActivity extends FragmentActivity implements
     private static final int paddingZoom = 70; // offset from edges of the map in pixels. value may need to be altered
     private static final int overview = 0;
     private static final float ATM = SensorManager.PRESSURE_STANDARD_ATMOSPHERE;
+    private static float P = 0;
 
     //string names of shared preferences
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -169,7 +175,7 @@ public class ParkedActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parked);
         //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
-
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Intent intentAborted = getIntent();
         freshStartFlag = intentAborted.getBooleanExtra("FRESH_START", false);
 
@@ -429,11 +435,9 @@ public class ParkedActivity extends FragmentActivity implements
         LatLng latLng = new LatLng(latitudeFirst, longitudeFirst);//instantiate lat/lng object
 
         //Elevation
-        float elevation = SensorManager.getAltitude(ATM, altitudeToPressure(latLng)); //broken; needs work
-        locMng.setParkElevation(elevation);
-        Log.i(TAG,"Initial Elevation: " + elevation);
-        ElevationResult result = getElevation(new com.google.maps.model.LatLng(latitudeFirst, longitudeFirst));
-        Log.i(TAG,"Google ElevationAPI: " + result.elevation);
+
+        //ElevationResult result = getElevation(new com.google.maps.model.LatLng(latitudeFirst, longitudeFirst));
+        //Log.i(TAG,"Google ElevationAPI: " + result.elevation);
 
         //changes things about the marker
         MarkerOptions markerOptions = new MarkerOptions();
@@ -641,6 +645,7 @@ public class ParkedActivity extends FragmentActivity implements
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "onResume()");
+        mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE), SensorManager.SENSOR_DELAY_NORMAL);
         //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
     }
     @Override
@@ -653,6 +658,7 @@ public class ParkedActivity extends FragmentActivity implements
     protected void onPause() {
         Log.i(TAG, "onPause()");
         //Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+        mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
     }
     @Override
@@ -668,6 +674,29 @@ public class ParkedActivity extends FragmentActivity implements
 //        super.onDestroy();
 //    }
 
+    private SensorEventListener mSensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float pressure_value = 0.0f;
+            float height = 0.0f;
 
+            if ( Sensor.TYPE_PRESSURE == event.sensor.getType()){
+                pressure_value = event.values[0];
+                P = SensorManager.getAltitude(ATM, pressure_value);
+                locMng.getSeaLevelPressure(ATM, SensorManager.PRESSURE_STANDARD_ATMOSPHERE);
+                if(P == 0) {
+                    locMng.setParkElevation(P);
+                }else{
+                    locMng.setElevation(P);
+                }
+                Log.i(TAG,"Elevation: " + P);
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
 
 }
