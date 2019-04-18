@@ -109,6 +109,7 @@ public class ParkedActivity extends FragmentActivity implements
     Button menuButton;
     TextView parkedCoord;
     TextView currCoord;
+    TextView elevation;
     TextView distance;
     TextView time;
 
@@ -154,6 +155,7 @@ public class ParkedActivity extends FragmentActivity implements
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
         distance = findViewById(R.id.distance);
+        elevation = findViewById(R.id.elevationDiff);
         time = findViewById(R.id.timeToCar);
 
         parkedCoord.append(" \t");
