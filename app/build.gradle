@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.dev2qa.parkedup2"
+        applicationId "com.dev2qa.parkedup"
         //needed to be altered to support JobScheduler
 //        minSdkVersion 15
         minSdkVersion 21
