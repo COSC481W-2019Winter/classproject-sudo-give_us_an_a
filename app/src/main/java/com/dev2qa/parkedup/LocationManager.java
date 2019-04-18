@@ -105,7 +105,8 @@ public class LocationManager {
     public String getDistance() {
         distanceToCar();
 
-        double dist = distance;
+        double absElevation = Math.abs(elevation-parkingElev);
+        double dist = distance + absElevation;
         String units, smallUnit;
         double threshold;
         int conversionFactor;
@@ -129,7 +130,8 @@ public class LocationManager {
         return String.format("%.3f",dist) + " " + units;
     }
     public String getDistance(long meters) {
-        double dist = meters;
+        double absElevation = Math.abs(elevation-parkingElev);
+        double dist = meters + absElevation;
         String units, smallUnit;
         double threshold;
         int conversionFactor;
@@ -282,11 +284,12 @@ public class LocationManager {
         }
 
         double time;
+        double absElevation = Math.abs(elevation-parkingElev);
         //if walking slower than half averageWalkingPace, assume stationary
         if (convertedSpeed < averageWalkingPace/2)
-            time = distance/averageWalkingPace;
+            time = (distance + absElevation) / averageWalkingPace;
         else
-            time = distance/convertedSpeed;
+            time = (distance + absElevation) / convertedSpeed;
 
         return timeFormatted(time);
     }
