@@ -529,30 +529,6 @@ public class ParkedActivity extends FragmentActivity implements
             return null;
         }
     }
-    private float altitudeToPressure(LatLng latlng) {
-        // Code needed to find closest latlng to airport .dat file.
-        double altitude = 0; // Above code will produce closest airport's altitude
-        // https://www.engineeringtoolbox.com/air-altitude-pressure-d_462.html
-        double pressure = 1013.25 * (1 - 2.25577 * Math.pow(10.0,-5.0) * altitude) * 5.25588;
-        return (float) pressure;
-    }
-    private ElevationResult getElevation(com.google.maps.model.LatLng latlng) {
-        try {
-            return ElevationApi.getByPoint(getGeoContext(), latlng).await();
-        } catch (ApiException e) {
-            Log.i(TAG,"Elevation ApiException" + e.toString());
-            e.printStackTrace();
-            return null;
-        } catch (InterruptedException e) {
-            Log.i(TAG,"Elevation InterruptedException" + e.toString());
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            Log.i(TAG,"Elevation IOException" + e.toString());
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     private GeoApiContext getGeoContext() {
         GeoApiContext.Builder geoApiContext = new GeoApiContext.Builder();
