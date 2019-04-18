@@ -14,13 +14,9 @@ import android.widget.ToggleButton;
 public class MenuActivity extends FragmentActivity {
     static Boolean notify = true;
     static Boolean Miles = true;
-
     static double[] coords;
-    private LocationManager locMng = new LocationManager();
-    private static final String TAG = "MyLog";
 
     Button homeButton;
-    Button mapButton;
     ToggleButton MIKI;
     ToggleButton Notify;
 
@@ -35,12 +31,6 @@ public class MenuActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        final SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-        boolean MiKi = preferences.getBoolean("MiKi", true);  //default is true
-
-
-
-        //https://stackoverflow.com/questions/43166650/save-state-of-togglebutton-android
         MIKI = findViewById(R.id.MIKItoggle);
         MIKI.setChecked(readState());
         MIKI.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -73,7 +63,6 @@ public class MenuActivity extends FragmentActivity {
                 } else {
                     coords = (double[]) savedInstanceState.getSerializable("Parked Coords");
                 }
-                Log.i(TAG, "MENU coords are "+ coords);
                 // redirects user back to previous screen depending onn if a parked location is stored
                 if (coords == null) {
                     Intent intent = new Intent(MenuActivity.this, BeginActivity.class);
@@ -84,6 +73,7 @@ public class MenuActivity extends FragmentActivity {
                 }
             }
         });
+
         Button aboutButton = findViewById(R.id.aboutButton);
         aboutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +83,6 @@ public class MenuActivity extends FragmentActivity {
                 try {
                     coords = (double[]) extras.get("Parked Coords");
                     intent.putExtra("Parked Coords", coords);
-                    Log.i(TAG, "MENU onclick coords are "+ coords);
                 } catch(Exception NullPointerException){
 
                 }
@@ -104,16 +93,18 @@ public class MenuActivity extends FragmentActivity {
     public static boolean getNotify(){
         return notify;
     }
+
     public static boolean getMiles(){
         return Miles;
     }
+
     private void saveState(boolean isFavourite) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedPreferences.edit().putBoolean("State", isFavourite).apply();
     }
+
     private boolean readState() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         return sharedPreferences.getBoolean("State", true);
     }
-
 }

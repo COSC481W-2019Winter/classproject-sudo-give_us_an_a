@@ -31,7 +31,6 @@ import com.google.android.gms.maps.model.Marker;
 
 import android.content.Intent;
 
-//public class BeginActivity extends AppCompatActivity implements
 public class BeginActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -53,9 +52,9 @@ public class BeginActivity extends FragmentActivity implements
     private FusedLocationProviderClient mFusedLocationProviderClient;//not used yet
 
     TextView text;
-    Button button;
-    Button button2;
-    Button buttonMenu;
+    Button parkButton;
+    Button exitButton;
+    Button menuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,18 +65,14 @@ public class BeginActivity extends FragmentActivity implements
             finish();
         }
 
-        //Find your views
-        button = findViewById(R.id.parkButton);
-        button2 = findViewById(R.id.exit);
-        buttonMenu = findViewById(R.id.menubutton);
+        parkButton = findViewById(R.id.parkButton);
+        exitButton = findViewById(R.id.exit);
+        menuButton = findViewById(R.id.menubutton);
 
-        //Assign a listener to your button
-        button.setOnClickListener(new View.OnClickListener() {
+        parkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BeginActivity.this, ParkedActivity.class);
-
-                //new intent for telling ParkedActivity if app has been fully aborted/restarted
                 intent.putExtra("FRESH_START", true);
                 startActivity(intent);
             }
@@ -86,18 +81,15 @@ public class BeginActivity extends FragmentActivity implements
             checkUserLocationPermission();
         }
 
-        //Find your views
-        button2 = findViewById(R.id.exit);
-
-        //Assign a listener to your button
-        button2.setOnClickListener(new View.OnClickListener() {
+        exitButton = findViewById(R.id.exit);
+        exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finishAffinity();//Call requires API level 16 (current min is 15)
             }
         });
 
-        buttonMenu.setOnClickListener(new View.OnClickListener() {
+        menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BeginActivity.this, MenuActivity.class);
@@ -108,10 +100,6 @@ public class BeginActivity extends FragmentActivity implements
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
-        //Toast.makeText(this, "On Create()", Toast.LENGTH_SHORT).show();
-
-        //new FusedLocationProviderClient not being used yet
-        //mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     /**
@@ -125,7 +113,6 @@ public class BeginActivity extends FragmentActivity implements
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        //Toast.makeText(this, "On Map Ready()", Toast.LENGTH_SHORT).show();
         mMap = googleMap;
         //Change type of map to hybrid ie satalite and roads
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
@@ -142,7 +129,6 @@ public class BeginActivity extends FragmentActivity implements
 
     //check if permission is granted or not
     public boolean checkUserLocationPermission(){
-        //Toast.makeText(this, "Check User Location Permission()", Toast.LENGTH_SHORT).show();
         //if the permission is not granted
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
@@ -159,7 +145,6 @@ public class BeginActivity extends FragmentActivity implements
     //handle permission request response
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //Toast.makeText(this, "On Request PermissionsResult()", Toast.LENGTH_SHORT).show();
         switch (requestCode)
         {//if permission is granted
             case Request_User_Location_Code:
@@ -168,7 +153,6 @@ public class BeginActivity extends FragmentActivity implements
                         if(googleApiClient == null){
                             buildGoogleApiClient();
                         }
-                        //less important I think. comment when debugging possibly
                         mMap.setMyLocationEnabled(true);
                     }
                 }
@@ -180,7 +164,7 @@ public class BeginActivity extends FragmentActivity implements
     }
     // we build google api client
     protected synchronized void buildGoogleApiClient(){
-        //Toast.makeText(this, "synchonized Build Google Api Client()", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "synchronized Build Google Api Client()", Toast.LENGTH_SHORT).show();
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -191,12 +175,10 @@ public class BeginActivity extends FragmentActivity implements
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {//called when device is connected
-        //Toast.makeText(this, "On Connected()", Toast.LENGTH_SHORT).show();
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(1500);//1000ms = 1sec
         locationRequest.setFastestInterval(1000);
-        //locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
@@ -206,7 +188,6 @@ public class BeginActivity extends FragmentActivity implements
     //new implemented methods for establishing our current location
     @Override
     public void onLocationChanged(Location location) {//called when location is changed
-        //Toast.makeText(this, "On Location Changed()", Toast.LENGTH_SHORT).show();
         lastLocation = location;
         if(currentUserLocationMarker != null){
             currentUserLocationMarker.remove();
@@ -217,35 +198,18 @@ public class BeginActivity extends FragmentActivity implements
 
         LatLng latLng = new LatLng(latitude, longitude);//instantiate lat/lng object
 
-        // fun target/camera/zoom/tilt methods that work
-        // Construct a CameraPosition focusing on latLng and animate the camera to that position.
-//        CameraPosition cameraPosition = new CameraPosition.Builder()
-//                .target(latLng)      // Sets the center of the map to latLng
-//                .zoom(20)                   // Sets the zoom
-//                .bearing(0)                // Sets the orientation of the camera to east
-//                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
-//                .build();                   // Creates a CameraPosition from the builder
-//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
         //abruptly moves camera to this location and animates zoom in
         CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
         CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 20);//2.0 to 21.0 -higher double = more zoom
         mMap.moveCamera(center);//centers camera right above before zooming
         mMap.animateCamera(zoom);//animated zoom in
-
-//        //start the location
-//        if(googleApiClient != null){
-//            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-//        }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        //Log.i(TAG, "Location services suspended. Please reconnect.");
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {//called when connection is severed
-        //Log.i(TAG, "Location services connection was severed and failed.");
     }
 }
