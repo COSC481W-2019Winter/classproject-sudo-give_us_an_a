@@ -372,9 +372,10 @@ public class ParkedActivity extends FragmentActivity implements
 
         if (location != null) {
             locMng.setCurrCoord(location);
-            float elev = P;
-            Log.i(TAG,"Elevation" + elev);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
+
+            //Elevation
+            ElevationResult elev = getElevation(new com.google.maps.model.LatLng(location.getLatitude(), location.getLongitude()));
 
             //Directions
             double[] parkingCoord = locMng.getParkingCoord();
@@ -389,12 +390,12 @@ public class ParkedActivity extends FragmentActivity implements
             if ((results != null) && (results.routes.length > 0)) {
                 addPolyline(results, latLng);
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
-                elevation.setText("Elevation Change: " + locMng.getElevationChange());
+                elevation.setText("Elevation Change: " + locMng.getElevationChange(elev.elevation));
                 time.setText("Time to Car: " + getTimeFromResults(results));
             } else {
                 updateCamera(latLng);
                 distance.setText("Distance: " + locMng.getDistance());
-                elevation.setText("Elevation Change: " + locMng.getElevationChange());
+                elevation.setText("Elevation Change: " + locMng.getElevationChange(elev.elevation));
                 time.setText("Time to Car: " + locMng.timeToCar());
             }
         }
@@ -427,6 +428,24 @@ public class ParkedActivity extends FragmentActivity implements
             e.printStackTrace();
             return null;
         } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private ElevationResult getElevation(com.google.maps.model.LatLng latlng) {
+        try {
+            return ElevationApi.getByPoint(getGeoContext(), latlng).await();
+        } catch (ApiException e) {
+            Log.i(TAG,"Elevation ApiException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (InterruptedException e) {
+            Log.i(TAG,"Elevation InterruptedException" + e.toString());
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            Log.i(TAG,"Elevation IOException" + e.toString());
             e.printStackTrace();
             return null;
         }

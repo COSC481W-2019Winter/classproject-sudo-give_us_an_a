@@ -1,6 +1,7 @@
 package com.dev2qa.parkedup;
 
 import android.location.Location;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
 public class LocationManager {
@@ -86,18 +87,19 @@ public class LocationManager {
         return formattedCoords(parkingCoord);
     }
 
-    public String getElevationChange() {
+    public String getElevationChange(double elev) {
         String units;
         double conversion;
         if (usUnits) {
             conversion = 5280;
             units = "feet";
+            elev*=3.28084; //meters to feet
         }
         else {
             conversion = 1;
             units = "meters";
         }
-        double diff = conversion * Math.abs(elevation-parkingElev);
+        double diff = conversion * Math.abs(elevation-parkingElev) - elev;
         if (elevation < parkingElev)
             return String.format("+%.3f ",diff) + units;
         else
