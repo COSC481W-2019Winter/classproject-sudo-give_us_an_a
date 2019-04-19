@@ -109,7 +109,7 @@ public class ParkedActivity extends FragmentActivity implements
     Button menuButton;
     TextView parkedCoord;
     TextView currCoord;
-    TextView elevation;
+    TextView elevationView;
     TextView distance;
     TextView time;
 
@@ -155,7 +155,7 @@ public class ParkedActivity extends FragmentActivity implements
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
         distance = findViewById(R.id.distance);
-        elevation = findViewById(R.id.elevationDiff);
+        elevationView = findViewById(R.id.elevationDiff);
         time = findViewById(R.id.timeToCar);
 
         parkedCoord.append(" \t");
@@ -376,7 +376,7 @@ public class ParkedActivity extends FragmentActivity implements
 
             //Elevation
             ElevationResult elev = getElevation(new com.google.maps.model.LatLng(location.getLatitude(), location.getLongitude()));
-
+            Log.i(TAG,String.valueOf(elev.elevation));
             //Directions
             double[] parkingCoord = locMng.getParkingCoord();
             com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0], parkingCoord[1]);
@@ -390,12 +390,12 @@ public class ParkedActivity extends FragmentActivity implements
             if ((results != null) && (results.routes.length > 0)) {
                 addPolyline(results, latLng);
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
-                elevation.setText("Elevation Change: " + locMng.getElevationChange(elev.elevation));
+                elevationView.setText("Elevation Change: " + locMng.getElevationChange(elev.elevation));
                 time.setText("Time to Car: " + getTimeFromResults(results));
             } else {
                 updateCamera(latLng);
                 distance.setText("Distance: " + locMng.getDistance());
-                elevation.setText("Elevation Change: " + locMng.getElevationChange(elev.elevation));
+                elevationView.setText("Elevation Change: " + locMng.getElevationChange(elev.elevation));
                 time.setText("Time to Car: " + locMng.timeToCar());
             }
         }
