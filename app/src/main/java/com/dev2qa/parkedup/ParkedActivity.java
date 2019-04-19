@@ -657,10 +657,11 @@ public class ParkedActivity extends FragmentActivity implements
 
             if ( Sensor.TYPE_PRESSURE == event.sensor.getType()){
                 pressure_value = event.values[0];
-                P = SensorManager.getAltitude(ATM, pressure_value);
                 if(P == 0) {
+                    P = SensorManager.getAltitude(ATM, pressure_value);
                     locMng.setParkElevation(P);
                 }else{
+                    P = SensorManager.getAltitude(ATM, pressure_value);
                     locMng.setElevation(P);
                 }
                 Log.i(TAG,"Elevation: " + P);
