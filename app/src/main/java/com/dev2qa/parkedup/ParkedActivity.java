@@ -147,7 +147,7 @@ public class ParkedActivity extends FragmentActivity implements
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Intent intentAborted = getIntent();
         freshStartFlag = intentAborted.getBooleanExtra("FRESH_START", false);
-
+        loadData();
         startService();
 
         // set strings with updated data
@@ -178,8 +178,8 @@ public class ParkedActivity extends FragmentActivity implements
                             case DialogInterface.BUTTON_POSITIVE:
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
-                                stopService();
                                 saveData(false);
+                                stopService();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
@@ -371,7 +371,7 @@ public class ParkedActivity extends FragmentActivity implements
         if (location != null) {
             locMng.setCurrCoord(location);
             float elevation = P;
-            Log.i(TAG,"Elevation" + elevation);
+            //Log.i(TAG,"Elevation" + elevation);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
 
             //Directions
