@@ -373,8 +373,6 @@ public class ParkedActivity extends FragmentActivity implements
 
         if (location != null) {
             locMng.setCurrCoord(location);
-            float elev = P;
-            Log.i(TAG,"Elevation" + elev);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
 
             //Directions
