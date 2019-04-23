@@ -133,6 +133,28 @@ public class ParkedActivity extends FragmentActivity implements
 
         floatLat = sharedPreferences.getFloat(LATITUDE_FLOAT, 0.0F);
         floatLong = sharedPreferences.getFloat(LONGITUDE_FLOAT, 0.0F);
+        LatLng latLng = new LatLng(Double.valueOf(LATITUDE_FLOAT), Double.valueOf(LONGITUDE_FLOAT));
+        //Directions
+        double[] parkingCoord = locMng.getParkingCoord();
+        com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(parkingCoord[0], parkingCoord[1]);
+        com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(Double.valueOf(LATITUDE_FLOAT), Double.valueOf(LONGITUDE_FLOAT));
+
+        DirectionsResult results;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            results = getDirectionsDetails(origin, destination);
+        else
+            results = null;
+        if ((results != null) && (results.routes.length > 0)) {
+            addPolyline(results, latLng);
+            distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
+            elevation.setText("Elevation Change: " + locMng.getElevationChange());
+            time.setText("Time to Car: " + getTimeFromResults(results));
+        } else {
+            updateCamera(latLng);
+            distance.setText("Distance: " + locMng.getDistance());
+            elevation.setText("Elevation Change: " + locMng.getElevationChange());
+            time.setText("Time to Car: " + locMng.timeToCar());
+        }
     }
 
     @Override
