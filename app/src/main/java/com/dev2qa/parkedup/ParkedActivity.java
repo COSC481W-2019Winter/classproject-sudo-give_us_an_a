@@ -109,6 +109,7 @@ public class ParkedActivity extends FragmentActivity implements
     Button menuButton;
     TextView parkedCoord;
     TextView currCoord;
+    TextView elevation;
     TextView distance;
     TextView time;
 
@@ -118,7 +119,6 @@ public class ParkedActivity extends FragmentActivity implements
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
             if (saveData) {
-                //save preference values to these variables
                 editor.putFloat(LATITUDE_FLOAT, (float) latitudeFirst);
                 editor.putFloat(LONGITUDE_FLOAT, (float) longitudeFirst);
                 editor.apply();
@@ -138,9 +138,7 @@ public class ParkedActivity extends FragmentActivity implements
     @Override
     public void finish() {
         super.finish();
-        //stopService();//deleting this will allow you to keep the app running in background, even after exiting
         saveData(false);
-        //perhaps save values to SharedPreferences or SQLlite database here
     }
 
     @Override
@@ -151,12 +149,14 @@ public class ParkedActivity extends FragmentActivity implements
         Intent intentAborted = getIntent();
         freshStartFlag = intentAborted.getBooleanExtra("FRESH_START", false);
 
+        loadData();
         startService();
 
         // set strings with updated data
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
         distance = findViewById(R.id.distance);
+        elevation = findViewById(R.id.elevationDiff);
         time = findViewById(R.id.timeToCar);
 
         parkedCoord.append(" \t");
@@ -181,8 +181,8 @@ public class ParkedActivity extends FragmentActivity implements
                             case DialogInterface.BUTTON_POSITIVE:
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
-                                stopService();
                                 saveData(false);
+                                stopService();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
@@ -347,11 +347,6 @@ public class ParkedActivity extends FragmentActivity implements
 
         LatLng latLng = new LatLng(latitudeFirst, longitudeFirst);//instantiate lat/lng object
 
-        //Elevation
-
-        //ElevationResult result = getElevation(new com.google.maps.model.LatLng(latitudeFirst, longitudeFirst));
-        //Log.i(TAG,"Google ElevationAPI: " + result.elevation);
-
         //changes things about the marker
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -378,8 +373,6 @@ public class ParkedActivity extends FragmentActivity implements
 
         if (location != null) {
             locMng.setCurrCoord(location);
-            float elevation = P;
-            Log.i(TAG,"Elevation" + elevation);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
 
             //Directions
@@ -395,10 +388,12 @@ public class ParkedActivity extends FragmentActivity implements
             if ((results != null) && (results.routes.length > 0)) {
                 addPolyline(results, latLng);
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
+                elevation.setText("Elevation Change: " + locMng.getElevationChange());
                 time.setText("Time to Car: " + getTimeFromResults(results));
             } else {
                 updateCamera(latLng);
                 distance.setText("Distance: " + locMng.getDistance());
+                elevation.setText("Elevation Change: " + locMng.getElevationChange());
                 time.setText("Time to Car: " + locMng.timeToCar());
             }
         }
@@ -425,15 +420,12 @@ public class ParkedActivity extends FragmentActivity implements
                     .departureTimeNow()
                     .await();
         } catch (ApiException e) {
-            Log.i(TAG,"Direction ApiException" + e.toString());
             e.printStackTrace();
             return null;
         } catch (InterruptedException e) {
-            Log.i(TAG,"Direction InterruptedException" + e.toString());
             e.printStackTrace();
             return null;
         } catch (IOException e) {
-            Log.i(TAG,"Direction IOException" + e.toString());
             e.printStackTrace();
             return null;
         }
@@ -508,13 +500,13 @@ public class ParkedActivity extends FragmentActivity implements
 
             if ( Sensor.TYPE_PRESSURE == event.sensor.getType()){
                 pressure_value = event.values[0];
-                P = SensorManager.getAltitude(ATM, pressure_value);
                 if(P == 0) {
+                    P = SensorManager.getAltitude(ATM, pressure_value);
                     locMng.setParkElevation(P);
                 }else{
+                    P = SensorManager.getAltitude(ATM, pressure_value);
                     locMng.setElevation(P);
                 }
-                Log.i(TAG,"Elevation: " + P);
             }
         }
 
