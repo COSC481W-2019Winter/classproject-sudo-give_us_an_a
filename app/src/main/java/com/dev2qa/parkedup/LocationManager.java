@@ -88,16 +88,20 @@ public class LocationManager {
 
     public String getElevationChange() {
         String units;
-        double conversion;
+        double conversion, threshold;
         if (usUnits) {
             conversion = 5280;
             units = "feet";
+            threshold = 2;
         }
         else {
             conversion = 1;
             units = "meters";
+            threshold = 0.61;
         }
         double diff = conversion * Math.abs(elevation-parkingElev);
+        if (diff < threshold)
+            return "0 " + units;
         if (elevation < parkingElev)
             return String.format("+%.3f ",diff) + units;
         else
