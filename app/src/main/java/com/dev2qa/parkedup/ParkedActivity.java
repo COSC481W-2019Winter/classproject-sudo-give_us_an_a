@@ -109,6 +109,7 @@ public class ParkedActivity extends FragmentActivity implements
     Button menuButton;
     TextView parkedCoord;
     TextView currCoord;
+    TextView elevation;
     TextView distance;
     TextView time;
 
@@ -154,6 +155,7 @@ public class ParkedActivity extends FragmentActivity implements
         parkedCoord = findViewById(R.id.parkedCoord);
         currCoord = findViewById(R.id.currCoord);
         distance = findViewById(R.id.distance);
+        elevation = findViewById(R.id.elevationDiff);
         time = findViewById(R.id.timeToCar);
 
         parkedCoord.append(" \t");
@@ -370,8 +372,8 @@ public class ParkedActivity extends FragmentActivity implements
 
         if (location != null) {
             locMng.setCurrCoord(location);
-            float elevation = P;
-            Log.i(TAG,"Elevation" + elevation);
+            float elev = P;
+            Log.i(TAG,"Elevation" + elev);
             currCoord.setText("\t\t\t " + locMng.displayCoord());
 
             //Directions
@@ -387,10 +389,12 @@ public class ParkedActivity extends FragmentActivity implements
             if ((results != null) && (results.routes.length > 0)) {
                 addPolyline(results, latLng);
                 distance.setText("Distance: " + locMng.getDistance(getDistanceFromResults(results)));
+                elevation.setText("Elevation Change: " + locMng.getElevationChange());
                 time.setText("Time to Car: " + getTimeFromResults(results));
             } else {
                 updateCamera(latLng);
                 distance.setText("Distance: " + locMng.getDistance());
+                elevation.setText("Elevation Change: " + locMng.getElevationChange());
                 time.setText("Time to Car: " + locMng.timeToCar());
             }
         }
@@ -497,10 +501,11 @@ public class ParkedActivity extends FragmentActivity implements
 
             if ( Sensor.TYPE_PRESSURE == event.sensor.getType()){
                 pressure_value = event.values[0];
-                P = SensorManager.getAltitude(ATM, pressure_value);
                 if(P == 0) {
+                    P = SensorManager.getAltitude(ATM, pressure_value);
                     locMng.setParkElevation(P);
                 }else{
+                    P = SensorManager.getAltitude(ATM, pressure_value);
                     locMng.setElevation(P);
                 }
             }
