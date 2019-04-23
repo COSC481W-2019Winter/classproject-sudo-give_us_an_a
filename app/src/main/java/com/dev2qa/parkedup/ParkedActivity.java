@@ -149,6 +149,7 @@ public class ParkedActivity extends FragmentActivity implements
         Intent intentAborted = getIntent();
         freshStartFlag = intentAborted.getBooleanExtra("FRESH_START", false);
 
+        loadData();
         startService();
 
         // set strings with updated data
@@ -180,8 +181,8 @@ public class ParkedActivity extends FragmentActivity implements
                             case DialogInterface.BUTTON_POSITIVE:
                                 Intent intent = new Intent(ParkedActivity.this, BeginActivity.class);
                                 startActivity(intent);
-                                stopService();
                                 saveData(false);
+                                stopService();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 break;
